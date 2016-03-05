@@ -1,0 +1,30 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="WebSSHConnector-application:ear exploded">
+    <output-path>$PROJECT_DIR$/WebSSHConnector-application/target/WebSSHConnector</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="WebSSHConnector-application/javaeeApplication/JavaEE" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/WebSSHConnector-application/target/WebSSHConnector/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="archive" name="WebSSHConnector-ejb-1.0-SNAPSHOT.jar">
+        <element id="artifact" artifact-name="WebSSHConnector-ejb:ejb exploded" />
+      </element>
+      <element id="archive" name="WebSSHConnector-web-1.0-SNAPSHOT.war">
+        <element id="artifact" artifact-name="WebSSHConnector-web:war exploded" />
+      </element>
+      <element id="library" level="project" name="Maven: com.h2database:h2:1.4.191" />
+      <element id="library" level="project" name="Maven: com.oracle:ojdbc7:12.1.0.1.0" />
+      <element id="library" level="project" name="Maven: org.primefaces:primefaces:5.2" />
+      <element id="library" level="project" name="Maven: com.sun.faces:jsf-api:2.2.1" />
+      <element id="library" level="project" name="Maven: com.sun.faces:jsf-impl:2.1.11" />
+      <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+      <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
+      <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.1" />
+      <element id="library" level="project" name="Maven: javax:javaee-api:7.0" />
+      <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.0" />
+      <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
+      <element id="library" level="project" name="Maven: org.glassfish.web:el-impl:2.2" />
+      <element id="library" level="project" name="Maven: javax.el:el-api:2.2" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,41 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="WebSSHConnector:ear exploded">
+    <output-path>$PROJECT_DIR$/target/WebSSHConnector</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="WebSSHConnector/javaeeApplication/JavaEE" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/target/WebSSHConnector/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="library" level="project" name="Maven: com.h2database:h2:1.4.191" />
+      <element id="library" level="project" name="Maven: com.oracle:ojdbc7:12.1.0.1.0" />
+      <element id="library" level="project" name="Maven: org.springframework.data:spring-data-jpa:1.9.4.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework.data:spring-data-commons:1.11.4.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-orm:4.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:4.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-tx:4.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.springframework:spring-core:4.1.9.RELEASE" />
+      <element id="library" level="project" name="Maven: org.aspectj:aspectjrt:1.8.7" />
+      <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.13" />
+      <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.7.13" />
+      <element id="library" level="project" name="Maven: org.primefaces:primefaces:5.2" />
+      <element id="library" level="project" name="Maven: com.sun.faces:jsf-api:2.2.1" />
+      <element id="library" level="project" name="Maven: com.sun.faces:jsf-impl:2.1.11" />
+      <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+      <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
+      <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.1" />
+      <element id="library" level="project" name="Maven: org.glassfish.web:el-impl:2.2" />
+      <element id="library" level="project" name="Maven: javax.el:el-api:2.2" />
+      <element id="archive" name="WebSSHConnector-ejb-1.0-SNAPSHOT.jar">
+        <element id="module-output" name="WebSSHConnector-ejb" />
+      </element>
+      <element id="archive" name="WebSSHConnector-web-1.0-SNAPSHOT.jar">
+        <element id="artifact" artifact-name="WebSSHConnector-web:war exploded" />
+      </element>
+    </root>
+  </artifact>
+</component>
