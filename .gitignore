@@ -62,4 +62,9 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# idea BS
+# IDEA BS
+*.iml
+/*/.idea/
+
+# Maven BS
+/*/target/
