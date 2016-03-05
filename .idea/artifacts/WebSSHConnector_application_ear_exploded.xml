@@ -25,6 +25,10 @@
       <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
       <element id="library" level="project" name="Maven: org.glassfish.web:el-impl:2.2" />
       <element id="library" level="project" name="Maven: javax.el:el-api:2.2" />
+      <element id="library" level="project" name="Maven: com.google.sitebricks:slf4j:0.8.3" />
+      <element id="library" level="project" name="Maven: com.google.inject:guice:2.0" />
+      <element id="library" level="project" name="Maven: aopalliance:aopalliance:1.0" />
+      <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.6.1" />
     </root>
   </artifact>
 </component>
