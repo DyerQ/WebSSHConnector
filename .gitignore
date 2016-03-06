@@ -64,7 +64,7 @@ $RECYCLE.BIN/
 
 # IDEA BS
 *.iml
-/*/.idea/
+/.idea
 
 # Maven BS
-/*/target/
+/*/target
