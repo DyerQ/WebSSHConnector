@@ -9,6 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+
+    <properties>
+        <!-- To enable parallel development and deployment, specify unique value -->
+        <web-deploy-suffix></web-deploy-suffix>
+    </properties>
+
     <artifactId>WebSSHConnector-application</artifactId>
     <packaging>ear</packaging>
 
@@ -32,17 +38,15 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.2</version>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.10.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
                     <modules>
                         <webModule>
                             <groupId>com.netcracker.edu.bestgroup.projects</groupId>
                             <artifactId>WebSSHConnector-web</artifactId>
                             <bundleFileName>WebSSHConnector-web.war</bundleFileName>
-                            <contextRoot>/WebSSHConnector-web</contextRoot>
+                            <contextRoot>/${web-deploy-suffix}</contextRoot>
                         </webModule>
                         <ejbModule>
                             <groupId>com.netcracker.edu.bestgroup.projects</groupId>
@@ -50,7 +54,7 @@
                             <bundleFileName>WebSSHConnector-ejb.jar</bundleFileName>
                         </ejbModule>
                     </modules>
-                    <displayName>WebSSHConnector</displayName>
+                    <earName>WebSSHConnector_${web-deploy-suffix}</earName>
                     <generateApplicationXml>true</generateApplicationXml>
                 </configuration>
 
