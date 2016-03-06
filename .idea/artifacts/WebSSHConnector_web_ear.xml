@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="ear" name="WebSSHConnector-web:ear">
-    <output-path>$PROJECT_DIR$/WebSSHConnector-web/target</output-path>
-    <root id="archive" name="WebSSHConnector-web-1.0-SNAPSHOT.ear">
-      <element id="artifact" artifact-name="WebSSHConnector-web:ear exploded" />
-    </root>
-  </artifact>
-</component>

@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-ejb" name="WebSSHConnector-ejb:ejb exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/WebSSHConnector_ejb_ejb_exploded</output-path>
-    <root id="root">
-      <element id="javaee-facet-resources" facet="WebSSHConnector-ejb/ejb/EJB" />
-      <element id="javaee-facet-classes" facet="WebSSHConnector-ejb/ejb/EJB" />
-    </root>
-  </artifact>
-</component>

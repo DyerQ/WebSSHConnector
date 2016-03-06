@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="WebSSHConnector-web:war">
-    <output-path>$PROJECT_DIR$/WebSSHConnector-web/target</output-path>
-    <root id="archive" name="WebSSHConnector-web-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="WebSSHConnector-web:war exploded" />
-    </root>
-  </artifact>
-</component>
