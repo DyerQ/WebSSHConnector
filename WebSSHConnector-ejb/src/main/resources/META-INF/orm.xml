@@ -15,17 +15,16 @@
 
     <entity class="MMObject">
         <table name="MM_OBJECTS"/>
+        <named-query name="MMObjects.findAll">
+            <query>select o from MMObject o</query>
+        </named-query>
         <attributes>
             <id name="id"/>
             <basic name="parentId">
                 <column name="PARENT_ID"/>
             </basic>
-            <basic name="name">
-                <column name="NAME"/>
-            </basic>
-            <basic name="description">
-                <column name="DESCRIPTION"/>
-            </basic>
+            <basic name="name"/>
+            <basic name="description"/>
         </attributes>
 
     </entity>
