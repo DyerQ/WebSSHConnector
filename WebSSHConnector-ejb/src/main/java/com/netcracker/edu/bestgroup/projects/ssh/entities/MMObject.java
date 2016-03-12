@@ -2,12 +2,10 @@ package com.netcracker.edu.bestgroup.projects.ssh.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import java.io.Serializable;
 import java.math.BigInteger;
 
 @Entity
-@NamedQuery(name = "findAllMMObjects", query = "select o from MMObject o")
 public class MMObject implements Serializable {
     private static final long serialVersionUID = -4359441295184175462L;
 

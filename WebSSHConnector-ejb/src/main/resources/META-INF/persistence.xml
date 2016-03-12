@@ -4,6 +4,7 @@
 <persistence-unit name="WebSSHConnect_PU" transaction-type="JTA">
     <provider>oracle.toplink.essentials.PersistenceProvider</provider>
     <jta-data-source>jdbc/ncedu</jta-data-source>
+    <class>com.netcracker.edu.bestgroup.projects.ssh.entities.MMObject</class>
 
     <properties>
         <property name="toplink.logging.level" value="INFO" />
