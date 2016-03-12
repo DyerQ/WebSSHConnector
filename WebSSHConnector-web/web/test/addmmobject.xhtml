@@ -9,16 +9,16 @@
     <h:form>
         <h:panelGrid columns="2">
             <h:outputLabel value="ID : "/>
-            <h:inputText value="#{mMObjectController.mmObject.id}"/>
+            <h:inputText value="#{mmObjectController.mmObject.id}"/>
             <h:outputLabel value="Parent ID :"/>
-            <h:inputText value="#{mMObjectController.mmObject.parentId}"/>
+            <h:inputText value="#{mmObjectController.mmObject.parentId}"/>
             <h:outputLabel value="Name : "/>
-            <h:inputText value="#{mMObjectController.mmObject.name}"/>
+            <h:inputText value="#{mmObjectController.mmObject.name}"/>
             <h:outputLabel value="Description : "/>
-            <h:inputText value="#{mMObjectController.mmObject.description}"/>
+            <h:inputText value="#{mmObjectController.mmObject.description}"/>
         </h:panelGrid>
         <h:commandButton value="Add New MMObject"
-                         action="#{mMObjectController.addNewMMObject}"/>
+                         action="#{mmObjectController.addNewMMObject}"/>
     </h:form>
 </h:body>
 </html>

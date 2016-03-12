@@ -5,13 +5,6 @@
 		  http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd"
          version="3.1">
     <enterprise-beans>
-        <entity>
-            <ejb-name>MMObject</ejb-name>
-            <ejb-class>com.netcracker.edu.bestgroup.projects.ssh.entities.MMObject</ejb-class>
-            <persistence-type>Bean</persistence-type>
-            <prim-key-class>java.math.BigInteger</prim-key-class>
-            <reentrant>true</reentrant>
-        </entity>
         <session>
             <ejb-name>MMObjectEJB</ejb-name>
             <ejb-class>com.netcracker.edu.bestgroup.projects.ssh.beans.MMObjectEJB</ejb-class>

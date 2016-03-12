@@ -10,7 +10,7 @@ import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean
+@ManagedBean(name = "mmObjectController")
 @RequestScoped
 public class MMObjectController {
 
@@ -21,23 +21,10 @@ public class MMObjectController {
 
     private List<MMObject> mmObjectList = new ArrayList<>();
 
-    public List<MMObject> getMMObjectList() {
-        mmObjectList = mmObjectEJB.findMMObjects();
-        return mmObjectList;
-    }
-
-    public String viewMMObject() {
-        return "mmObjectList.xhtml";
-    }
-
     public String addNewMMObject() {
         mmObject = mmObjectEJB.addNew(mmObject);
         mmObjectList = mmObjectEJB.findMMObjects();
-        return "mmObjectList.xhtml";
-    }
-
-    public MMObjectEJB getMmObjectEJB() {
-        return mmObjectEJB;
+        return "/test/mmobjects.xhtml";
     }
 
     public MMObject getMmObject() {
@@ -48,9 +35,6 @@ public class MMObjectController {
         return mmObjectList;
     }
 
-    public void setMmObjectEJB(MMObjectEJB mmObjectEJB) {
-        this.mmObjectEJB = mmObjectEJB;
-    }
 
     public void setMmObject(MMObject mmObject) {
         this.mmObject = mmObject;
