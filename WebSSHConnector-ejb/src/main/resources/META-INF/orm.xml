@@ -14,7 +14,7 @@
     <package>com.netcracker.edu.bestgroup.projects.ssh.entities</package>
 
     <entity class="MMObject">
-        <table name = "MM_OBJECTS"/>
+        <table name="MM_OBJECTS"/>
         <attributes>
             <id name="id"/>
             <basic name="parentId">
@@ -26,6 +26,45 @@
             <basic name="description">
                 <column name="DESCRIPTION"/>
             </basic>
+        </attributes>
+
+    </entity>
+    <entity class="com.netcracker.edu.bestgroup.projects.ssh.entities.Users">
+        <table name="USERS"/>
+        <attributes>
+            <id name="id"/>
+            <basic name="name">
+                <column name="NAME"/>
+            </basic>
+            <basic name="login">
+                <column name="LOGIN"/>
+            </basic>
+            <basic name="password">
+                <column name="PASSWORD"/>
+            </basic>
+        </attributes>
+    </entity>
+
+    <entity class="Connections">
+        <table name="CONNECTIONS"/>
+        <attributes>
+            <id name="id"/>
+            <basic name="password">
+                <column name="PASSWORD"/>
+            </basic>
+            <basic name="connectionType">
+                <column name="CONNECTION_TYPE"/>
+            </basic>
+            <basic name="hostName">
+                <column name="HOST_NAME"/>
+            </basic>
+            <basic name="port">
+                <column name="PORT"/>
+            </basic>
+            <basic name="login">
+                <column name="LOGIN"/>
+            </basic>
+
         </attributes>
     </entity>
 </entity-mappings>

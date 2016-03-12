@@ -18,5 +18,17 @@
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
+        <session>
+            <ejb-name>UsersEJB</ejb-name>
+            <ejb-class>com.netcracker.edu.bestgroup.projects.ssh.beans.UsersEJB</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
+        <session>
+            <ejb-name>ConnectionsEJBEJB</ejb-name>
+            <ejb-class>com.netcracker.edu.bestgroup.projects.ssh.beans.ConnectionsEJB</ejb-class>
+            <session-type>Stateless</session-type>
+            <transaction-type>Container</transaction-type>
+        </session>
     </enterprise-beans>
 </ejb-jar>

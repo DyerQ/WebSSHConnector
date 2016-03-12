@@ -10,4 +10,8 @@
     </properties>
 
 </persistence-unit>
+
+<persistence-unit name="WebSSHConnect_USERS" transaction-type="JTA">
+    <jta-data-source>jdbc/webssh</jta-data-source>
+</persistence-unit>
 </persistence>
