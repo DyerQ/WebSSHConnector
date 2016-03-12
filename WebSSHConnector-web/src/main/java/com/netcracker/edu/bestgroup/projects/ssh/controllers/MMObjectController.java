@@ -3,11 +3,10 @@ package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 import com.netcracker.edu.bestgroup.projects.ssh.beans.MMObjectEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.MMObject;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.inject.Named;
-import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "mmObjectController")
@@ -19,7 +18,12 @@ public class MMObjectController {
 
     private MMObject mmObject = new MMObject();
 
-    private List<MMObject> mmObjectList = new ArrayList<>();
+    private List<MMObject> mmObjectList;
+
+    @PostConstruct
+    private void postConstruct() {
+        mmObjectList = mmObjectEJB.findMMObjects();
+    }
 
     public String addNewMMObject() {
         mmObject = mmObjectEJB.addNew(mmObject);
