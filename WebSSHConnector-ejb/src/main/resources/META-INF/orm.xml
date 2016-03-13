@@ -28,8 +28,11 @@
         </attributes>
 
     </entity>
-    <entity class="com.netcracker.edu.bestgroup.projects.ssh.entities.Users">
+    <entity class="Users">
         <table name="USERS"/>
+        <named-query name="Users.findAll">
+            <query>select o from Users o</query>
+        </named-query>
         <attributes>
             <id name="id"/>
             <basic name="name">
