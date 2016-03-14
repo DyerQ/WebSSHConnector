@@ -31,4 +31,8 @@ public class MMObjectEJB {
         entityManager.persist(mmObject);
         return mmObject;
     }
+
+    public void save(MMObject mmObject) {
+        entityManager.merge(mmObject);
+    }
 }

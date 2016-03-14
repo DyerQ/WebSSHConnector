@@ -2,6 +2,7 @@ package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 
 import com.netcracker.edu.bestgroup.projects.ssh.beans.MMObjectEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.MMObject;
+import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -46,5 +47,10 @@ public class MMObjectController {
 
     public void setMmObjectList(List<MMObject> mmObjectList) {
         this.mmObjectList = mmObjectList;
+    }
+
+    public void saveRow(RowEditEvent event) {
+        MMObject editedMMObject = ((MMObject) event.getObject());
+        mmObjectEJB.save(editedMMObject);
     }
 }
