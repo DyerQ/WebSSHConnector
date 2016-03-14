@@ -1,15 +1,16 @@
 package com.netcracker.edu.bestgroup.projects.ssh.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 
 @Entity
+@SequenceGenerator(name="seq", initialValue=1)
 public class Users implements Serializable {
 
-    @Id
-    private BigInteger id;
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @Id private BigInteger id;
 
     private String name;
 
@@ -18,7 +19,7 @@ public class Users implements Serializable {
     private String password;
 
 
-
+    @Transient
     boolean editable;
 
     public String getName() {
@@ -54,11 +55,12 @@ public class Users implements Serializable {
         this.password = password;
     }
 
-    public void setEditable(boolean editable) {
-        this.editable = editable;
-    }
-
-    public boolean isEditable() {
-        return editable;
-    }
+//    @Transient
+//    public void setEditable(boolean editable) {
+//        this.editable = editable;
+//    }
+//    @Transient
+//    public boolean isEditable() {
+//        return editable;
+//    }
 }

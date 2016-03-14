@@ -29,7 +29,7 @@ public class UsersEJB {
         @SuppressWarnings("unchecked")
         TypedQuery<Users> query = (TypedQuery<Users>) entityManager.createNamedQuery("Users.findAll");
         List<Users> resultList = query.getResultList();
-//        entityManager.flush();
+        entityManager.flush();
         return resultList;
     }
 }
