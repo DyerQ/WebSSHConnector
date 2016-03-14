@@ -21,6 +21,7 @@
                          action="#{usersController.addNewUser}"/>
     </h:form>
 
+    <h:form rendered="#{not empty usersController.usersList}">
     <h:dataTable value="#{usersController.usersList}" var="list" border="1">
         <h:column>
             <f:facet name="header">
@@ -46,11 +47,13 @@
             </f:facet>
             <h:outputText value="#{list.password}"/>
         </h:column>
-
         <h:column>
-            <h:commandButton value="delete" action="#{usersController.deleteUser()}" />
+            <h:commandLink value="delete" action="#{usersController.deleteUser(list)}" />
+        </h:column>
+        <h:column>
+            <h:commandLink value="edit" action="#{usersController.editUser(list)}" />
         </h:column>
     </h:dataTable>
-
+    </h:form>
 </h:body>
 </html>

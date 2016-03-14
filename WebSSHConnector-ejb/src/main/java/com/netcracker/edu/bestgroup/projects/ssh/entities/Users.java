@@ -17,6 +17,10 @@ public class Users implements Serializable {
 
     private String password;
 
+
+
+    boolean editable;
+
     public String getName() {
         return name;
     }
@@ -48,5 +52,13 @@ public class Users implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setEditable(boolean editable) {
+        this.editable = editable;
+    }
+
+    public boolean isEditable() {
+        return editable;
     }
 }

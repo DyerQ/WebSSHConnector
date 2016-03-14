@@ -11,7 +11,7 @@ import java.util.List;
 
 @Stateless(name = "UsersEJB")
 public class UsersEJB {
-    @PersistenceContext(unitName = "WebSSHConnect_USERS")
+    @PersistenceContext(unitName = "appPersistenceUnit")
     private EntityManager entityManager;
 
     public UsersEJB() {
@@ -26,8 +26,10 @@ public class UsersEJB {
         return user;
     }
     public List<Users> findUsers(){
+        @SuppressWarnings("unchecked")
         TypedQuery<Users> query = (TypedQuery<Users>) entityManager.createNamedQuery("Users.findAll");
         List<Users> resultList = query.getResultList();
+//        entityManager.flush();
         return resultList;
     }
 }

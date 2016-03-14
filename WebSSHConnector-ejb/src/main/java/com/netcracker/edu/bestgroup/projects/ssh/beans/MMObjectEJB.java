@@ -14,7 +14,7 @@ import java.util.List;
 public class MMObjectEJB {
     private static final Logger LOGGER = LoggerFactory.getLogger(MMObjectEJB.class);
 
-    @PersistenceContext(unitName = "WebSSHConnect_PU")
+    @PersistenceContext(unitName = "vasiliyPersistenceUnit")
     private EntityManager entityManager;
 
     public List<MMObject> findMMObjects() {

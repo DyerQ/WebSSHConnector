@@ -29,7 +29,7 @@ public class UsersController {
         usersList  = usersEJB.findUsers();
         return "/test/crud.xhtml";
     }
-    public String editUser(){
+    public String editUser(Users user){
         return null;
     }
     public String deleteUser(Users user){
