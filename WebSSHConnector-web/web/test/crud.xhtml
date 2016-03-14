@@ -49,7 +49,11 @@
             <h:commandLink value="delete" action="#{usersController.deleteUser(list)}" />
         </h:column>
         <h:column>
-            <h:commandLink value="edit" action="#{usersController.editUser(list)}" />
+            <!--<h:commandLink value="edit" action="#{usersController.editUser(list)}" />-->
+            <h:commandLink value="Edit" action="#{usersController.editUser(list)}"
+                           rendered="#{not usersController.editable}" />
+            <h:commandLink value="Save" action="#{usersController.saveEditable}"
+                           rendered="#{ usersController.editable}" />
         </h:column>
     </h:dataTable>
     </h:form>

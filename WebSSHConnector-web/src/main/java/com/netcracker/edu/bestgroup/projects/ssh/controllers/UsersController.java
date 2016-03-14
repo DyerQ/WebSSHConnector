@@ -3,12 +3,14 @@ package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 
 import com.netcracker.edu.bestgroup.projects.ssh.beans.UsersEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Users;
+import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 @ManagedBean
@@ -27,15 +29,13 @@ public class UsersController {
     public String addNewUser(){
         user = usersEJB.addNew(user);
         usersList  = usersEJB.findUsers();
-        return "/test/crud.xhtml";
+        return "/test/testcrud.xhtml";
     }
-    public String editUser(Users user){
-        return null;
-    }
+
     public String deleteUser(Users user){
         usersEJB.delete(user);
         usersList=usersEJB.findUsers();
-        return "/test/crud.xhtml";
+        return "/test/testcrud.xhtml";
     }
 
     public List<Users> getUsersList() {
@@ -52,5 +52,10 @@ public class UsersController {
 
     public void setUser(Users user) {
         this.user = user;
+    }
+
+    public void saveRow(RowEditEvent event) {
+        Users editedUser = ((Users) event.getObject());
+        usersEJB.save(editedUser);
     }
 }

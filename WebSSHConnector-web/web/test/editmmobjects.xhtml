@@ -7,25 +7,25 @@
 <h:head><title>View All MMObjects with editing enabled via toggling entity variable</title></h:head>
 <h:body>
     <h:form id="content">
-        <p:dataTable id="mmo_table" editable="true" value="#{mmObjectController.mmObjectList}" var="mmo">
+        <p:dataTable id="mmo_table" editable="true" value="#{mmObjectController.mmObjectList}" var="user">
             <p:ajax event="rowEdit" listener="#{mmObjectController.saveRow}" update=":content:mmo_table" />
 
             <p:column headerText="ID">
-                <h:outputText value="#{mmo.id}"/>
+                <h:outputText value="#{user.id}"/>
             </p:column>
             <p:column headerText="Parent ID">
-                <h:outputText value="#{mmo.parentId}"/>
+                <h:outputText value="#{user.parentId}"/>
             </p:column>
             <p:column headerText="Name">
                 <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{mmo.name}"/></f:facet>
-                    <f:facet name="input"><p:inputText value="#{mmo.name}" style="width:100%"/></f:facet>
+                    <f:facet name="output"><h:outputText value="#{user.name}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{user.name}" style="width:100%"/></f:facet>
                 </p:cellEditor>
             </p:column>
             <p:column headerText="Description">
                 <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{mmo.description}"/></f:facet>
-                    <f:facet name="input"><p:inputText value="#{mmo.description}" style="width:100%"/></f:facet>
+                    <f:facet name="output"><h:outputText value="#{user.description}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{user.description}" style="width:100%"/></f:facet>
                 </p:cellEditor>
             </p:column>
             <p:column>

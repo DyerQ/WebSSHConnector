@@ -32,4 +32,8 @@ public class UsersEJB {
         entityManager.flush();
         return resultList;
     }
+
+    public void save(Users user) {
+        entityManager.merge(user);
+    }
 }

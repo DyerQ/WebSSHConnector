@@ -1,6 +1,8 @@
 package com.netcracker.edu.bestgroup.projects.ssh.entities;
 
 import javax.persistence.*;
+import javax.persistence.Transient;
+import java.beans.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 
@@ -17,10 +19,6 @@ public class Users implements Serializable {
     private String login;
 
     private String password;
-
-
-    @Transient
-    boolean editable;
 
     public String getName() {
         return name;
@@ -55,12 +53,4 @@ public class Users implements Serializable {
         this.password = password;
     }
 
-//    @Transient
-//    public void setEditable(boolean editable) {
-//        this.editable = editable;
-//    }
-//    @Transient
-//    public boolean isEditable() {
-//        return editable;
-//    }
 }
