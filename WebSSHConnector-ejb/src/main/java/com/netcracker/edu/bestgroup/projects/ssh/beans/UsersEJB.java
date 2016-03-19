@@ -26,7 +26,6 @@ public class UsersEJB {
         return user;
     }
     public List<Users> findUsers(){
-        @SuppressWarnings("unchecked")
         TypedQuery<Users> query = (TypedQuery<Users>) entityManager.createNamedQuery("Users.findAll");
         List<Users> resultList = query.getResultList();
         entityManager.flush();
