@@ -1,13 +1,18 @@
 package com.netcracker.edu.bestgroup.projects.ssh.entities;
 
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
 
+@Entity
+@SequenceGenerator(name="seq", initialValue=1)
 public class Connections implements Serializable {
 
     @Id
-    private BigInteger id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    private BigInteger connection_id;
+
+    private BigInteger user_id;
 
     private String hostName;
 
@@ -19,10 +24,28 @@ public class Connections implements Serializable {
 
     private String password;
 
-    public BigInteger getId() {
-        return id;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name ="USER_ID",referencedColumnName = "ID")
+    private Users users;
+    public Users getUsers() {
+        return users;
+    }
+    public void setUsers(Users users) {
+        this.users = users;
     }
 
+    public BigInteger getConnection_id() {
+        return connection_id;
+    }
+
+    public BigInteger getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(BigInteger user_id) {
+        this.user_id = user_id;
+    }
     public String getHostName() {
         return hostName;
     }
@@ -43,8 +66,8 @@ public class Connections implements Serializable {
         return password;
     }
 
-    public void setId(BigInteger id){
-        this.id = id;
+    public void setConnection_id(BigInteger id){
+        this.connection_id = id;
     }
 
     public void setHostName(String hostName) {
