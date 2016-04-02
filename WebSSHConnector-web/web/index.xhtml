@@ -1,12 +1,21 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/template.xhtml">
+    <ui:define name="title">WebSSHConnector | Index Page</ui:define>
+
     <ui:define name="content">
-        <p:outputLabel>Hello!</p:outputLabel>
-
-
+        <h:form id="content">
+            <div class="row">
+                <p:outputLabel>Hello!</p:outputLabel>
+            </div>
+            <div class="row">
+                <p:clock/>
+            </div>
+            <div class="row">
+                <p:graphicImage styleClass="img-rounded" value="resources/img/welcome_with_cat.jpg"/>
+            </div>
+        </h:form>
     </ui:define>
 </ui:composition>
