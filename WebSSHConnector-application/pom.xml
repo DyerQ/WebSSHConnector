@@ -12,7 +12,7 @@
 
     <properties>
         <!-- To enable parallel development and deployment, specify unique value -->
-        <web-deploy-suffix>vasya</web-deploy-suffix>
+        <web-deploy-suffix></web-deploy-suffix>
     </properties>
 
     <artifactId>WebSSHConnector-application</artifactId>
