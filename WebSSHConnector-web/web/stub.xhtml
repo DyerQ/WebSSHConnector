@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/template.xhtml">
+    <ui:define name="content">
+        <f:view>
+        <h:form id="form">
+            <p:panel id="basic" header="doesn't matter" footer="doesn't matter" style="margin-bottom:20px">
+                <h:panelGrid columns="2" cellpadding="10">
+                    <p:dataList id="values" var="str" value="#{stubButtonController.values}" emptyMessage="" type="definition">
+                        #{str}
+                    </p:dataList>
+                </h:panelGrid>
+            </p:panel>
+            <p:commandButton update="values" value="Print" icon="ui-icon-star" actionListener="#{stubButtonController.printHello}"/>
+            <h3 style="margin-top: 0">AutoComplete</h3>
+            <p>input TextArea</p>
+            
+            <p:inputTextarea rows="10" cols="50"   />
+        </h:form>
+        </f:view>
+    </ui:define>
+</ui:composition>
