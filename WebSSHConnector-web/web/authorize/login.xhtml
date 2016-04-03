@@ -18,18 +18,18 @@
                 </tr>
                 <tr>
                     <td> <h:outputText value="Enter Your Name : "/> </td>
-                    <td> <h:inputText id="inputName" value="#{usersController.user.login}" required="true"
+                    <td> <h:inputText id="inputName" value="#{mainController.user.login}" required="true"
                                       requiredMessage="Name field must not be empty"/> </td>
                     <td><h:message for="inputName" style="color:red"/></td>
                 </tr>
                 <tr>
                     <td> <h:outputText value="Enter password :"/> </td>
-                    <td> <h:inputSecret id="inputPassword" value="#{usersController.user.password}" required="true"
+                    <td> <h:inputSecret id="inputPassword" value="#{mainController.user.password}" required="true"
                                         requiredMessage="Password field must not be empty"/> </td>
                     <td><h:message for="inputPassword" style="color:red"/></td>
                 </tr>
                 <tr>
-                    <td><h:commandButton value="Sign In" action="#{usersController.login}"/></td>
+                    <td><h:commandButton value="Sign In" action="#{mainController.login}"/></td>
 
                     <td> <h:outputText value="Not a User "/>
                         <h:outputLink value="register.xhtml">Sign Up</h:outputLink></td>

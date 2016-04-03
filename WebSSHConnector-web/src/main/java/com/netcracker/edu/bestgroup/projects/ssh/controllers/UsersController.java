@@ -24,8 +24,6 @@ public class UsersController {
     private Users user = new Users();
     @EJB
     private UsersEJB usersEJB;
-    boolean isLoginPage = (FacesContext.getCurrentInstance().getViewRoot()
-            .getViewId().lastIndexOf("login.xhtml") > -1);
 
     @PostConstruct
     public void postConstruct() {
@@ -37,54 +35,9 @@ public class UsersController {
         return "/test/testcrud.xhtml";
     }
 
-    public String login() {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(false);
-        usersList = usersEJB.findUsers();
-        List <Users> tmp = new ArrayList<Users>();
-        for (Users e: usersList){
-            if(e.getLogin().equals(user.getLogin())){
-                tmp.add(e);
-            }
-        }
-        if (isLoginPage && (!tmp.isEmpty())) {
-            FacesContext.getCurrentInstance().getExternalContext()
-                    .getSessionMap().put("username", user.getLogin());
-            if (session == null) {
-                FacesContext
-                        .getCurrentInstance()
-                        .getApplication()
-                        .getNavigationHandler()
-                        .handleNavigation(FacesContext.getCurrentInstance(),
-                                null, "/login.xhtml");
-            } else {
-                Object currentUser = session.getAttribute("name");
-                if (!isLoginPage && (currentUser == null || currentUser == "")) {
-                    FacesContext
-                            .getCurrentInstance()
-                            .getApplication()
-                            .getNavigationHandler()
-                            .handleNavigation(
-                                    FacesContext.getCurrentInstance(), null,
-                                    "/login.xhtml");
-                }
-            }
-            return "success";
-        } else {
-            return "invalid";
-        }
-    }
-
-    public String logout() {
-        FacesContext.getCurrentInstance().getExternalContext()
-                .invalidateSession();
-        FacesContext
-                .getCurrentInstance()
-                .getApplication()
-                .getNavigationHandler()
-                .handleNavigation(FacesContext.getCurrentInstance(), null,
-                        "/login.xhtml");
-        return "login";
+    public void registerUser(){
+        user = usersEJB.addNew(user);
+        usersList  = usersEJB.findUsers();
     }
 
     public String deleteUser(Users user){
