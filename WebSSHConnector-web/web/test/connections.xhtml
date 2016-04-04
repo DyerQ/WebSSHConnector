@@ -4,7 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
-<h:head><title>CRUD USERS</title></h:head>
+<h:head><title>CONNECTIONS</title></h:head>
+
+<f:metadata>
+    <f:viewParam name="user" value="#{connetctionsController.login}"/>
+</f:metadata>
+
+<h:outputText id="out" value="#{connetctionsController.login}" style="font-size:16px" />
+
+
 <h:body>
 
     <h:form>
@@ -21,8 +29,10 @@
             <p:inputText id="Password" value="#{connetctionsController.connections.password}"/>
             <h:outputLabel value="Port: " style="font-weight:bold"/>
             <p:inputText id="Port" value="#{connetctionsController.connections.port}"/>
+            <h:outputLabel value="user_id: " style="font-weight:bold"/>
+            <p:inputText id="user_id" value="#{connetctionsController.login}" autocomplete="on"/>
         </h:panelGrid>
-        <p:commandButton  icon="ui-icon-document" value="Add new User"
+        <p:commandButton  icon="ui-icon-document" value="Add new Connection"
                           action="#{connetctionsController.addNewConnection}" ajax="false"/>
     </h:form>
 

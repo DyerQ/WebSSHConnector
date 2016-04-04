@@ -28,8 +28,14 @@ public class UsersEJB {
     public List<Users> findUsers(){
         TypedQuery<Users> query = (TypedQuery<Users>) entityManager.createNamedQuery("Users.findAll");
         List<Users> resultList = query.getResultList();
-        entityManager.flush();
+        //entityManager.flush();
         return resultList;
+    }
+
+    public Users findUserByLogin(String login){
+        @SuppressWarnings("unchecked")
+        TypedQuery<Users> query = (TypedQuery<Users>)entityManager.createQuery("SELECT c FROM Users c WHERE c.login = :login");
+        return query.setParameter("login", login).getSingleResult();
     }
 
     public void save(Users user) {
