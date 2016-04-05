@@ -7,38 +7,41 @@
 <h:head><title>CONNECTIONS</title></h:head>
 
 <f:metadata>
-    <f:viewParam name="user" value="#{connetctionsController.login}"/>
+    <!--<f:viewParam name="user" value="#{connectionsController.login}"/>-->
+    <!--<f:viewAction action="#{connectionsController.findConnections}" />-->
+    <!--<f:event type="preRenderView" listener="#{connectionsController.prerender}" />-->
+    <!--<f:event type="preRenderView" listener="#{connectionsController.findConnections}" />-->
 </f:metadata>
+<h:outputText id="out1" value="LOGIN:" style="font-size:16px" />
 
-<h:outputText id="out" value="#{connetctionsController.login}" style="font-size:16px" />
-
+<h:outputText id="out2" value="#{connectionsController.login}" style="font-size:16px" />
 
 <h:body>
 
     <h:form>
         <h:panelGrid columns="2">
             <h:outputLabel value="Connection_id : " style="font-weight:bold"/>
-            <p:inputText id="Connetction_id" value="#{connetctionsController.connections.connection_id}"/>
+            <p:inputText id="Connetction_id" value="#{connectionsController.connections.connection_id}"/>
             <h:outputLabel value="Type : " style="font-weight:bold"/>
-            <p:inputText id="Type" value="#{connetctionsController.connections.connectionType}"/>
+            <p:inputText id="Type" value="#{connectionsController.connections.connectionType}"/>
             <h:outputLabel value="Host_name : " style="font-weight:bold"/>
-            <p:inputText id="Host_name" value="#{connetctionsController.connections.hostName}"/>
+            <p:inputText id="Host_name" value="#{connectionsController.connections.hostName}"/>
             <h:outputLabel value="Login : " style="font-weight:bold"/>
-            <p:inputText id="Login" value="#{connetctionsController.connections.login}"/>
+            <p:inputText id="Login" value="#{connectionsController.connections.login}"/>
             <h:outputLabel value="Password : " style="font-weight:bold"/>
-            <p:inputText id="Password" value="#{connetctionsController.connections.password}"/>
+            <p:inputText id="Password" value="#{connectionsController.connections.password}"/>
             <h:outputLabel value="Port: " style="font-weight:bold"/>
-            <p:inputText id="Port" value="#{connetctionsController.connections.port}"/>
+            <p:inputText id="Port" value="#{connectionsController.connections.port}"/>
             <h:outputLabel value="user_id: " style="font-weight:bold"/>
-            <p:inputText id="user_id" value="#{connetctionsController.login}" autocomplete="on"/>
+            <p:inputText id="user_id" value="#{connectionsController.login}" autocomplete="on"/>
         </h:panelGrid>
-        <p:commandButton  icon="ui-icon-document" value="Add new Connection"
-                          action="#{connetctionsController.addNewConnection}" ajax="false"/>
+        <p:commandButton icon="ui-icon-document" value="Add new Connection"
+                         action="#{connectionsController.addNewConnection}" ajax="false"/>
     </h:form>
 
     <h:form id="content">
-        <p:dataTable id="mmo_table" editable="true" value="#{connetctionsController.connectionList}" var="connection">
-            <p:ajax event="rowEdit" listener="#{connetctionsController.saveRow}" update=":content:mmo_table" />
+        <p:dataTable id="mmo_table" editable="true" value="#{connectionsController.connectionList}" var="connection">
+            <p:ajax event="rowEdit" listener="#{connectionsController.saveRow}" update=":content:mmo_table" />
 
             <p:column headerText="CONNECTION_ID">
                 <p:cellEditor>
@@ -86,7 +89,7 @@
             <p:column>
                 <p:commandButton icon="ui-icon-trash"
                                  title="Delete this connection"
-                                 actionListener="#{connetctionsController.deleteConnection(connection)}"
+                                 actionListener="#{connectionsController.deleteConnection(connection)}"
                                  ajax="false" />
             </p:column>
             <p:column>

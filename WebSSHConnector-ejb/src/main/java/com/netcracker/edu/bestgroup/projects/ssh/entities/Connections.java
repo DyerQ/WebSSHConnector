@@ -8,21 +8,24 @@ import java.math.BigInteger;
 @SequenceGenerator(name="seq", initialValue=1)
 public class Connections implements Serializable {
 
-    @Id
+
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @Id
     private BigInteger connection_id;
 
     public Connections() {
     }
 
-//    public Connections(String hostName, Integer port, String connectionType, String login, String password,  user) {
-//        this.hostName = hostName;
-//        this.port = port;
-//        this.connectionType = connectionType;
-//        this.login = login;
-//        this.password = password;
-//        this.user_id = user;
-//    }
+    public Connections(BigInteger connection_id,String hostName, Integer port, String connectionType, String login, String password, BigInteger user_id) {
+        this.connection_id = connection_id;
+        this.hostName = hostName;
+        this.port = port;
+        this.connectionType = connectionType;
+        this.login = login;
+        this.password = password;
+        this.user_id = user_id;
+    }
+
 //    public BigInteger getUser_id() {
 //        return user_id;
 //    }

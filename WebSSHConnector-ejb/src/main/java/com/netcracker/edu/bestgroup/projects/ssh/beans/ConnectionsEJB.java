@@ -42,11 +42,11 @@ public class ConnectionsEJB {
          TypedQuery<Connections> query = (TypedQuery<Connections>)entityManager.createQuery("SELECT c FROM Connections c WHERE c.user_id = :user_id");
          return query.setParameter("user_id", userTmp.getId()).getResultList();
     }
-    public List<Connections> findUserConnections(){
-        Users userTmp = usersEJB.findUserByLogin("qq");
-        TypedQuery<Connections> query = (TypedQuery<Connections>)entityManager.createQuery("SELECT c FROM Connections c WHERE c.user_id = :user_id");
-        return query.setParameter("user_id", userTmp.getId()).getResultList();
-    }
+//    public List<Connections> findUserConnections(){
+//        Users userTmp = usersEJB.findUserByLogin("qq");
+//        TypedQuery<Connections> query = (TypedQuery<Connections>)entityManager.createQuery("SELECT c FROM Connections c WHERE c.user_id = :user_id");
+//        return query.setParameter("user_id", userTmp.getId()).getResultList();
+//    }
     public void save(Connections connections) {
         entityManager.merge(connections);
     }

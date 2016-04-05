@@ -12,7 +12,6 @@ public class Users implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     @Id
-    @Column(name = "ID")
     private BigInteger id;
 
     private String name;
