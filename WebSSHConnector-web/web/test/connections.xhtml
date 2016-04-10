@@ -12,9 +12,9 @@
     <!--<f:event type="preRenderView" listener="#{connectionsController.prerender}" />-->
     <!--<f:event type="preRenderView" listener="#{connectionsController.findConnections}" />-->
 </f:metadata>
-<h:outputText id="out1" value="LOGIN:" style="font-size:16px" />
+<h:outputText id="out1" value="ID:#{connectionsController.id}" style="font-size:16px" />
 
-<h:outputText id="out2" value="#{connectionsController.login}" style="font-size:16px" />
+<h:outputText id="out2" value="LOGIN:#{connectionsController.login}" style="font-size:16px" />
 
 <h:body>
 
@@ -33,7 +33,9 @@
             <h:outputLabel value="Port: " style="font-weight:bold"/>
             <p:inputText id="Port" value="#{connectionsController.connections.port}"/>
             <h:outputLabel value="user_id: " style="font-weight:bold"/>
-            <p:inputText id="user_id" value="#{connectionsController.login}" autocomplete="on"/>
+            <p:inputText id="user_id" value="#{connectionsController.connections.user_id}"/>
+                         <!--binding="#{connectionsController.id}"/>-->
+            <!--<p:watermark for="firstName" value="#{connectionsController.id}" />-->
         </h:panelGrid>
         <p:commandButton icon="ui-icon-document" value="Add new Connection"
                          action="#{connectionsController.addNewConnection}" ajax="false"/>

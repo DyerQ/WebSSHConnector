@@ -2,6 +2,7 @@ package com.netcracker.edu.bestgroup.projects.ssh.beans;
 
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Users;
 
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,7 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.AssertFalse;
 import java.util.List;
 
-@Stateless(name = "UsersEJB")
+@Stateful(name = "UsersEJB")
 public class UsersEJB {
     @PersistenceContext(unitName = "appPersistenceUnit")
     private EntityManager entityManager;

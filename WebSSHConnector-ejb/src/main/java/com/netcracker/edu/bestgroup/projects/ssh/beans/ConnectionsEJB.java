@@ -3,23 +3,26 @@ package com.netcracker.edu.bestgroup.projects.ssh.beans;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Connections;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Users;
 
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Stateless(name = "ConnectionsEJB")
+@Stateful(name = "ConnectionsEJB")
 public class ConnectionsEJB {
     @PersistenceContext(unitName = "appPersistenceUnit")
     private EntityManager entityManager;
+    @EJB
     private UsersEJB usersEJB;
     public ConnectionsEJB() {
     }
 
     public Connections addNew(Connections connections, String userLogin){
-        //Users users = usersEJB.findUserByLogin(userLogin);
-        //connections.setUser(users);
+//        Users users = usersEJB.findUserByLogin(userLogin);
+//        connections.setUser_id(users.getId());
         entityManager.persist(connections);
         return connections;
     }

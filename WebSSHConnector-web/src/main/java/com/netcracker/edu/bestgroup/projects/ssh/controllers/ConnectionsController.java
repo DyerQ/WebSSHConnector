@@ -5,18 +5,14 @@ import com.netcracker.edu.bestgroup.projects.ssh.beans.ConnectionsEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.beans.UsersEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Connections;
 import org.primefaces.event.RowEditEvent;
-import org.primefaces.push.EventBus;
-import org.primefaces.push.EventBusFactory;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean
@@ -29,10 +25,16 @@ public class ConnectionsController {
     }
 
     private String login;
+
+
+
+    private String id;
+    private HtmlInputText inputComponent = new HtmlInputText();
     private List<Connections> connectionList;
     private Connections connections = new Connections();
     @EJB
     private ConnectionsEJB connectionsEJB;
+    @EJB
     private UsersEJB usersEJB;
 
     @PostConstruct
@@ -41,63 +43,24 @@ public class ConnectionsController {
 
         HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         login = req.getParameter("user");
-        if (login == null) {
-            String message = "Bad request.";
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
-            return;
-        }
         connectionList = connectionsEJB.findUserConnections(login);
-
-//
-//        connectionList = new ArrayList<>();
-//        connectionList.add(new Connections(new BigInteger(String.valueOf(1)),"q",11,"q","q","q",new BigInteger(String.valueOf(11))));
-//        connectionList.add(new Connections(new BigInteger(String.valueOf(1)),"q",11,"q","q","q",new BigInteger(String.valueOf(11))));
-//        connectionList.add(new Connections(new BigInteger(String.valueOf(1)),login,11,"q","q","q",new BigInteger(String.valueOf(11))));
-
+        id = usersEJB.findUserByLogin(login).getId().toString();
 
     }
 
-//    public void prerender() {
-//        EventBus eventBus = EventBusFactory.getDefault().eventBus();
-//        eventBus.publish("/setlogin", login);
-//    }
-
-//    public void findConnections(){
-//        connectionList = connectionsEJB.findUserConnections(login);
-//        if (login == null) {
-//            String message = "Bad request.";
-//            FacesContext.getCurrentInstance().addMessage(null,
-//                    new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
-//            return;
-//        }
-//
-////        connectionList = connectionsEJB.findUserConnections(login);
-//        connectionList = new ArrayList<>();
-//        connectionList.add(new Connections(new BigInteger(String.valueOf(1)),"q",11,"q","q","q",new BigInteger(String.valueOf(11))));
-//        connectionList.add(new Connections(new BigInteger(String.valueOf(1)),"q",11,"q","q","q",new BigInteger(String.valueOf(11))));
-//        connectionList.add(new Connections(new BigInteger(String.valueOf(1)),login,11,"q","q","q",new BigInteger(String.valueOf(11))));
-//
-////        return "/test/connections.xhtml";
-//
-//    }
 
     public String addNewConnection(){
         connections = connectionsEJB.addNew(connections,login);
 //        connectionList = connectionsEJB.findConnections();
         connectionList  = connectionsEJB.findUserConnections(login);
-        return "/test/connections.xhtml";
+        return "/test/connections.xhtml?user="+login+"&faces-redirect=true";
     }
-//    public String addTestConnection(){
-//        Connections connections = new Connections("q",11,"q","q","q",usersEJB.findUserByLogin("q"));
-//        connectionsEJB.addNew(connections,login);
-//        return "/test/connections.xhtml";
-//    }
+
 
     public String deleteConnection(Connections user){
         connectionsEJB.delete(user);
         connectionList=connectionsEJB.findUserConnections(login);
-        return "/test/connections.xhtml";
+        return "/test/connections.xhtml?user="+login+"&faces-redirect=true";
     }
 
     public void saveRow(RowEditEvent event) {
@@ -139,5 +102,12 @@ public class ConnectionsController {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
