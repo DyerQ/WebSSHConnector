@@ -5,11 +5,11 @@ import java.io.Serializable;
 import java.math.BigInteger;
 
 @Entity
-@SequenceGenerator(name="seq", initialValue=1)
+@SequenceGenerator(name="seqq", initialValue=1)
 public class Connections implements Serializable {
 
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqq")
     @Id
     private BigInteger connection_id;
 

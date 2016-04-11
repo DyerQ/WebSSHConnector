@@ -8,11 +8,12 @@ import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.html.HtmlInputText;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.util.List;
 
 @ManagedBean
@@ -28,8 +29,7 @@ public class ConnectionsController {
 
 
 
-    private String id;
-    private HtmlInputText inputComponent = new HtmlInputText();
+    private BigInteger id;
     private List<Connections> connectionList;
     private Connections connections = new Connections();
     @EJB
@@ -43,8 +43,16 @@ public class ConnectionsController {
 
         HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         login = req.getParameter("user");
+        if (login == null){
+            FacesContext context = FacesContext.getCurrentInstance();
+
+            context.addMessage(null, new FacesMessage("INFO",  "LOGIN IS NULL") );
+        }
+        id = usersEJB.findUserByLogin(login).getId();
+
+
         connectionList = connectionsEJB.findUserConnections(login);
-        id = usersEJB.findUserByLogin(login).getId().toString();
+        connections.setUser_id(id);
 
     }
 
@@ -60,7 +68,7 @@ public class ConnectionsController {
     public String deleteConnection(Connections user){
         connectionsEJB.delete(user);
         connectionList=connectionsEJB.findUserConnections(login);
-        return "/test/connections.xhtml?user="+login+"&faces-redirect=true";
+        return "/test/connections.xhtml?user="+user.getLogin()+"&faces-redirect=true";
     }
 
     public void saveRow(RowEditEvent event) {
@@ -103,11 +111,11 @@ public class ConnectionsController {
     public void setLogin(String login) {
         this.login = login;
     }
-    public String getId() {
+    public BigInteger getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(BigInteger id) {
         this.id = id;
     }
 }
