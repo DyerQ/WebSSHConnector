@@ -27,10 +27,6 @@ public class MainController {
     @EJB
     private UsersEJB usersEJB;
 
-    public void connect(){
-        //connect via ssh
-    }
-
     public void login(ActionEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;
