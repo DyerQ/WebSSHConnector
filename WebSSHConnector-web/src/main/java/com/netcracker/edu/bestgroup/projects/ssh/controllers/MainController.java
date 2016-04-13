@@ -27,6 +27,11 @@ public class MainController {
     @EJB
     private UsersEJB usersEJB;
 
+
+    public void connect() {
+
+    }
+
     public void login(ActionEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message = null;

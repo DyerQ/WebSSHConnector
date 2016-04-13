@@ -4,47 +4,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
-<h:head><title>CONNECTIONS</title></h:head>
+<h:head>
+    <title>CONNECTIONS</title>
+    <h:outputStylesheet name="table.css"/>
 
-<f:metadata>
-    <!--<f:viewParam name="user" value="#{connectionsController.login}"/>-->
-    <!--<f:viewAction action="#{connectionsController.findConnections}" />-->
-    <!--<f:event type="preRenderView" listener="#{connectionsController.prerender}" />-->
-    <!--<f:event type="preRenderView" listener="#{connectionsController.findConnections}" />-->
-</f:metadata>
-<!--<h:outputText id="out1" value="ID:#{connectionsController.id}" style="font-size:16px" />-->
 
-<!--<h:outputText id="out2" value="LOGIN:#{connectionsController.login}" style="font-size:16px" />-->
+</h:head>
 
 <h:body>
     <f:view>
-
-        <!--<h:form>-->
-            <!--<h:panelGrid columns="2">-->
-                <!--&lt;!&ndash;<h:outputLabel value="Connection_id : " style="font-weight:bold"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p:inputText id="Connetction_id" value="#{connectionsController.connections.connection_id}"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<h:outputLabel value="Type : " style="font-weight:bold"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p:inputText id="Type" value="#{connectionsController.connections.connectionType}"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<h:outputLabel value="Host_name : " style="font-weight:bold"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p:inputText id="Host_name" value="#{connectionsController.connections.hostName}"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<h:outputLabel value="Login : " style="font-weight:bold"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p:inputText id="Login" value="#{connectionsController.connections.login}"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<h:outputLabel value="Password : " style="font-weight:bold"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p:inputText id="Password" value="#{connectionsController.connections.password}"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<h:outputLabel value="Port: " style="font-weight:bold"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p:inputText id="Port" value="#{connectionsController.connections.port}"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<h:outputLabel value="user_id: " style="font-weight:bold"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p:inputText id="user_id" value="#{connectionsController.connections.user_id}"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;binding="#{connectionsController.id}"/>&ndash;&gt;-->
-                <!--&lt;!&ndash;<p:watermark for="firstName" value="#{connectionsController.id}" />&ndash;&gt;-->
-            <!--</h:panelGrid>-->
-            <!--&lt;!&ndash;<p:commandButton icon="ui-icon-document" value="Add new Connection"&ndash;&gt;-->
-            <!--&lt;!&ndash;action="#{connectionsController.addNewConnection}" ajax="false"/>&ndash;&gt;-->
-        <!--</h:form>-->
-
         <h:form>
-            <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"
-                             title="Add new connection"/>
+            <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
 
             <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
             <p:dialog header="Login" widgetVar="dlg" resizable="false">
@@ -62,87 +32,84 @@
                     <p:inputText id="Password" value="#{connectionsController.connections.password}"/>
                     <h:outputLabel value="Port: " style="font-weight:bold"/>
                     <p:inputText id="Port" value="#{connectionsController.connections.port}"/>
+                    <p:commandButton value="Add new connection" update=":content:mmo_table"
+                                     actionListener="#{connectionsController.addNewConnection}"
+                                     oncomplete="handleSignUpRequest(xhr, status, args)"/>
 
-                    <f:facet name="footer">
-                        <p:commandButton value="Add new connection" update="growl"
-                                         action="#{connectionsController.addNewConnection}"
-                                         oncomplete="handleSignUpRequest(xhr, status, args)"/>
-                    </f:facet>
                 </h:panelGrid>
             </p:dialog>
         </h:form>
         <script type="text/javascript">
             function handleSignUpRequest(xhr, status, args) {
                 PF('dlg').hide();
-                $('#signupLink').fadeOut();
+                $('#qweqe').fadeOut();
             }
         </script>
-
-
-        <h:form id="content">
-            <p:dataTable id="mmo_table" editable="true" value="#{connectionsController.connectionList}"
-                         var="connection">
-                <p:ajax event="rowEdit" listener="#{connectionsController.saveRow}" update=":content:mmo_table"/>
-
-                <p:column headerText="CONNECTION_ID">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{connection.connection_id}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{connection.connection_id}"
-                                                           style="width:100%"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Type">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{connection.connectionType}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{connection.connectionType}"
-                                                           style="width:100%"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Host_name">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{connection.hostName}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{connection.hostName}" style="width:100%"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Login">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{connection.login}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{connection.login}" style="width:100%"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Password">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{connection.password}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{connection.password}" style="width:100%"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="Port">
-                    <p:cellEditor>
-                        <f:facet name="output"><h:outputText value="#{connection.port}"/></f:facet>
-                        <f:facet name="input"><p:inputText value="#{connection.port}" style="width:100%"/></f:facet>
-                    </p:cellEditor>
-                </p:column>
-                <p:column headerText="user_id">
-                    <h:outputText value="#{connection.user_id}"/>
-                </p:column>
-                <p:column>
-                    <p:commandButton icon="fa fa-fw fa-edit" value="connect"/>
-                                     <!--actionListener="#{mainController.connect}"/>-->
-                </p:column>
-
-                <p:column>
-                    <p:commandButton icon="ui-icon-trash"
-                                     title="Delete this connection"
-                                     actionListener="#{connectionsController.deleteConnection(connection)}"
-                                     ajax="false"/>
-                </p:column>
-                <p:column>
-                    <p:rowEditor/>
-
-                </p:column>
-
-            </p:dataTable>
-        </h:form>
     </f:view>
+
+    <h:form id="content">
+        <p:dataTable id="mmo_table" editable="true" value="#{connectionsController.connectionList}"
+                     var="connection">
+            <p:ajax event="rowEdit" listener="#{connectionsController.saveRow}" update=":content:mmo_table"/>
+
+            <p:column headerText="CONNECTION_ID">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{connection.connection_id}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{connection.connection_id}"
+                                                       style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="Type">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{connection.connectionType}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{connection.connectionType}"
+                                                       style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="Host_name">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{connection.hostName}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{connection.hostName}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="Login">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{connection.login}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{connection.login}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="Password">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{connection.password}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{connection.password}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="Port">
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{connection.port}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{connection.port}" style="width:100%"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column headerText="user_id">
+                <h:outputText value="#{connection.user_id}"/>
+            </p:column>
+            <p:column>
+                <p:commandButton icon="fa fa-fw fa-edit" value="connect" actionListener="#{mainController.connect}"/>
+            </p:column>
+
+            <p:column>
+                <p:commandButton icon="ui-icon-trash"
+                                 title="Delete this connection"
+                                 actionListener="#{connectionsController.deleteConnection(connection)}"
+                                 ajax="false"/>
+            </p:column>
+            <p:column>
+                <p:rowEditor/>
+
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
 </h:body>
 </html>

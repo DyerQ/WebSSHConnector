@@ -4,6 +4,7 @@ package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 import com.netcracker.edu.bestgroup.projects.ssh.beans.ConnectionsEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.beans.UsersEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Connections;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
@@ -61,6 +62,7 @@ public class ConnectionsController {
         connections = connectionsEJB.addNew(connections,login);
 //        connectionList = connectionsEJB.findConnections();
         connectionList  = connectionsEJB.findUserConnections(login);
+//        RequestContext.getCurrentInstance().update(":content:mmo_table");
         return "/test/connections.xhtml?user="+login+"&faces-redirect=true";
     }
 
