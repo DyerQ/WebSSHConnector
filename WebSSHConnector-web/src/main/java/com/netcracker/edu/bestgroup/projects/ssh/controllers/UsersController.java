@@ -35,11 +35,6 @@ public class UsersController {
         return "/test/testcrud.xhtml";
     }
 
-    public void registerUser(){
-        user = usersEJB.addNew(user);
-        usersList  = usersEJB.findUsers();
-    }
-
     public String deleteUser(Users user){
         usersEJB.delete(user);
         usersList=usersEJB.findUsers();
