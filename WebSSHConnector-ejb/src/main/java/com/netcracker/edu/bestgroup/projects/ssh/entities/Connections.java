@@ -5,14 +5,36 @@ import java.io.Serializable;
 import java.math.BigInteger;
 
 @Entity
-@SequenceGenerator(name="seq", initialValue=1)
+@SequenceGenerator(name="seqq", initialValue=1)
 public class Connections implements Serializable {
 
+
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqq")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private BigInteger connection_id;
 
-    private BigInteger user_id;
+    public Connections() {
+    }
+
+    public Connections(BigInteger connection_id,String hostName, Integer port, String connectionType, String login, String password, BigInteger user_id) {
+        this.connection_id = connection_id;
+        this.hostName = hostName;
+        this.port = port;
+        this.connectionType = connectionType;
+        this.login = login;
+        this.password = password;
+        this.user_id = user_id;
+    }
+
+//    public BigInteger getUser_id() {
+//        return user_id;
+//    }
+//
+//    public void setUser_id(BigInteger user_id) {
+//        this.user_id = user_id;
+//    }
+//
+//    private BigInteger user_id;
 
     private String hostName;
 
@@ -24,20 +46,7 @@ public class Connections implements Serializable {
 
     private String password;
 
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name ="USER_ID",referencedColumnName = "ID")
-    private Users users;
-    public Users getUsers() {
-        return users;
-    }
-    public void setUsers(Users users) {
-        this.users = users;
-    }
-
-    public BigInteger getConnection_id() {
-        return connection_id;
-    }
+    private BigInteger user_id;
 
     public BigInteger getUser_id() {
         return user_id;
@@ -46,6 +55,27 @@ public class Connections implements Serializable {
     public void setUser_id(BigInteger user_id) {
         this.user_id = user_id;
     }
+
+    //    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name ="USER_ID")
+   // private Users user;
+
+//    public Users getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(Users user) {
+//        this.user = user;
+//        if(user.getConnections().contains(this)){
+//            user.getConnections().add(this);
+//        }
+//    }
+
+
+    public BigInteger getConnection_id() {
+        return connection_id;
+    }
+
     public String getHostName() {
         return hostName;
     }

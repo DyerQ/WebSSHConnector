@@ -4,42 +4,66 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
-<h:head><title>CRUD USERS</title></h:head>
-<h:body>
+<h:head>
+    <title>CONNECTIONS</title>
+    <h:outputStylesheet name="table.css"/>
 
-    <h:form>
-        <h:panelGrid columns="2">
-            <h:outputLabel value="Connection_id : " style="font-weight:bold"/>
-            <p:inputText id="Connetction_id" value="#{connetctionsController.connections.connection_id}"/>
-            <h:outputLabel value="Type : " style="font-weight:bold"/>
-            <p:inputText id="Type" value="#{connetctionsController.connections.connectionType}"/>
-            <h:outputLabel value="Host_name : " style="font-weight:bold"/>
-            <p:inputText id="Host_name" value="#{connetctionsController.connections.hostName}"/>
-            <h:outputLabel value="Login : " style="font-weight:bold"/>
-            <p:inputText id="Login" value="#{connetctionsController.connections.login}"/>
-            <h:outputLabel value="Password : " style="font-weight:bold"/>
-            <p:inputText id="Password" value="#{connetctionsController.connections.password}"/>
-            <h:outputLabel value="Port: " style="font-weight:bold"/>
-            <p:inputText id="Port" value="#{connetctionsController.connections.port}"/>
-        </h:panelGrid>
-        <p:commandButton  icon="ui-icon-document" value="Add new User"
-                          action="#{connetctionsController.addNewConnection}" ajax="false"/>
-    </h:form>
+
+</h:head>
+
+<h:body>
+    <f:view>
+        <h:form>
+            <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
+
+            <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+            <p:dialog header="Login" widgetVar="dlg" resizable="false">
+
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Connection_id : " style="font-weight:bold"/>
+                    <p:inputText id="Connetction_id" value="#{connectionsController.connections.connection_id}"/>
+                    <h:outputLabel value="Type : " style="font-weight:bold"/>
+                    <p:inputText id="Type" value="#{connectionsController.connections.connectionType}"/>
+                    <h:outputLabel value="Host_name : " style="font-weight:bold"/>
+                    <p:inputText id="Host_name" value="#{connectionsController.connections.hostName}"/>
+                    <h:outputLabel value="Login : " style="font-weight:bold"/>
+                    <p:inputText id="Login" value="#{connectionsController.connections.login}"/>
+                    <h:outputLabel value="Password : " style="font-weight:bold"/>
+                    <p:inputText id="Password" value="#{connectionsController.connections.password}"/>
+                    <h:outputLabel value="Port: " style="font-weight:bold"/>
+                    <p:inputText id="Port" value="#{connectionsController.connections.port}"/>
+                    <p:commandButton value="Add new connection" update=":content:mmo_table"
+                                     actionListener="#{connectionsController.addNewConnection}"
+                                     oncomplete="handleSignUpRequest(xhr, status, args)"/>
+
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        <script type="text/javascript">
+            function handleSignUpRequest(xhr, status, args) {
+                PF('dlg').hide();
+                $('#qweqe').fadeOut();
+            }
+        </script>
+    </f:view>
 
     <h:form id="content">
-        <p:dataTable id="mmo_table" editable="true" value="#{connetctionsController.connectionList}" var="connection">
-            <p:ajax event="rowEdit" listener="#{connetctionsController.saveRow}" update=":content:mmo_table" />
+        <p:dataTable id="mmo_table" editable="true" value="#{connectionsController.connectionList}"
+                     var="connection">
+            <p:ajax event="rowEdit" listener="#{connectionsController.saveRow}" update=":content:mmo_table"/>
 
             <p:column headerText="CONNECTION_ID">
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{connection.connection_id}"/></f:facet>
-                    <f:facet name="input"><p:inputText value="#{connection.connection_id}" style="width:100%"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{connection.connection_id}"
+                                                       style="width:100%"/></f:facet>
                 </p:cellEditor>
             </p:column>
             <p:column headerText="Type">
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{connection.connectionType}"/></f:facet>
-                    <f:facet name="input"><p:inputText value="#{connection.connectionType}" style="width:100%"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{connection.connectionType}"
+                                                       style="width:100%"/></f:facet>
                 </p:cellEditor>
             </p:column>
             <p:column headerText="Host_name">
@@ -67,24 +91,25 @@
                 </p:cellEditor>
             </p:column>
             <p:column headerText="user_id">
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{connection.user_id}"/></f:facet>
-                    <f:facet name="input"><p:inputText value="#{connection.user_id}" style="width:100%"/></f:facet>
-                </p:cellEditor>
+                <h:outputText value="#{connection.user_id}"/>
+            </p:column>
+            <p:column>
+                <p:commandButton icon="fa fa-fw fa-edit" value="connect" actionListener="#{mainController.connect}"/>
             </p:column>
 
             <p:column>
                 <p:commandButton icon="ui-icon-trash"
                                  title="Delete this connection"
-                                 actionListener="#{connetctionsController.deleteConnection(connection)}"
-                                 ajax="false" />
+                                 actionListener="#{connectionsController.deleteConnection(connection)}"
+                                 ajax="false"/>
             </p:column>
             <p:column>
-                <p:rowEditor />
+                <p:rowEditor/>
 
             </p:column>
 
         </p:dataTable>
     </h:form>
+
 </h:body>
 </html>

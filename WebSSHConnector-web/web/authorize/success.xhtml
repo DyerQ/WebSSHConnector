@@ -13,10 +13,9 @@
 <h:body>
     <f:view>
         <p>Successfully logged in</p>
-        <h:outputLabel value= "#{usersController.user.login}" style="font-weight:bold"></h:outputLabel>
-
+        <h:outputLabel value= "#{mainController.user.login}" style="font-weight:bold"></h:outputLabel>
         <h:form>
-            <p><h:commandButton value="logout" action="#{usersController.logout}" /></p>
+            <p><h:commandButton value="logout" action="#{mainController.logout}" /></p>
         </h:form>
     </f:view>
 </h:body>
