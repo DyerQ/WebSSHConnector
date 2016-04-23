@@ -12,6 +12,7 @@
         <module>WebSSHConnector-web</module>
         <module>WebSSHConnector-ejb</module>
         <module>WebSSHConnector-application</module>
+        <module>WebSSHConnector-ssh</module>
     </modules>
 
     <properties>
