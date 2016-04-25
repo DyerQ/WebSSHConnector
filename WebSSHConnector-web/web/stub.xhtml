@@ -8,17 +8,21 @@
         <f:view>
         <h:form id="form">
             <p:panel id="basic" header="doesn't matter" footer="doesn't matter" style="margin-bottom:20px">
-                <h:panelGrid columns="2" cellpadding="10">
-                    <p:dataList id="values" var="str" value="#{stubButtonController.values}" emptyMessage="" type="definition">
+                <p:panel style="float:left; overflow-y: auto; height : 500px;"  >
+
+                    <p:dataList id="values" var="str" value="#{stubTextAreaController.data}" emptyMessage="" type="definition" >
                         #{str}
                     </p:dataList>
-                </h:panelGrid>
+                </p:panel>
             </p:panel>
-            <p:commandButton update="values" value="Print" icon="ui-icon-star" actionListener="#{stubButtonController.printHello}"/>
-            <h3 style="margin-top: 0">AutoComplete</h3>
-            <p>input TextArea</p>
-            
-            <p:inputTextarea rows="10" cols="50"   />
+
+            <h:panelGrid columns="2" cellpadding="10">
+
+                <p:inputText id="InText1" value = "#{stubTextAreaController.inputString}"  />
+                <p:commandButton value="ButtonForText" update="form" id="btn1" actionListener = "#{stubTextAreaController.addToData}" />
+                <p:defaultCommand target="btn1" />
+
+            </h:panelGrid>
         </h:form>
         </f:view>
     </ui:define>
