@@ -26,24 +26,24 @@ public class SSHSession implements AutoCloseable {
     /**
      * Creates the instance of SSHSession and instantiates the JSCh session
      *
-     * @param connectionString in the format of 'username[/password]@host[:port]', where
+     * @param connectionString in the format of 'username/password@host[:port]', where
      *                         [param] means that the parameter can be omitted
+     *                         If port is omitted, default value of 22 is used
+     *                         Connection without a password is unavailable
      * @throws InvalidConnectionParametersException on invalid connectionString
      */
     public SSHSession(String connectionString) throws InvalidConnectionParametersException, SessionInitializationException {
-        if (!connectionString.matches("^[^/@:]+(/[^/@:]+)?@[^/@:]+(:\\d+)?$")) {
+        if (!connectionString.matches("^[^/@:]+/[^/@:]+@[^/@:]+(:\\d+)?$")) {
             throw new ConnectionStringFormatException("Format of connectionString is " +
-                    "username[/password]@host[:port]");
+                    "username/password@host[:port]");
         }
 
         int userNameEndIndex = connectionString.contains("/") ? connectionString.indexOf('/') : connectionString.indexOf('@');
         String userName = connectionString.substring(0, userNameEndIndex);
-        String password;
-        if (connectionString.contains("/")) {
-            password = connectionString.substring(connectionString.indexOf('/') + 1, connectionString.indexOf('@'));
-        } else {
-            password = "";
-        }
+
+        // by matching to the pattern we ensured that the length of password is more than 0
+        String password = connectionString.substring(connectionString.indexOf('/') + 1, connectionString.indexOf('@'));
+
         if (!connectionString.contains(":")) {
             connectionString = connectionString + ":" + Const.DEFAULT_PORT;
         }
@@ -71,6 +71,10 @@ public class SSHSession implements AutoCloseable {
             throw new InvalidConnectionParametersException("userName can't be null");
         }
 
+        if (password == null || password.isEmpty()) {
+            throw new InvalidConnectionParametersException("password can't be null");
+        }
+
         if (host == null || host.isEmpty()) {
             throw new InvalidConnectionParametersException("host can't be null");
         }
@@ -89,9 +93,7 @@ public class SSHSession implements AutoCloseable {
         try {
             JSch jSch = new JSch();
             session = jSch.getSession(userName, host, port);
-            if (password != null && !password.isEmpty()) {
-                session.setPassword(password);
-            }
+            session.setPassword(password);
             UserInfo userInfo = new UserInfoImpl();
             session.setUserInfo(userInfo);
         } catch (JSchException ignored) {
