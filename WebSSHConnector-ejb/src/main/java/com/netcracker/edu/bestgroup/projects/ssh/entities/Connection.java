@@ -6,12 +6,13 @@ import java.math.BigInteger;
 
 @Entity
 @Table(name = "Connections")
+@SequenceGenerator(name = "ConnectionPKGenerator", sequenceName = "connection_ids_seq", allocationSize = 1)
 public class Connection implements Serializable {
     private static final long serialVersionUID = 5975416545613143307L;
 
     @Id
     @Column(name = "connection_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ConnectionPKGenerator")
     private BigInteger connectionId;
 
     @ManyToOne(targetEntity = User.class)

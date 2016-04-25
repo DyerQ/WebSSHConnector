@@ -31,7 +31,7 @@
                                      value="#{connectionsController.connectionList}"
                                      var="connection">
                             <p:ajax event="rowEdit" listener="#{connectionsController.saveRow}"
-                                    update=":content:connections_table"/>
+                                    update="connections_table"/>
 
                             <p:column headerText="CONNECTION_ID">
                                 <p:cellEditor>
@@ -87,6 +87,31 @@
                             </p:column>
 
                         </p:dataTable>
+
+                        <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
+
+                        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+                        <p:dialog header="Login" widgetVar="dlg" resizable="false">
+
+                            <h:panelGrid columns="2">
+                                <h:outputLabel value="Connection_id : " style="font-weight:bold"/>
+                                <p:inputText id="Connetction_id"
+                                             value="#{connectionsController.connection.connectionId}"/>
+                                <h:outputLabel value="Host_name : " style="font-weight:bold"/>
+                                <p:inputText id="Host_name" value="#{connectionsController.connection.hostName}"/>
+                                <h:outputLabel value="Login : " style="font-weight:bold"/>
+                                <p:inputText id="Login" value="#{connectionsController.connection.login}"/>
+                                <h:outputLabel value="Password : " style="font-weight:bold"/>
+                                <p:inputText id="Password" value="#{connectionsController.connection.password}"/>
+                                <h:outputLabel value="Port: " style="font-weight:bold"/>
+                                <p:inputText id="Port" value="#{connectionsController.connection.port}"/>
+                                <p:commandButton value="Add new connection" update="content"
+                                                 actionListener="#{connectionsController.addNewConnection}"
+                                                 oncomplete="handleSignUpRequest(xhr, status, args)"/>
+
+                            </h:panelGrid>
+                        </p:dialog>
+
                     </div>
                 </div>
             </div>

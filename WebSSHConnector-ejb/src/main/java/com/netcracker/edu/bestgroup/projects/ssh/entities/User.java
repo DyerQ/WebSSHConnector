@@ -3,15 +3,17 @@ package com.netcracker.edu.bestgroup.projects.ssh.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.List;
 
 @Entity
 @Table(name = "Users")
+@SequenceGenerator(name = "UserPKGenerator", sequenceName = "user_ids_seq", allocationSize = 1)
 public class User implements Serializable {
     private static final long serialVersionUID = 1945342493774132278L;
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "UserPKGenerator")
     private BigInteger userId;
 
     @Column(nullable = false)
@@ -22,6 +24,9 @@ public class User implements Serializable {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(targetEntity = Connection.class, mappedBy = "user")
+    private List<Connection> connectionList;
 
     public BigInteger getUserId() {
         return userId;

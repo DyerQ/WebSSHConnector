@@ -7,71 +7,60 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html">
 <h:head>
-    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
     <title><ui:insert name="title"/></title>
+
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <h:outputScript library="js" name="authentication.js"/>
 </h:head>
 <h:body>
-    <div class="navbar-fixed-top">
+    <h:form id="form">
+        <p:growl id="authenticationGrowl" sticky="true" showDetail="true" life="3000"/>
 
-        <p:toolbar>
-            <f:facet name="left">
-                <p:outputLabel>WebSSHConnector (Dev in progress)</p:outputLabel>
-            </f:facet>
+        <p:dialog header="Login" widgetVar="dlg_L" resizable="false" draggable="false" closeOnEscape="true">
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="login" value="Login:"/>
+                <p:inputText id="login" value="#{mainController.user.login}" required="true"
+                             label="username"/>
 
-            <f:facet name="right">
-                <p:button outcome="/index.xhtml" value="Go to Index"/>
-                <h:form rendered="#{!(mainController.loggedIn)}">
+                <h:outputLabel for="password_L" value="Password:"/>
+                <p:password id="password_L" value="#{mainController.user.password}" required="true"
+                            label="password"/>
 
-                    <h:outputLink value="javascript:void(0)" style="position:relative; top:-30px; right:100px"
-                                  onclick="PF('dlg_L').show();" title="login">
-                        <p:graphicImage width="80" height="50" library="Images" name="login.png"/>
-                    </h:outputLink>
+                <f:facet name="footer">
+                    <p:commandButton value="Login" update="authenticationGrowl" actionListener="#{mainController.login}"
+                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
 
-                    <p:growl id="growlL" sticky="true" showDetail="true" life="3000"/>
+        <div class="navbar-fixed-top">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:outputLabel>WebSSHConnector (Dev in progress)</p:outputLabel>
+                </f:facet>
 
-                    <p:dialog header="Login" widgetVar="dlg_L" resizable="false">
-                        <h:panelGrid columns="2" cellpadding="5">
-                            <h:outputLabel for="username" value="Username:"/>
-                            <p:inputText id="username" value="#{mainController.user.login}" required="true"
-                                         label="username"/>
+                <f:facet name="right">
+                    <h:commandButton value="Login" onclick="PF('dlg_L').show();" title="login"
+                                     rendered="#{!(mainController.loggedIn)}"/>
+                    <p:button outcome="/index.xhtml" value="Go to Index"/>
 
-                            <h:outputLabel for="password_L" value="Password:"/>
-                            <p:password id="password_L" value="#{mainController.user.password}" required="true"
-                                        label="password"/>
 
-                            <f:facet name="footer">
-                                <p:commandButton value="Login" update="growlL" actionListener="#{mainController.login}"
-                                                 oncomplete="handleLoginRequest(xhr, status, args)"/>
-                            </f:facet>
-                        </h:panelGrid>
-                    </p:dialog>
+                </f:facet>
 
-                    <script type="text/javascript">
-                        function handleLoginRequest(xhr, status, args) {
-                            if (!args.loggedIn) {
-                                PF('dlg_L').jq.effect("shake", {times: 5}, 100);
-                            } else {
-                                PF('dlg_L').hide();
-                                $('#loginLink').fadeOut();
-                            }
-                        }
-                    </script>
-                </h:form>
-            </f:facet>
+            </p:toolbar>
+        </div>
 
-        </p:toolbar>
-    </div>
+        <div class="container" style="margin-top: 40px;">
+            <ui:insert name="content"/>
+        </div>
 
-    <div class="container" style="margin-top: 40px;">
-        <ui:insert name="content"/>
-    </div>
-
-    <div class="navbar-fixed-bottom">
-        <div class="navbar-inner">
-            <div class="container text-center">
-                <p:outputLabel>Created by someone... © 2016</p:outputLabel>
+        <div class="navbar-fixed-bottom">
+            <div class="navbar-inner">
+                <div class="container text-center">
+                    <p:outputLabel>Created by someone... © 2016</p:outputLabel>
+                </div>
             </div>
         </div>
-    </div>
+    </h:form>
 </h:body>
 </html>

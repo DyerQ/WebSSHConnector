@@ -36,15 +36,6 @@ END;
 
 CREATE SEQUENCE user_ids_seq;
 
-CREATE OR REPLACE TRIGGER user_pk_trig
-BEFORE INSERT ON Users
-FOR EACH ROW
-  BEGIN
-    SELECT user_ids_seq.nextval
-    INTO :new.user_id
-    FROM dual;
-  END;
-
 -- Use of certain fields and constraints for Connections table is necessary due to API of ssh module.
 -- e.g. Fields login, password, host are required -> corresponding table columns are marked as not null.
 -- Connections(connection_id /* generated automatically, primary key */, user_id /* foreign key referencing Users(user_id) */,
@@ -79,15 +70,6 @@ BEGIN
 END;
 
 CREATE SEQUENCE connection_ids_seq;
-
-CREATE OR REPLACE TRIGGER connection_pk_trig
-BEFORE INSERT ON Connections
-FOR EACH ROW
-  BEGIN
-    SELECT connection_ids_seq.nextval
-    INTO :new.connection_id
-    FROM dual;
-  END;
 
 CREATE OR REPLACE TRIGGER connection_null_port_trig
 BEFORE UPDATE ON Connections
