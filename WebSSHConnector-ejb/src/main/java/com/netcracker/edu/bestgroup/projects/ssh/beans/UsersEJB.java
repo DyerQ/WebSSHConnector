@@ -1,45 +1,42 @@
 package com.netcracker.edu.bestgroup.projects.ssh.beans;
 
-import com.netcracker.edu.bestgroup.projects.ssh.entities.Users;
+import com.netcracker.edu.bestgroup.projects.ssh.entities.User;
 
-import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import javax.validation.constraints.AssertFalse;
 import java.util.List;
 
-@Stateful(name = "UsersEJB")
+@Stateless
 public class UsersEJB {
     @PersistenceContext(unitName = "appPersistenceUnit")
     private EntityManager entityManager;
 
-    public UsersEJB() {
-    }
-    public Users addNew(Users user){
+    public User addNew(User user) {
         entityManager.persist(user);
         return user;
     }
-    public Users delete(Users user){
-        Users toBeRemoved = entityManager.merge(user);
+
+    public User delete(User user) {
+        User toBeRemoved = entityManager.merge(user);
         entityManager.remove(toBeRemoved);
         return user;
     }
-    public List<Users> findUsers(){
-        TypedQuery<Users> query = (TypedQuery<Users>) entityManager.createNamedQuery("Users.findAll");
-        List<Users> resultList = query.getResultList();
-        //entityManager.flush();
-        return resultList;
+
+    public List<User> findUsers() {
+        @SuppressWarnings("unchecked")
+        TypedQuery<User> query = (TypedQuery<User>) entityManager.createQuery("SELECT u FROM User u");
+        return query.getResultList();
     }
 
-    public Users findUserByLogin(String login){
+    public User findUserByLogin(String login) {
         @SuppressWarnings("unchecked")
-        TypedQuery<Users> query = (TypedQuery<Users>)entityManager.createQuery("SELECT c FROM Users c WHERE c.login = :login");
+        TypedQuery<User> query = (TypedQuery<User>) entityManager.createQuery("SELECT c FROM User c WHERE c.login = :login");
         return query.setParameter("login", login).getSingleResult();
     }
 
-    public void save(Users user) {
+    public void save(User user) {
         entityManager.merge(user);
     }
 }

@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
-<persistence-unit name="vasiliyPersistenceUnit" transaction-type="JTA">
-    <provider>oracle.toplink.essentials.PersistenceProvider</provider>
-    <jta-data-source>jdbc/ncedu</jta-data-source>
-    <class>com.netcracker.edu.bestgroup.projects.ssh.entities.MMObject</class>
-
-    <properties>
-        <property name="toplink.logging.level" value="INFO" />
-    </properties>
-
-</persistence-unit>
-
-<persistence-unit name="appPersistenceUnit" transaction-type="JTA">
-    <jta-data-source>jdbc/webssh</jta-data-source>
-</persistence-unit>
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
+             version="1.0">
+    <persistence-unit name="appPersistenceUnit" transaction-type="JTA">
+        <jta-data-source>jdbc/webssh</jta-data-source>
+    </persistence-unit>
 </persistence>

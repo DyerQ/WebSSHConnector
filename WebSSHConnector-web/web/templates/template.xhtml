@@ -22,38 +22,40 @@
                 <p:button outcome="index.xhtml" value="Go to Index"/>
                 <h:form rendered="#{!(mainController.loggedIn)}">
 
-                <h:outputLink value="javascript:void(0)" style="position:relative; top:-30px; right:100px" onclick="PF('dlg_L').show();" title="login">
-                    <p:graphicImage width="80" height="50" library="Images" name="login.png" />
-                </h:outputLink>
+                    <h:outputLink value="javascript:void(0)" style="position:relative; top:-30px; right:100px"
+                                  onclick="PF('dlg_L').show();" title="login">
+                        <p:graphicImage width="80" height="50" library="Images" name="login.png"/>
+                    </h:outputLink>
 
-                <p:growl id="growlL" sticky="true" showDetail="true" life="3000" />
+                    <p:growl id="growlL" sticky="true" showDetail="true" life="3000"/>
 
-                <p:dialog header="Login" widgetVar="dlg_L" resizable="false">
-                    <h:panelGrid columns="2" cellpadding="5">
-                        <h:outputLabel for="username" value="Username:" />
-                        <p:inputText id="username" value="#{mainController.user.login}" required="true" label="username" />
+                    <p:dialog header="Login" widgetVar="dlg_L" resizable="false">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="username" value="Username:"/>
+                            <p:inputText id="username" value="#{mainController.user.login}" required="true"
+                                         label="username"/>
 
-                        <h:outputLabel for="password_L" value="Password:" />
-                        <p:password id="password_L" value="#{mainController.user.password}" required="true" label="password" />
+                            <h:outputLabel for="password_L" value="Password:"/>
+                            <p:password id="password_L" value="#{mainController.user.password}" required="true"
+                                        label="password"/>
 
-                        <f:facet name="footer">
-                            <p:commandButton value="Login" update="growlL" actionListener="#{mainController.login}"
-                                             oncomplete="handleLoginRequest(xhr, status, args)" />
-                        </f:facet>
-                    </h:panelGrid>
-                </p:dialog>
+                            <f:facet name="footer">
+                                <p:commandButton value="Login" update="growlL" actionListener="#{mainController.login}"
+                                                 oncomplete="handleLoginRequest(xhr, status, args)"/>
+                            </f:facet>
+                        </h:panelGrid>
+                    </p:dialog>
 
-                <script type="text/javascript">
-                    function handleLoginRequest(xhr, status, args) {
-                        if (!args.loggedIn) {
-                            PF('dlg_L').jq.effect("shake", {times: 5}, 100);
+                    <script type="text/javascript">
+                        function handleLoginRequest(xhr, status, args) {
+                            if (!args.loggedIn) {
+                                PF('dlg_L').jq.effect("shake", {times: 5}, 100);
+                            } else {
+                                PF('dlg_L').hide();
+                                $('#loginLink').fadeOut();
+                            }
                         }
-                        else {
-                            PF('dlg_L').hide();
-                            $('#loginLink').fadeOut();
-                        }
-                    }
-                </script>
+                    </script>
                 </h:form>
             </f:facet>
 

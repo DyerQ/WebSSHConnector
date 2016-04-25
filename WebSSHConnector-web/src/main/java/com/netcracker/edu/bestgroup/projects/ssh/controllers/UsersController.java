@@ -1,27 +1,21 @@
 package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 
-
 import com.netcracker.edu.bestgroup.projects.ssh.beans.UsersEJB;
-import com.netcracker.edu.bestgroup.projects.ssh.entities.Users;
+import com.netcracker.edu.bestgroup.projects.ssh.entities.User;
 import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.jws.soap.SOAPBinding;
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean
 @RequestScoped
 public class UsersController {
 
-    private List<Users> usersList;
-    private Users user = new Users();
+    private List<User> usersList;
+    private User user = new User();
     @EJB
     private UsersEJB usersEJB;
 
@@ -29,36 +23,37 @@ public class UsersController {
     public void postConstruct() {
         usersList = usersEJB.findUsers();
     }
-    public String addNewUser(){
+
+    public String addNewUser() {
         user = usersEJB.addNew(user);
-        usersList  = usersEJB.findUsers();
-        return "/test/testcrud.xhtml";
+        usersList = usersEJB.findUsers();
+        return "test/testcrud.xhtml";
     }
 
-    public String deleteUser(Users user){
+    public String deleteUser(User user) {
         usersEJB.delete(user);
-        usersList=usersEJB.findUsers();
-        return "/test/testcrud.xhtml";
+        usersList = usersEJB.findUsers();
+        return "test/testcrud.xhtml";
     }
 
-    public List<Users> getUsersList() {
+    public List<User> getUsersList() {
         return usersList;
     }
 
-    public void setUsersList(List<Users> usersList) {
+    public void setUsersList(List<User> usersList) {
         this.usersList = usersList;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Users user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
     public void saveRow(RowEditEvent event) {
-        Users editedUser = ((Users) event.getObject());
+        User editedUser = ((User) event.getObject());
         usersEJB.save(editedUser);
     }
 }

@@ -1,3 +1,5 @@
+-- Disclaimer: this file does not define settings of your JDBC connection. See @file persistence.xml
+
 -- This file contains all of the DDL commands required for a proper work of this application.
 -- If you are installing this project on a fresh server, please firstly run those commands on your database.
 -- Version of SQL used in the development: Oracle Database 10g Enterprise Edition Release 10.2.0.1.0
@@ -59,10 +61,10 @@ END;
 
 CREATE TABLE Connections (
   connection_id NUMBER(10, 0) PRIMARY KEY,
-  user_id       NUMBER(10, 0) REFERENCES Users (user_id),
-  login         VARCHAR2(200) NOT NULL,
-  password      VARCHAR2(200) NOT NULL,
-  host_name     VARCHAR2(200) NOT NULL,
+  user_id       NUMBER(10, 0) REFERENCES Users (user_id) NOT NULL,
+  login         VARCHAR2(200)                            NOT NULL,
+  password      VARCHAR2(200)                            NOT NULL,
+  host_name     VARCHAR2(200)                            NOT NULL,
   port          NUMBER(5, 0) DEFAULT 22
 );
 

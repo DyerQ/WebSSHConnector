@@ -6,19 +6,13 @@
          version="3.1">
     <enterprise-beans>
         <session>
-            <ejb-name>MMObjectEJB</ejb-name>
-            <ejb-class>com.netcracker.edu.bestgroup.projects.ssh.beans.MMObjectEJB</ejb-class>
-            <session-type>Stateless</session-type>
-            <transaction-type>Container</transaction-type>
-        </session>
-        <session>
             <ejb-name>UsersEJB</ejb-name>
             <ejb-class>com.netcracker.edu.bestgroup.projects.ssh.beans.UsersEJB</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>
         </session>
         <session>
-            <ejb-name>ConnectionsEJBEJB</ejb-name>
+            <ejb-name>ConnectionsEJB</ejb-name>
             <ejb-class>com.netcracker.edu.bestgroup.projects.ssh.beans.ConnectionsEJB</ejb-class>
             <session-type>Stateless</session-type>
             <transaction-type>Container</transaction-type>

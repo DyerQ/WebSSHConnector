@@ -7,10 +7,9 @@ import java.util.List;
 
 @ManagedBean
 @ViewScoped
-
 public class StubTextAreaController {
     private List<String> data = new ArrayList<>();
-    private String inputString = new String();
+    private String inputString = "";
 
     public String getInputString() {
         return inputString;

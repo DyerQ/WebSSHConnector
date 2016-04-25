@@ -3,7 +3,6 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
 
@@ -13,9 +12,9 @@
 <h:body>
     <f:view>
         <p>Successfully logged in</p>
-        <h:outputLabel value= "#{mainController.user.login}" style="font-weight:bold"></h:outputLabel>
+        <h:outputLabel value="#{mainController.user.login}" style="font-weight:bold"/>
         <h:form>
-            <p><h:commandButton value="logout" action="#{mainController.logout}" /></p>
+            <p><h:commandButton value="logout" action="#{mainController.logout}"/></p>
         </h:form>
     </f:view>
 </h:body>

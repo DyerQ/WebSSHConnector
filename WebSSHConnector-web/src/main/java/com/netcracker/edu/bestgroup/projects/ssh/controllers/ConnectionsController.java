@@ -3,8 +3,8 @@ package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 
 import com.netcracker.edu.bestgroup.projects.ssh.beans.ConnectionsEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.beans.UsersEJB;
-import com.netcracker.edu.bestgroup.projects.ssh.entities.Connections;
-import org.primefaces.context.RequestContext;
+import com.netcracker.edu.bestgroup.projects.ssh.entities.Connection;
+import com.netcracker.edu.bestgroup.projects.ssh.entities.User;
 import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
@@ -14,97 +14,70 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigInteger;
 import java.util.List;
 
 @ManagedBean
 @ViewScoped
 public class ConnectionsController {
-
-
-    public ConnectionsController() {
-
-    }
-
     private String login;
+    private User currentUser;
+    private List<Connection> connectionList;
+    private Connection connection = new Connection();
 
-
-
-    private BigInteger id;
-    private List<Connections> connectionList;
-    private Connections connections = new Connections();
     @EJB
     private ConnectionsEJB connectionsEJB;
     @EJB
+
     private UsersEJB usersEJB;
 
     @PostConstruct
     public void postConstruct() {
-
-
-        HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         login = req.getParameter("user");
-        if (login == null){
+        if (login == null) {
             FacesContext context = FacesContext.getCurrentInstance();
 
-            context.addMessage(null, new FacesMessage("INFO",  "LOGIN IS NULL") );
+            context.addMessage(null, new FacesMessage("INFO", "LOGIN IS NULL"));
         }
-        id = usersEJB.findUserByLogin(login).getId();
-
-
+        currentUser = usersEJB.findUserByLogin(login);
         connectionList = connectionsEJB.findUserConnections(login);
-        connections.setUser_id(id);
-
+        connection.setUser(currentUser);
     }
 
 
-    public String addNewConnection(){
-        connections = connectionsEJB.addNew(connections,login);
-//        connectionList = connectionsEJB.findConnections();
-        connectionList  = connectionsEJB.findUserConnections(login);
-//        RequestContext.getCurrentInstance().update(":content:mmo_table");
-        return "/test/connections.xhtml?user="+login+"&faces-redirect=true";
+    public String addNewConnection() {
+        connection = connectionsEJB.addNew(connection);
+        connectionList = connectionsEJB.findUserConnections(login);
+        return "test/connection.xhtml?user=" + login + "&faces-redirect=true";
     }
 
 
-    public String deleteConnection(Connections user){
+    public String deleteConnection(Connection user) {
         connectionsEJB.delete(user);
-        connectionList=connectionsEJB.findUserConnections(login);
-        return "/test/connections.xhtml?user="+user.getLogin()+"&faces-redirect=true";
+        connectionList = connectionsEJB.findUserConnections(login);
+        return "test/connection.xhtml?user=" + user.getLogin() + "&faces-redirect=true";
     }
 
     public void saveRow(RowEditEvent event) {
-        Connections editedUser = ((Connections) event.getObject());
+        Connection editedUser = ((Connection) event.getObject());
         connectionsEJB.save(editedUser);
     }
 
-
-
-
-    public List<Connections> getConnectionList() {
+    public List<Connection> getConnectionList() {
         return connectionList;
     }
 
-    public void setConnectionList(List<Connections> connectionList) {
+    public void setConnectionList(List<Connection> connectionList) {
         this.connectionList = connectionList;
     }
 
-    public Connections getConnections() {
-        return connections;
+    public Connection getConnection() {
+        return connection;
     }
 
-    public void setConnections(Connections connections) {
-        this.connections = connections;
+    public void setConnection(Connection connection) {
+        this.connection = connection;
     }
-
-    public ConnectionsEJB getConnectionsEJB() {
-        return connectionsEJB;
-    }
-
-    public void setConnectionsEJB(ConnectionsEJB connectionsEJB) {
-        this.connectionsEJB = connectionsEJB;
-    }
-
 
     public String getLogin() {
         return login;
@@ -113,11 +86,12 @@ public class ConnectionsController {
     public void setLogin(String login) {
         this.login = login;
     }
-    public BigInteger getId() {
-        return id;
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 
-    public void setId(BigInteger id) {
-        this.id = id;
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 }
