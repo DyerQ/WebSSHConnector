@@ -5,14 +5,13 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 template="/templates/template.xhtml">
     <ui:define name="title">WebSSHConnector | Index Page</ui:define>
-    <!-- This page is used as an example of possible layout for a future main page -->
     <ui:define name="content">
         <h:form id="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="row">
-                            <p:panel style="float:left; overflow-y: auto; height : 500px; width: 95%">
+                            <p:panel style="float:left; overflow-y: auto; height : 500px;">
                                 <p:dataList id="data" var="str" value="#{stubTextAreaController.data}" emptyMessage=""
                                             type="definition">
                                     #{str}
@@ -27,26 +26,12 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <p:dataTable id="connections_table" editable="true"
-                                     value="#{connectionsController.connectionList}"
+                        <p:dataTable id="connectionsTable" editable="true"
+                                     value="#{connectionsController.currentUser.connectionList}"
                                      var="connection">
                             <p:ajax event="rowEdit" listener="#{connectionsController.saveRow}"
-                                    update=":content:connections_table"/>
+                                    update="connectionsTable"/>
 
-                            <p:column headerText="CONNECTION_ID">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{connection.connectionId}"/></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{connection.connectionId}"
-                                                                       style="width:100%"/></f:facet>
-                                </p:cellEditor>
-                            </p:column>
-                            <p:column headerText="Host_name">
-                                <p:cellEditor>
-                                    <f:facet name="output"><h:outputText value="#{connection.hostName}"/></f:facet>
-                                    <f:facet name="input"><p:inputText value="#{connection.hostName}"
-                                                                       style="width:100%"/></f:facet>
-                                </p:cellEditor>
-                            </p:column>
                             <p:column headerText="Login">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{connection.login}"/></f:facet>
@@ -60,6 +45,13 @@
                                                                        style="width:100%"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
+                            <p:column headerText="Host">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{connection.hostName}"/></f:facet>
+                                    <f:facet name="input"><p:inputText value="#{connection.hostName}"
+                                                                       style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
                             <p:column headerText="Port">
                                 <p:cellEditor>
                                     <f:facet name="output"><h:outputText value="#{connection.port}"/></f:facet>
@@ -67,11 +59,8 @@
                                                                        style="width:100%"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column headerText="userName">
-                                <h:outputText value="#{connection.user.userName}"/>
-                            </p:column>
                             <p:column>
-                                <p:commandButton icon="fa fa-fw fa-edit" value="connect"
+                                <p:commandButton value="Connect"
                                                  actionListener="#{mainController.connect}"/>
                             </p:column>
 
@@ -79,34 +68,32 @@
                                 <p:commandButton icon="ui-icon-trash"
                                                  title="Delete this connection"
                                                  actionListener="#{connectionsController.deleteConnection(connection)}"
-                                                 ajax="false"/>
+                                                 update="connectionsTable"/>
                             </p:column>
                             <p:column>
                                 <p:rowEditor/>
-
                             </p:column>
 
                         </p:dataTable>
+
                         <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
 
                         <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
-
-                        <p:dialog header="Login" widgetVar="dlg" resizable="false">
+                        <p:dialog header="Enter connection parameters" widgetVar="dlg" resizable="false"
+                                  closeOnEscape="true" draggable="false">
 
                             <h:panelGrid columns="2">
-                                <h:outputLabel value="Connection_id : " style="font-weight:bold"/>
-                                <p:inputText id="Connetction_id" value="#{connectionsController.connection.connectionId}"/>
-                                <h:outputLabel value="Host_name : " style="font-weight:bold"/>
-                                <p:inputText id="Host_name" value="#{connectionsController.connection.hostName}"/>
-                                <h:outputLabel value="Login : " style="font-weight:bold"/>
-                                <p:inputText id="Login" value="#{connectionsController.connection.login}"/>
-                                <h:outputLabel value="Password : " style="font-weight:bold"/>
-                                <p:inputText id="Password" value="#{connectionsController.connection.password}"/>
-                                <h:outputLabel value="Port: " style="font-weight:bold"/>
-                                <p:inputText id="Port" value="#{connectionsController.connection.port}"/>
+                                <h:outputLabel value="Login: " for="login" style="font-weight:bold"/>
+                                <p:inputText id="login" value="#{connectionsController.connection.login}"/>
+                                <h:outputLabel value="Password: " for="password" style="font-weight:bold"/>
+                                <p:inputText id="password" value="#{connectionsController.connection.password}"/>
+                                <h:outputLabel value="Host: " for="hostName" style="font-weight:bold"/>
+                                <p:inputText id="hostName" value="#{connectionsController.connection.hostName}"/>
+                                <h:outputLabel value="Port: " for="port" style="font-weight:bold"/>
+                                <p:inputText id="port" value="#{connectionsController.connection.port}"/>
                                 <p:commandButton value="Add new connection" update="content"
                                                  actionListener="#{connectionsController.addNewConnection}"
-                                                 oncomplete="handleSignUpRequest(xhr, status, args)"/>
+                                                 onclick="PF('dlg').hide();"/>
 
                             </h:panelGrid>
                         </p:dialog>

@@ -59,4 +59,12 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public List<Connection> getConnectionList() {
+        return connectionList;
+    }
+
+    public void setConnectionList(List<Connection> connectionList) {
+        this.connectionList = connectionList;
+    }
 }

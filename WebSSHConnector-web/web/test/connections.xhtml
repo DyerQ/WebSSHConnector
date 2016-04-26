@@ -31,8 +31,7 @@
                     <h:outputLabel value="Port: " style="font-weight:bold"/>
                     <p:inputText id="Port" value="#{connectionsController.connection.port}"/>
                     <p:commandButton value="Add new connection" update=":content:connections_table"
-                                     actionListener="#{connectionsController.addNewConnection}"
-                                     oncomplete="handleSignUpRequest(xhr, status, args)"/>
+                                     actionListener="#{connectionsController.addNewConnection}"/>
 
                 </h:panelGrid>
             </p:dialog>
@@ -46,7 +45,7 @@
     </f:view>
 
     <h:form id="content">
-        <p:dataTable id="connections_table" editable="true" value="#{connectionsController.connectionList}"
+        <p:dataTable id="connections_table" editable="true" value="#{connectionsController.currentUser.connectionList}"
                      var="connection">
             <p:ajax event="rowEdit" listener="#{connectionsController.saveRow}" update=":content:connections_table"/>
 
@@ -80,9 +79,6 @@
                     <f:facet name="output"><h:outputText value="#{connection.port}"/></f:facet>
                     <f:facet name="input"><p:inputText value="#{connection.port}" style="width:100%"/></f:facet>
                 </p:cellEditor>
-            </p:column>
-            <p:column headerText="userName">
-                <h:outputText value="#{connection.user.userName}"/>
             </p:column>
             <p:column>
                 <p:commandButton icon="fa fa-fw fa-edit" value="connect" actionListener="#{mainController.connect}"/>

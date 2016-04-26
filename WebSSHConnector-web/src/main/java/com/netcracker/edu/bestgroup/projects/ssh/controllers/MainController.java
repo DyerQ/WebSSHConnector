@@ -81,6 +81,6 @@ public class MainController {
 
     public String registerUser() {
         usersEJB.addNew(user);
-        return "test/vasya.xhtml?user" + user.getLogin() + "&faces-redirect=true";
+        return "main.xhtml?user" + user.getLogin() + "&faces-redirect=true";
     }
 }

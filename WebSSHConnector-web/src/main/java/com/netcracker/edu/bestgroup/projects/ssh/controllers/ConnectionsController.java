@@ -14,61 +14,52 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @ManagedBean
 @ViewScoped
 public class ConnectionsController {
-    private String login;
     private User currentUser;
-    private List<Connection> connectionList;
     private Connection connection = new Connection();
+
+    {
+        connection.setPort(22);
+    }
 
     @EJB
     private ConnectionsEJB connectionsEJB;
     @EJB
-
     private UsersEJB usersEJB;
 
     @PostConstruct
     public void postConstruct() {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        login = req.getParameter("user");
+        String login = req.getParameter("user");
         if (login == null) {
             FacesContext context = FacesContext.getCurrentInstance();
 
             context.addMessage(null, new FacesMessage("INFO", "LOGIN IS NULL"));
         }
         currentUser = usersEJB.findUserByLogin(login);
-        connectionList = connectionsEJB.findUserConnections(login);
         connection.setUser(currentUser);
     }
 
 
-    public String addNewConnection() {
-        connection = connectionsEJB.addNew(connection);
-        connectionList = connectionsEJB.findUserConnections(login);
-        return "test/connection.xhtml?user=" + login + "&faces-redirect=true";
+    public void addNewConnection() {
+        connectionsEJB.addNew(connection);
+
+        connection = new Connection();
+        connection.setPort(22);
+        connection.setUser(currentUser);
     }
 
 
-    public String deleteConnection(Connection user) {
-        connectionsEJB.delete(user);
-        connectionList = connectionsEJB.findUserConnections(login);
-        return "test/connection.xhtml?user=" + user.getLogin() + "&faces-redirect=true";
+    public void deleteConnection(Connection connection) {
+        connectionsEJB.delete(connection);
     }
 
     public void saveRow(RowEditEvent event) {
-        Connection editedUser = ((Connection) event.getObject());
-        connectionsEJB.save(editedUser);
-    }
-
-    public List<Connection> getConnectionList() {
-        return connectionList;
-    }
-
-    public void setConnectionList(List<Connection> connectionList) {
-        this.connectionList = connectionList;
+        Connection editedConnection = ((Connection) event.getObject());
+        connectionsEJB.save(editedConnection);
     }
 
     public Connection getConnection() {
@@ -77,14 +68,6 @@ public class ConnectionsController {
 
     public void setConnection(Connection connection) {
         this.connection = connection;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
     }
 
     public User getCurrentUser() {
