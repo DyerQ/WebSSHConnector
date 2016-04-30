@@ -34,7 +34,7 @@ public class SessionEJB {
     }
 
     public void closeSession() {
-        if (hasActiveSession()){
+        if (hasActiveSession()) {
             activeSession.close();
         }
     }

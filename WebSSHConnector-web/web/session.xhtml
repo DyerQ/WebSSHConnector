@@ -1,19 +1,18 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:p="http://primefaces.org/ui"
                 template="/templates/template.xhtml">
-<ui:define name="title">WebSSHConnector | Session Page</ui:define>
+    <ui:define name="title">WebSSHConnector | Session Page</ui:define>
 
-<ui:define name="content">
-    <h:form id="content">
-        <p:growl id="growl" life="20000" style="margin-top: 40px;"/>
-        <p:commandButton value="Connect" update="content" id="connect" actionListener="#{sessionController.connect}" styleClass="ui-priority-primary" />
-        <p:commandButton value="Execute" update="content" id="execute" actionListener="#{sessionController.execute}" styleClass="ui-priority-primary" />
-        <p:commandButton value="Disconnect" update="content" id="disconnect" actionListener="#{sessionController.disconnect}" styleClass="ui-priority-primary" />
-        <p:dataList id="values" var="str" value="#{sessionController.output}" emptyMessage="" type="definition" >
+    <ui:define name="content">
+        <p:commandButton value="Connect" update="form" actionListener="#{sessionController.connect}"
+                         styleClass="ui-priority-primary"/>
+        <p:commandButton value="Execute" update="form" id="execute" actionListener="#{sessionController.execute}"
+                         styleClass="ui-priority-primary"/>
+        <p:commandButton value="Disconnect" update="form" id="disconnect"
+                         actionListener="#{sessionController.disconnect}" styleClass="ui-priority-primary"/>
+        <p:dataList id="values" var="str" value="#{sessionController.output}" emptyMessage="" type="definition">
             #{str}
         </p:dataList>
-    </h:form>
-</ui:define>
+    </ui:define>
 </ui:composition>
