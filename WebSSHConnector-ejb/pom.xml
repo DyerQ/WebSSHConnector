@@ -28,6 +28,7 @@
             <groupId>com.netcracker.edu.bestgroup.projects</groupId>
             <artifactId>WebSSHConnector-ssh</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         
         <dependency>
