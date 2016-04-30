@@ -41,12 +41,14 @@ public class ConnectionsController {
         }
         currentUser = usersEJB.findUserByLogin(login);
         connection.setUser(currentUser);
+        currentUser.setConnectionList(usersEJB.findUserConnections(currentUser.getLogin()));
+
     }
 
 
     public void addNewConnection() {
         connectionsEJB.addNew(connection);
-
+        currentUser.setConnectionList(usersEJB.findUserConnections(currentUser.getLogin()));
         connection = new Connection();
         connection.setPort(22);
         connection.setUser(currentUser);
@@ -55,6 +57,7 @@ public class ConnectionsController {
 
     public void deleteConnection(Connection connection) {
         connectionsEJB.delete(connection);
+        currentUser.setConnectionList(usersEJB.findUserConnections(currentUser.getLogin()));
     }
 
     public void saveRow(RowEditEvent event) {

@@ -88,6 +88,7 @@
                 <p:commandButton icon="ui-icon-trash"
                                  title="Delete this connection"
                                  actionListener="#{connectionsController.deleteConnection(connection)}"
+                                 update=":content:connections_table"
                                  ajax="false"/>
             </p:column>
             <p:column>

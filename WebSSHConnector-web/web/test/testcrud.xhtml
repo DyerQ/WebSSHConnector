@@ -21,8 +21,8 @@
     </h:form>
 
     <h:form id="content">
-        <p:dataTable id="mmo_table" editable="true" value="#{usersController.usersList}" var="user">
-            <p:ajax event="rowEdit" listener="#{usersController.saveRow}" update=":content:mmo_table" />
+        <p:dataTable id="user_table" editable="true" value="#{usersController.usersList}" var="user">
+            <p:ajax event="rowEdit" listener="#{usersController.saveRow}" update=":content:user_table" />
 
             <p:column headerText="ID">
                 <p:cellEditor>

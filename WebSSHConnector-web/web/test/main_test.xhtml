@@ -1,0 +1,124 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/template.xhtml">
+    <ui:define name="title">WebSSHConnector | Index Page</ui:define>
+    <ui:define name="content">
+        <h:form id="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <p:panel style="float:left; overflow-y: auto; height : 500px;">
+                                <p:dataList id="data" var="str" value="#{stubTextAreaController.data}" emptyMessage=""
+                                            type="definition">
+                                    #{str}
+                                </p:dataList>
+                            </p:panel>
+                        </div>
+                        <div class="row">
+                            <p:inputText id="commandInput" value="#{stubTextAreaController.inputString}"/>
+                            <p:commandButton value="Submit" update="content" id="submitButton"
+                                             actionListener="#{stubTextAreaController.addToData}"/>
+                            <p:defaultCommand target="submitButton"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+
+
+
+
+
+                        <!--<h:form id="table_content">-->
+                            <p:dataTable id="connections_table" editable="true" value="#{connectionsController.currentUser.connectionList}"
+                                         var="connection">
+                                <p:ajax event="rowEdit" listener="#{connectionsController.saveRow}" update="connections_table"/>
+
+                                <p:column headerText="CONNECTION_ID">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{connection.connectionId}"/></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{connection.connectionId}"
+                                                                           style="width:100%"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Host_name">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{connection.hostName}"/></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{connection.hostName}" style="width:100%"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Login">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{connection.login}"/></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{connection.login}" style="width:100%"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Password">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{connection.password}"/></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{connection.password}" style="width:100%"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column headerText="Port">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{connection.port}"/></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{connection.port}" style="width:100%"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+                                <p:column>
+                                    <p:commandButton icon="fa fa-fw fa-edit" value="connect" actionListener="#{mainController.connect}"/>
+                                </p:column>
+
+                                <p:column>
+                                    <p:commandButton icon="ui-icon-trash"
+                                                     title="Delete this connection"
+                                                     actionListener="#{connectionsController.deleteConnection(connection)}"
+                                                     update="connections_table"
+                                                     ajax="false"/>
+                                </p:column>
+                                <p:column>
+                                    <p:rowEditor/>
+
+                                </p:column>
+
+                            </p:dataTable>
+
+
+
+
+                                <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
+
+                                <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
+                                <p:dialog header="Login" widgetVar="dlg" resizable="false">
+
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel value="Connection_id : " style="font-weight:bold"/>
+                                        <p:inputText id="Connetction_id" value="#{connectionsController.connection.connectionId}"/>
+                                        <h:outputLabel value="Host_name : " style="font-weight:bold"/>
+                                        <p:inputText id="Host_name" value="#{connectionsController.connection.hostName}"/>
+                                        <h:outputLabel value="Login : " style="font-weight:bold"/>
+                                        <p:inputText id="Login" value="#{connectionsController.connection.login}"/>
+                                        <h:outputLabel value="Password : " style="font-weight:bold"/>
+                                        <p:inputText id="Password" value="#{connectionsController.connection.password}"/>
+                                        <h:outputLabel value="Port: " style="font-weight:bold"/>
+                                        <p:inputText id="Port" value="#{connectionsController.connection.port}"/>
+                                        <p:commandButton value="Add new connection" update="connections_table"
+                                                         actionListener="#{connectionsController.addNewConnection}"/>
+
+                                    </h:panelGrid>
+                                </p:dialog>
+                            <!--</h:form>-->
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
