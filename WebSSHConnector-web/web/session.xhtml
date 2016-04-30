@@ -6,11 +6,14 @@
 <ui:define name="title">WebSSHConnector | Session Page</ui:define>
 
 <ui:define name="content">
-    <h:form>
+    <h:form id="content">
         <p:growl id="growl" life="20000" style="margin-top: 40px;"/>
-        <p:commandButton value="Connect" update="growl" id="connect" actionListener="#{sessionController.connect}" styleClass="ui-priority-primary" />
-        <p:commandButton value="Execute" update="growl" id="execute" actionListener="#{sessionController.execute}" styleClass="ui-priority-primary" />
-        <p:commandButton value="Disconnect" update="growl" id="disconnect" actionListener="#{sessionController.disconnect}" styleClass="ui-priority-primary" />
+        <p:commandButton value="Connect" update="content" id="connect" actionListener="#{sessionController.connect}" styleClass="ui-priority-primary" />
+        <p:commandButton value="Execute" update="content" id="execute" actionListener="#{sessionController.execute}" styleClass="ui-priority-primary" />
+        <p:commandButton value="Disconnect" update="content" id="disconnect" actionListener="#{sessionController.disconnect}" styleClass="ui-priority-primary" />
+        <p:dataList id="values" var="str" value="#{sessionController.output}" emptyMessage="" type="definition" >
+            #{str}
+        </p:dataList>
     </h:form>
 </ui:define>
 </ui:composition>
