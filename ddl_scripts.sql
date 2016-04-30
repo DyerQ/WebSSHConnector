@@ -11,7 +11,7 @@ BEGIN
   EXECUTE IMMEDIATE 'drop table Users';
   EXCEPTION
   WHEN OTHERS THEN
-  IF sqlcode != -942
+  IF sqlcode != -942 /* ORA-00942: table or view does not exist */
   THEN
     RAISE;
   END IF;
@@ -28,7 +28,7 @@ BEGIN
   EXECUTE IMMEDIATE 'drop sequence user_ids_seq';
   EXCEPTION
   WHEN OTHERS THEN
-  IF sqlcode != -2289
+  IF sqlcode != -2289 /* ORA-02289: sequence does not exist */
   THEN
     RAISE;
   END IF;
@@ -44,7 +44,7 @@ BEGIN
   EXECUTE IMMEDIATE 'drop table Connections';
   EXCEPTION
   WHEN OTHERS THEN
-  IF sqlcode != -942
+  IF sqlcode != -942 /* ORA-00942: table or view does not exist */
   THEN
     RAISE;
   END IF;
@@ -63,7 +63,7 @@ BEGIN
   EXECUTE IMMEDIATE 'drop sequence connection_ids_seq';
   EXCEPTION
   WHEN OTHERS THEN
-  IF sqlcode != -2289
+  IF sqlcode != -2289 /* ORA-02289: sequence does not exist */
   THEN
     RAISE;
   END IF;
