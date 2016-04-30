@@ -14,41 +14,89 @@
 </h:head>
 <h:body>
     <h:form id="form">
-        <p:growl id="authenticationGrowl" sticky="true" showDetail="true" life="3000"/>
-<!--
-
-        <p:dialog header="Login" widgetVar="dlg_L" resizable="false" draggable="false" closeOnEscape="true">
-            <h:panelGrid columns="2" cellpadding="5">
-                <h:outputLabel for="login" value="Login:"/>
-                <p:inputText id="login" value="#{mainController.user.login}" required="true"
-                             label="username"/>
-
-                <h:outputLabel for="password_L" value="Password:"/>
-                <p:password id="password_L" value="#{mainController.user.password}" required="true"
-                            label="password"/>
-
-                <f:facet name="footer">
-                    <p:commandButton value="Login" update="authenticationGrowl" actionListener="#{mainController.login}"
-                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
-                </f:facet>
-            </h:panelGrid>
-        </p:dialog>
--->
-
         <div class="navbar-fixed-top">
             <p:toolbar>
-                <f:facet name="left">
+                <f:facet name="left" >
                     <p:outputLabel>WebSSHConnector (Dev in progress)</p:outputLabel>
                 </f:facet>
-
-<!--
                 <f:facet name="right">
-                    <h:commandButton value="Login" onclick="PF('dlg_L').show();" title="login"
-                                     rendered="#{!(mainController.loggedIn)}"/>
-                    <p:button outcome="/index.xhtml" value="Go to Index"/>
-                </f:facet>
--->
+                    <h:form rendered="#{!(mainController.loggedIn)}">
 
+                        <h:outputLink value="javascript:void(0)" onclick="PF('dlg_L').show();" title="login">LOGIN
+                        </h:outputLink>
+
+                        <p:growl id="growlL" sticky="true" showDetail="true" life="3000"/>
+
+                        <p:dialog header="Login" widgetVar="dlg_L" resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="username" value="Username:"/>
+                                <p:inputText id="username" value="#{mainController.user.login}" required="true"
+                                             label="username"/>
+
+                                <h:outputLabel for="password_L" value="Password:"/>
+                                <p:password id="password_L" value="#{mainController.user.password}" required="true"
+                                            label="password"/>
+
+                                <f:facet name="footer">
+                                    <p:commandButton value="Login" update="growlL"
+                                                     actionListener="#{mainController.login}"
+                                                     oncomplete="handleLoginRequest(xhr, status, args)"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:dialog>
+
+                        <script type="text/javascript">
+                            function handleLoginRequest(xhr, status, args) {
+                                if (!args.loggedIn) {
+                                    PF('dlg_L').jq.effect("shake", {times: 5}, 100);
+                                }
+                                else {
+                                    PF('dlg_L').hide();
+                                    $('#loginLink').fadeOut();
+                                }
+                            }
+                        </script>
+                    </h:form>
+
+                    <h:form>
+                        <h:commandButton value="logout" action="#{mainController.logout}"
+                                         rendered="#{mainController.loggedIn}"/>
+                    </h:form>
+                    <h:form rendered="#{!(mainController.loggedIn)}">
+                        <h:outputLink value="javascript:void(0)" onclick="PF('dlg_R').show();" title="signup">SIGN UP
+                        </h:outputLink>
+
+                        <p:growl id="growlR" sticky="true" showDetail="true" life="3000"/>
+
+                        <p:dialog header="Sign Up" widgetVar="dlg_R" position="500,30" resizable="false">
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel for="name" value="Name:"/>
+                                <p:inputText id="name" value="#{mainController.user.userName}" required="true"
+                                             label="username"/>
+
+                                <h:outputLabel for="login" value="Login:"/>
+                                <p:inputText id="login" value="#{mainController.user.login}" required="true"
+                                             label="login"/>
+
+                                <h:outputLabel for="password" value="Password:"/>
+                                <p:password id="password" value="#{mainController.user.password}" required="true"
+                                            label="password"/>
+
+                                <f:facet name="footer">
+                                    <h:commandButton value="Sign Up" update="growlR"
+                                                     action="#{mainController.registerUser}"
+                                                     oncomplete="handleSignUpRequest()"/>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:dialog>
+                        <script type="text/javascript">
+                            function handleSignUpRequest() {
+                                PF('dlg_R').hide();
+                                $('#loginLink').fadeOut();
+                            }
+                        </script>
+                    </h:form>
+                </f:facet>
             </p:toolbar>
         </div>
 
