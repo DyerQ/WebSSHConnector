@@ -78,4 +78,20 @@ public class Connection implements Serializable {
     public void setPort(int port) {
         this.port = port;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Connection that = (Connection) o;
+
+        return connectionId.equals(that.connectionId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return connectionId.hashCode();
+    }
 }

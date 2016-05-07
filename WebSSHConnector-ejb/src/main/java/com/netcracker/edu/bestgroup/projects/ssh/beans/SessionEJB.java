@@ -11,6 +11,7 @@ import javax.ejb.Stateful;
 
 
 @Stateful
+@Deprecated
 public class SessionEJB {
 
     private SSHSession activeSession;
