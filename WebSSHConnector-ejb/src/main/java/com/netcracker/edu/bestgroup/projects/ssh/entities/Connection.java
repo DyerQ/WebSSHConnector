@@ -16,7 +16,6 @@ public class Connection implements Serializable {
     private BigInteger connectionId;
 
 
-
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -100,13 +99,7 @@ public class Connection implements Serializable {
 
     @Override
     public String toString() {
-        return "Connection{" +
-                "connectionId=" + connectionId +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", hostName='" + hostName + '\'' +
-                ", port=" + port +
-                '}';
+        return login + "@" + hostName + ":" + port;
     }
 
 
