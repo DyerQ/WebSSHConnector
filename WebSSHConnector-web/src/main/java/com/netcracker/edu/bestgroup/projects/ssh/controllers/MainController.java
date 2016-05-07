@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,8 @@ public class MainController {
     private UsersEJB usersEJB;
 
     public String login(ActionEvent event) {
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+                .getExternalContext().getSession(false);
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message;
         List<User> usersList = usersEJB.findUsers();
@@ -36,6 +39,8 @@ public class MainController {
 
         if ((!tmp.isEmpty())) {
             loggedIn = true;
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .getSessionMap().put("username", user.getLogin());
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Welcome", user.getLogin());
             FacesContext.getCurrentInstance().addMessage(null, message);
             context.addCallbackParam("loggedIn", loggedIn);
