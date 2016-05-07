@@ -21,7 +21,8 @@ CREATE TABLE Users (
   user_id   NUMBER(10, 0) PRIMARY KEY,
   login     VARCHAR2(200) UNIQUE NOT NULL,
   user_name VARCHAR2(200),
-  password  VARCHAR2(200)        NOT NULL
+  password  VARCHAR2(200)        NOT NULL,
+  e_mail     VARCHAR2(200)
 );
 
 BEGIN
