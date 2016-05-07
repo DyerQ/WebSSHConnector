@@ -57,7 +57,8 @@
                     <h:outputLabel value="Port: " style="font-weight:bold"/>
                     <p:inputText id="Port_tmp" value="#{connectionsController.connectionToEdit.port}"/>
                     <p:commandButton value="EDIT" update=":content:connections_table"
-                                     actionListener="#{connectionsController.cancelEdit}" oncomplete="PF('dlg2').hide();"/>
+                                     actionListener="#{connectionsController.cancelEdit}"
+                                     oncomplete="PF('dlg2').hide();"/>
 
 
                 </h:panelGrid>
@@ -80,25 +81,20 @@
 
             </p:column>
             <p:column>
-                <p:commandButton icon="fa fa-fw fa-edit" value="connect" actionListener="#{mainController.connect}"/>
-            </p:column>
-
-
-            <p:column>
-                <p:commandButton icon="ui-icon-trash"
-                                 title="Delete this connection"
-                                 actionListener="#{connectionsController.deleteConnection(connection)}"
-                                 update=":content:connections_table"
-                                 ajax="false"/>
-            </p:column>
-            <p:column>
-                <p:commandButton icon="fa fa-fw fa-edit"
-                                 title="Edit this connection"
-                                 actionListener="#{connectionsController.editConnection(connection)}"
-                                 update=":dialog:"
-                                 oncomplete="PF('dlg2').show();"
-                                 />
-
+                <p:splitButton value="Connect" actionListener="#{mainController.connect}">
+                    <p:menuitem icon="ui-icon-trash"
+                                title="Delete this connection"
+                                value="delete"
+                                actionListener="#{connectionsController.deleteConnection(connection)}"
+                                update=":content:connections_table"
+                                ajax="false"/>
+                    <p:menuitem icon="fa fa-fw fa-edit"
+                                title="Edit this connection"
+                                value="edit"
+                                actionListener="#{connectionsController.editConnection(connection)}"
+                                update=":dialog:"
+                                oncomplete="PF('dlg2').show();"/>
+                </p:splitButton>
             </p:column>
         </p:dataTable>
     </h:form>
