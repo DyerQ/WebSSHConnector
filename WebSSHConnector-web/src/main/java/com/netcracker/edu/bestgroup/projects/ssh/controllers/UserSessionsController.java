@@ -6,6 +6,7 @@ import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.InvalidConne
 import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.SessionInitializationException;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Connection;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.User;
+import org.primefaces.component.outputlabel.OutputLabel;
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.component.tabview.TabView;
 import org.primefaces.event.TabChangeEvent;
@@ -59,6 +60,11 @@ public class UserSessionsController {
         openedConnections = new LinkedHashMap<>();
         tabView = new TabView();
         tabView.setScrollable(true);
+        fakeConnect();
+        fakeConnect();
+        fakeConnect();
+        fakeConnect();
+        fakeConnect();
     }
 
     public boolean connect(Connection connection) {
@@ -69,6 +75,7 @@ public class UserSessionsController {
                     tab.setTitle(connection.toString());
                     tabView.getChildren().add(tab);
                     openedConnections.put(tab, connection);
+                    tabView.setActiveIndex(tabView.getChildren().indexOf(tab));
                     return true;
                 }
             } else {
@@ -85,6 +92,10 @@ public class UserSessionsController {
 
     private Tab constructNewTab() {
         Tab tab = new Tab();
+        tab.setClosable(true);
+        OutputLabel label = new OutputLabel();
+        label.setValue("ABC");
+        tab.getChildren().add(label);
         // TODO add dataList, inputText & button with defaultCommand for this inputText
         return tab;
     }
@@ -118,6 +129,8 @@ public class UserSessionsController {
 
     // TODO remove
     public void fakeConnect() {
-        connect(new Connection(fakeIdCounter, "root", "netcracker", "localhost", 22, usersEJB.getFakeUserInstance()));
+        boolean result = connect(new Connection(fakeIdCounter, "root", "netcracker", "localhost", 22, usersEJB.getFakeUserInstance()));
+        fakeIdCounter = fakeIdCounter.add(BigInteger.ONE);
+        FacesMessage message = new FacesMessage("Inside fakeConnect", "Result is " + result);
     }
 }
