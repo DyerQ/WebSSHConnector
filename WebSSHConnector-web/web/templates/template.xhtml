@@ -21,8 +21,8 @@
                     <p:outputLabel>WebSSHConnector (Dev in progress)</p:outputLabel>
                 </f:facet>
                 <f:facet name="right">
-                    <h:outputLink value="javascript:void(0)" onclick="PF('dlg_L').show();" title="login" rendered="#{!(mainController.loggedIn)}">LOGIN
-                    </h:outputLink>
+                    <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();" rendered="#{!(mainController.loggedIn)}"/>
+
                     <p:dialog widgetVar="dlg_L" resizable="false" dynamic="true" modal="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="username" value="Username:"/>
@@ -55,15 +55,13 @@
 
                     <h:outputLabel value="#{mainController.user.userName}" rendered="#{(mainController.loggedIn)}" style="font-weight:bold" >
                     </h:outputLabel>
-                    <h:commandButton value="logout" action="#{mainController.logout}"
+                    <h:commandButton value="Logout" action="#{mainController.logout}"
                                      rendered="#{mainController.loggedIn}"/>
 
 
-                    <h:outputLink value="javascript:void(0)" onclick="PF('dlg_R').show();" title="signup" rendered="#{!(mainController.loggedIn)}">SIGN UP
-                    </h:outputLink>
+                    <h:commandButton value="Sign Up" type="button" onclick="PF('dlg_R').show();" rendered="#{!(mainController.loggedIn)}"/>
 
-
-                    <p:dialog header="Sign Up" widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true">
+                    <p:dialog widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="name" value="Name:"/>
                             <p:inputText id="name" value="#{mainController.user.userName}" required="true"
