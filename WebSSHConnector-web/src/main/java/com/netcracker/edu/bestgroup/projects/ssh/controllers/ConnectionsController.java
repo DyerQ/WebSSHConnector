@@ -20,9 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 public class ConnectionsController {
     private User currentUser;
     private Connection connection = new Connection();
+    private Connection connectionToEdit = connection.clone();
+    boolean edited = false;
 
     {
         connection.setPort(22);
+        connectionToEdit.setPort(22);
     }
 
     @EJB
@@ -65,6 +68,18 @@ public class ConnectionsController {
         connectionsEJB.save(editedConnection);
     }
 
+    public void editConnection(Connection conn) {
+        edited =true;
+        connectionToEdit = conn.clone();
+
+    }
+
+    public void cancelEdit() {
+        connectionsEJB.save(connectionToEdit);
+        currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
+        edited = false;
+    }
+
     public Connection getConnection() {
         return connection;
     }
@@ -79,5 +94,21 @@ public class ConnectionsController {
 
     public void setCurrentUser(User currentUser) {
         this.currentUser = currentUser;
+    }
+
+    public Connection getConnectionToEdit() {
+        return connectionToEdit;
+    }
+
+    public void setConnectionToEdit(Connection connectionToEdit) {
+        this.connectionToEdit = connectionToEdit;
+    }
+
+    public boolean isEdited() {
+        return edited;
+    }
+
+    public void setEdited(boolean edited) {
+        this.edited = edited;
     }
 }
