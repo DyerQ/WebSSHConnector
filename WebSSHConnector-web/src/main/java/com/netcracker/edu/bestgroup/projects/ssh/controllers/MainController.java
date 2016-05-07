@@ -39,8 +39,9 @@ public class MainController {
 
         if ((!tmp.isEmpty())) {
             loggedIn = true;
+            user = usersEJB.findUserByLogin(user.getLogin());
             FacesContext.getCurrentInstance().getExternalContext()
-                    .getSessionMap().put("username", user.getLogin());
+                    .getSessionMap().put("username", user.getUserName());
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Welcome", user.getLogin());
             FacesContext.getCurrentInstance().addMessage(null, message);
             context.addCallbackParam("loggedIn", loggedIn);
@@ -84,8 +85,9 @@ public class MainController {
 
     }
 
-    public String registerUser() {
+    public String registerUser(ActionEvent event) {
         usersEJB.addNew(user);
+        login(event);
         return "main.xhtml?user" + user.getLogin() + "&faces-redirect=true";
     }
 }

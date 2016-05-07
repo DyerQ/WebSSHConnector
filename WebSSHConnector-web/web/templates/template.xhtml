@@ -53,7 +53,7 @@
                         }
                     </script>
 
-                    <h:outputLabel value="#{mainController.user.login}" rendered="#{(mainController.loggedIn)}" style="font-weight:bold" >
+                    <h:outputLabel value="#{mainController.user.userName}" rendered="#{(mainController.loggedIn)}" style="font-weight:bold" >
                     </h:outputLabel>
                     <h:commandButton value="logout" action="#{mainController.logout}"
                                      rendered="#{mainController.loggedIn}"/>
@@ -79,7 +79,7 @@
 
                             <f:facet name="footer">
                                 <h:commandButton value="Sign Up" update="authenticationGrowl"
-                                                 action="#{mainController.registerUser}"
+                                                 actionListener="#{mainController.registerUser}"
                                                  oncomplete="handleSignUpRequest()"/>
                             </f:facet>
                         </h:panelGrid>
