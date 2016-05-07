@@ -22,7 +22,11 @@ public class ConnectionsEJB {
     }
 
     public Connection addNew(Connection connection) {
-        entityManager.persist(connection);
+        if(entityManager.contains(connection)){
+            entityManager.merge(connection);
+        }else {
+            entityManager.persist(connection);
+        }
         return connection;
     }
 
