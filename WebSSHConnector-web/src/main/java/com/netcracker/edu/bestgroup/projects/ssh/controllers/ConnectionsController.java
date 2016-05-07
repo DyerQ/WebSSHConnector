@@ -38,11 +38,11 @@ public class ConnectionsController {
             FacesContext context = FacesContext.getCurrentInstance();
 
             context.addMessage(null, new FacesMessage("INFO", "LOGIN IS NULL"));
+        } else {
+            currentUser = usersEJB.findUserByLogin(login);
+            connection.setUser(currentUser);
+            currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
         }
-        currentUser = usersEJB.findUserByLogin(login);
-        connection.setUser(currentUser);
-        currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
-
     }
 
 
