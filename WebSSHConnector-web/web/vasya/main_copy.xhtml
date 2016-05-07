@@ -12,17 +12,12 @@
                     <div class="col-lg-8">
                         <div class="row">
                             <p:panel style="float:left; overflow-y: auto; height : 500px;">
+                                <p:commandButton action="#{userSessionsController.fakeConnect}" />
                                 <p:tabView binding="#{userSessionsController.tabView}">
-                                    <p:ajax event="tabChange" listener="#{userSessionsController.onTabChange}" update=":form:msgs"/>
-                                    <p:ajax event="tabClose" listener="#{userSessionsController.onTabClose}" update=":form:msgs"/>
+                                    <p:ajax event="tabChange" listener="#{userSessionsController.onTabChange}" update="content"/>
+                                    <p:ajax event="tabClose" listener="#{userSessionsController.onTabClose}" update="content"/>
 
                                 </p:tabView>
-<!--
-                                <p:dataList id="data" var="str" value="#{stubTextAreaController.data}" emptyMessage=""
-                                            type="definition">
-                                    #{str}
-                                </p:dataList>
--->
                             </p:panel>
                         </div>
                         <div class="row">

@@ -8,6 +8,8 @@ import com.netcracker.edu.bestgroup.projects.ssh.entities.Connection;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.User;
 import org.primefaces.component.tabview.Tab;
 import org.primefaces.component.tabview.TabView;
+import org.primefaces.event.TabChangeEvent;
+import org.primefaces.event.TabCloseEvent;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -16,6 +18,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -23,6 +26,8 @@ import java.util.Map;
 @ViewScoped
 public class UserSessionsController {
     private User authorizedUser;
+
+    private Connection openedConnection;
 
     private Map<Tab, Connection> openedConnections;
 
@@ -53,10 +58,10 @@ public class UserSessionsController {
         }
         openedConnections = new LinkedHashMap<>();
         tabView = new TabView();
+        tabView.setScrollable(true);
     }
 
     public boolean connect(Connection connection) {
-        // openAndDisplayNewConnection
         try {
             if (!openedConnections.containsValue(connection)) {
                 if (multipleSessionsEJB.openNewSession(connection)) {
@@ -89,7 +94,19 @@ public class UserSessionsController {
         return multipleSessionsEJB.closeConnection(connection);
     }
 
-    // перед уничтожением бина - закрываем свои сессии
+    public void onTabChange(TabChangeEvent event) {
+        Tab activeTab = event.getTab();
+        openedConnection = openedConnections.get(activeTab);
+    }
+
+    public void onTabClose(TabCloseEvent event) {
+        Tab closedTab = event.getTab();
+        Connection connection = openedConnections.remove(closedTab);
+        if (connection != null) {
+            multipleSessionsEJB.closeConnection(connection);
+        }
+    }
+
     @PreDestroy
     private void preDestroy() {
         for (Connection openedConnection : openedConnections.values()) {
@@ -97,4 +114,10 @@ public class UserSessionsController {
         }
     }
 
+    private BigInteger fakeIdCounter = BigInteger.ONE;
+
+    // TODO remove
+    public void fakeConnect() {
+        connect(new Connection(fakeIdCounter, "root", "netcracker", "localhost", 22, usersEJB.getFakeUserInstance()));
+    }
 }
