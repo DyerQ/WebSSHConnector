@@ -109,4 +109,19 @@ public class Connection implements Serializable {
                 '}';
     }
 
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Connection that = (Connection) o;
+
+        return connectionId.equals(that.connectionId);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return connectionId.hashCode();
+    }
 }
