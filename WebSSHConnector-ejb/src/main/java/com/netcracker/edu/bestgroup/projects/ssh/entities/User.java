@@ -25,6 +25,10 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
 
+
+    @Column(name = "e_mail")
+    private String eMail;
+
     @OneToMany(targetEntity = Connection.class, mappedBy = "user")
     private List<Connection> connectionList;
 
@@ -58,6 +62,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return eMail;
+    }
+
+    public void setEmail(String email) {
+        this.eMail = email;
     }
 
     public List<Connection> getConnectionList() {
