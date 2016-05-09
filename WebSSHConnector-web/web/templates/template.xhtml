@@ -23,7 +23,7 @@
                 <f:facet name="right">
                     <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();" rendered="#{!(mainController.loggedIn)}"/>
 
-                    <p:dialog widgetVar="dlg_L" resizable="false" dynamic="true" modal="true">
+                    <p:dialog widgetVar="dlg_L" resizable="false" dynamic="true" modal="true" closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="username" value="Username:"/>
                             <p:inputText id="username" value="#{mainController.user.login}" required="true"
@@ -41,27 +41,16 @@
                         </h:panelGrid>
                     </p:dialog>
 
-                    <script type="text/javascript">
-                        function handleLoginRequest(xhr, status, args) {
-                            if (!args.loggedIn) {
-                                PF('dlg_L').jq.effect("shake", {times: 5}, 100);
-                            }
-                            else {
-                                PF('dlg_L').hide();
-                                $('#loginLink').fadeOut();
-                            }
-                        }
-                    </script>
-
-                    <h:outputLabel value="#{mainController.user.userName}" rendered="#{(mainController.loggedIn)}" style="font-weight:bold" >
-                    </h:outputLabel>
+                    <h:outputLink value="profile.xhtml" rendered="#{!(mainController.profilePage)}" style="font-weight:bold" >#{mainController.user.userName}
+                    </h:outputLink>
+                    <h:button value="Go to main" rendered="#{(mainController.profilePage)}" outcome="main.xhtml" style="font-weight:bold" />
                     <h:commandButton value="Logout" action="#{mainController.logout}"
                                      rendered="#{mainController.loggedIn}"/>
 
 
                     <h:commandButton value="Sign Up" type="button" onclick="PF('dlg_R').show();" rendered="#{!(mainController.loggedIn)}"/>
 
-                    <p:dialog widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true">
+                    <p:dialog widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true" closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="name" value="Name:"/>
                             <p:inputText id="name" value="#{mainController.user.userName}" required="true"
@@ -83,11 +72,9 @@
                         </h:panelGrid>
                     </p:dialog>
                     <script type="text/javascript">
-                        function handleSignUpRequest() {
-                            PF('dlg_R').hide();
-                            $('#loginLink').fadeOut();
-                        }
+                        src = "resources/js/authentication.js";
                     </script>
+
 
                 </f:facet>
             </p:toolbar>

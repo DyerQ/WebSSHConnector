@@ -6,3 +6,27 @@ function handleLoginRequest(xhr, status, args) {
         $('#loginLink').fadeOut();
     }
 }
+(function() {
+
+    var KEY_ENTER = 13;
+
+    var inputs = document.querySelectorAll('password[id=password]');
+    for(var i = 0; i < inputs.length; i++) (function(i){
+        function hidePassword(){
+            inputs[i].id = 'password';
+        }
+        function showPassword(){
+            inputs[i].id = 'text';
+        }
+        inputs[i].addEventListener('focus', showPassword, false);
+        inputs[i].addEventListener('blur', hidePassword, false);
+        inputs[i].addEventListener('keydown', function onBeforeSubmit(e){
+            if (e.keyCode === KEY_ENTER) hidePassword();
+        }, false);
+    })(i);
+
+})();
+function handleSignUpRequest() {
+    PF('dlg_R').hide();
+    $('#loginLink').fadeOut();
+}

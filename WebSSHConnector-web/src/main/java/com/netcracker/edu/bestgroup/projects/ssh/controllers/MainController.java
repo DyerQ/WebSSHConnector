@@ -21,9 +21,15 @@ public class MainController {
     private User user = new User();
     boolean loggedIn = false;
 
+   public boolean isProfilePage() {
+        isProfilePage = (loggedIn)&(FacesContext.getCurrentInstance().getViewRoot()
+                .getViewId().lastIndexOf("profile.xhtml") > -1);
+        return isProfilePage;
+    }
+    boolean isProfilePage = false;
+
     @EJB
     private UsersEJB usersEJB;
-
     public String login(ActionEvent event) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
