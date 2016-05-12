@@ -25,9 +25,14 @@
                             <p:defaultCommand target="submitButton"/>
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-4">
 
-                        <p:dataTable id="connections_table" editable="true" value="#{connectionsController.currentUser.connectionList}"
+                        <p:dataTable id="connections_table" editable="true"
+                                     value="#{connectionsController.currentUser.connectionList}"
                                      var="connection">
 
                             <f:facet name="header">
@@ -43,32 +48,36 @@
                                         value="#{connection.login.concat('@').concat(connection.hostName).concat(':').concat(connection.port)}"/>
 
                             </p:column>
-                            <p:column>
+                            <p:column style="width:60px">
                                 <p:commandButton icon="ui-icon-trash"
                                                  title="Delete this connection"
                                                  actionListener="#{connectionsController.deleteConnection(connection)}"
                                                  update="connections_table"
                                                  ajax="false"/>
-                                <p:commandButton icon="fa fa-fw fa-edit"
+                                <p:commandButton icon="ui-icon-pencil"
                                                  title="Edit this connection"
                                                  actionListener="#{connectionsController.editConnection(connection)}"
+                                                 update=":form:dialog:"
                                                  oncomplete="PF('dlg2').show();"
                                 />
-                            </p:column>
-                            <p:column style="width:60px">
-                                <p:splitButton value="GO" actionListener="#{mainController.connect}">
+                                <p:splitButton icon="ui-icon-arrowthick-1-e"
+                                               title="Connect"
+                                               actionListener="#{connectionsController.deleteConnection(connection)}"
+                                               ajax="false">
                                     <p:menuitem icon="ui-icon-trash"
                                                 title="Delete this connection"
                                                 value="delete"
+                                                faces-redirect="true"
                                                 actionListener="#{connectionsController.deleteConnection(connection)}"
-                                                update="connections_table"
                                                 ajax="false"/>
                                     <p:menuitem icon="fa fa-fw fa-edit"
                                                 title="Edit this connection"
                                                 value="edit"
                                                 actionListener="#{connectionsController.editConnection(connection)}"
+                                                update=":form:dialog:"
                                                 oncomplete="PF('dlg2').show();"/>
                                 </p:splitButton>
+
                             </p:column>
                         </p:dataTable>
 
@@ -79,7 +88,8 @@
 
                             <h:panelGrid columns="2">
                                 <h:outputLabel value="Connection_id : " style="font-weight:bold"/>
-                                <p:inputText id="Connetction_id" value="#{connectionsController.connection.connectionId}"/>
+                                <p:inputText id="Connetction_id"
+                                             value="#{connectionsController.connection.connectionId}"/>
 
                                 <h:outputLabel value="Host_name : " style="font-weight:bold"/>
                                 <p:inputText id="Host_name" value="#{connectionsController.connection.hostName}"/>
@@ -95,30 +105,6 @@
                             </h:panelGrid>
                         </p:dialog>
 
-                        <h:form id="dialog">
-                            <p:growl id="growlR" sticky="true" showDetail="true" life="3000"/>
-                            <p:dialog header="EDIT" widgetVar="dlg2" resizable="false">
-
-                                <h:panelGrid columns="2">
-                                    <h:outputLabel value="Connection_id : " style="font-weight:bold"/>
-                                    <p:inputText id="Connetction_id_tmp"
-                                                 value="#{connectionsController.connectionToEdit.connectionId}"/>
-                                    <h:outputLabel value="Host_name : " style="font-weight:bold"/>
-                                    <p:inputText id="Host_name_tmp" value="#{connectionsController.connectionToEdit.hostName}"/>
-                                    <h:outputLabel value="Login : " style="font-weight:bold"/>
-                                    <p:inputText id="Login_tmp" value="#{connectionsController.connectionToEdit.login}"/>
-                                    <h:outputLabel value="Password : " style="font-weight:bold"/>
-                                    <p:inputText id="Password_tmp" value="#{connectionsController.connectionToEdit.password}"/>
-                                    <h:outputLabel value="Port: " style="font-weight:bold"/>
-                                    <p:inputText id="Port_tmp" value="#{connectionsController.connectionToEdit.port}"/>
-                                    <p:commandButton value="EDIT" update=":form:content:connections_table"
-                                                     actionListener="#{connectionsController.cancelEdit}"
-                                                     oncomplete="PF('dlg2').hide();"/>
-
-
-                                </h:panelGrid>
-                            </p:dialog>
-                        </h:form>
 
 
                     </div>
@@ -126,9 +112,35 @@
             </div>
         </h:form>
 
+        <div class="connection_form">
+        <p:outputPanel id="dialog">
+            <p:growl id="growlR" sticky="true" showDetail="true" life="3000"/>
+            <p:dialog header="EDIT" widgetVar="dlg2" resizable="false">
+
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="Connection_id : " style="font-weight:bold"/>
+                    <p:inputText id="Connetction_id_tmp"
+                                 value="#{connectionsController.connectionToEdit.connectionId}"/>
+                    <h:outputLabel value="Host_name : " style="font-weight:bold"/>
+                    <p:inputText id="Host_name_tmp"
+                                 value="#{connectionsController.connectionToEdit.hostName}"/>
+                    <h:outputLabel value="Login : " style="font-weight:bold"/>
+                    <p:inputText id="Login_tmp"
+                                 value="#{connectionsController.connectionToEdit.login}"/>
+                    <h:outputLabel value="Password : " style="font-weight:bold"/>
+                    <p:inputText id="Password_tmp"
+                                 value="#{connectionsController.connectionToEdit.password}"/>
+                    <h:outputLabel value="Port: " style="font-weight:bold"/>
+                    <p:inputText id="Port_tmp" value="#{connectionsController.connectionToEdit.port}"/>
+                    <p:commandButton value="EDIT" update=":form:content:connections_table"
+                                     actionListener="#{connectionsController.cancelEdit}"
+                                     oncomplete="PF('dlg2').hide();"/>
 
 
-
+                </h:panelGrid>
+            </p:dialog>
+        </p:outputPanel>
+        </div>
 
     </ui:define>
 </ui:composition>

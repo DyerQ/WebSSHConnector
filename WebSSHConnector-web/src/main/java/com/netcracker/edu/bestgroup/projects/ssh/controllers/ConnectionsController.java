@@ -21,8 +21,6 @@ public class ConnectionsController {
     private User currentUser;
     private Connection connection = new Connection();
     private Connection connectionToEdit = connection.clone();
-    boolean edited = false;
-
     {
         connection.setPort(22);
         connectionToEdit.setPort(22);
@@ -46,6 +44,8 @@ public class ConnectionsController {
             connection.setUser(currentUser);
             currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
         }
+
+
     }
 
 
@@ -69,7 +69,6 @@ public class ConnectionsController {
     }
 
     public void editConnection(Connection conn) {
-        edited =true;
         connectionToEdit = conn.clone();
 
     }
@@ -77,7 +76,6 @@ public class ConnectionsController {
     public void cancelEdit() {
         connectionsEJB.save(connectionToEdit);
         currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
-        edited = false;
     }
 
     public Connection getConnection() {
@@ -104,11 +102,5 @@ public class ConnectionsController {
         this.connectionToEdit = connectionToEdit;
     }
 
-    public boolean isEdited() {
-        return edited;
-    }
 
-    public void setEdited(boolean edited) {
-        this.edited = edited;
-    }
 }
