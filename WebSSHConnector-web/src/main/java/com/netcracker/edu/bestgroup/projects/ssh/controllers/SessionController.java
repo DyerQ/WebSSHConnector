@@ -97,7 +97,7 @@ public class SessionController {
         if (activeConnection != null) {
             return activeConnection + " connected at " + DATE_FORMAT.format(connectionDate);
         } else {
-            return "No active connection";
+            return "";
         }
     }
 
