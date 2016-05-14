@@ -64,6 +64,12 @@
                             <p:password id="password" value="#{mainController.user.password}" required="true"
                                         label="password"/>
 
+                            <h:outputLabel for="email" value="E-mail:"/>
+                            <p:inputText id="email" value="#{mainController.user.email}"
+                                         label="email" validatorMessage="Invalid email format">
+                                <f:validateRegex
+                                        pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                            </p:inputText>
                             <f:facet name="footer">
                                 <h:commandButton value="Sign Up" update="authenticationGrowl"
                                                  actionListener="#{mainController.registerUser}"
@@ -87,7 +93,7 @@
         <div class="navbar-fixed-bottom">
             <div class="navbar-inner">
                 <div class="container text-center">
-                    <p:outputLabel>Created by someone... © 2016</p:outputLabel>
+                    <h:outputLink value="about.xhtml">Created by someone... © 2016</h:outputLink>
                 </div>
             </div>
         </div>
