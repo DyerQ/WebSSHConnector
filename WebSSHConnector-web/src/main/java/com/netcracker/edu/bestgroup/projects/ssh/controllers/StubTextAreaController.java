@@ -1,5 +1,7 @@
 package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 
+import org.primefaces.context.RequestContext;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ public class StubTextAreaController {
 
     public void addToData(){
         this.data.add(this.inputString);
-        this.inputString = null;
+        this.inputString = "";
 
     }
 }

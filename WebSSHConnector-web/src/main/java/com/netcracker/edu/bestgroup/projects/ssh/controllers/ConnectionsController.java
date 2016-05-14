@@ -35,15 +35,20 @@ public class ConnectionsController {
     public void postConstruct() {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String login = req.getParameter("user");
-        if (login == null) {
-            FacesContext context = FacesContext.getCurrentInstance();
+        if (login == null || (login.compareTo("") == 0) ) {
+//            FacesContext context = FacesContext.getCurrentInstance();
+//
+//            context.addMessage(null, new FacesMessage("INFO", "LOGIN IS NULL"));
 
-            context.addMessage(null, new FacesMessage("INFO", "LOGIN IS NULL"));
+            currentUser = usersEJB.getFakeUserInstance();
+            connection.setUser(currentUser);
         } else {
             currentUser = usersEJB.findUserByLogin(login);
             connection.setUser(currentUser);
             currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
+
         }
+
 
 
     }
@@ -52,11 +57,14 @@ public class ConnectionsController {
     public void addNewConnection() {
         connectionsEJB.addNew(connection);
         currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
+        clearConnection();
+    }
+    public void clearConnection(){
         connection = new Connection();
         connection.setPort(22);
         connection.setUser(currentUser);
-    }
 
+    }
 
     public void deleteConnection(Connection connection) {
         connectionsEJB.delete(connection);
