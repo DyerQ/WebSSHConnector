@@ -99,7 +99,7 @@ public class Connection implements Serializable {
 
     @Override
     public String toString() {
-        return login + "@" + hostName + ":" + port;
+        return login + "@" + hostName;
     }
 
 
