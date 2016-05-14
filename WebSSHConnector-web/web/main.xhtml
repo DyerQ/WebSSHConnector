@@ -12,16 +12,16 @@
                     <div class="col-lg-8">
                         <div class="row">
                             <p:panel style="float:left; overflow-y: auto; height : 500px; width: auto">
-                                <p:dataList id="data" var="str" value="#{stubTextAreaController.data}" emptyMessage=""
+                                <p:dataList id="data" var="str" value="#{sessionController.output}" emptyMessage=""
                                             type="definition">
                                     #{str}
                                 </p:dataList>
                             </p:panel>
                         </div>
                         <div class="row">
-                            <p:inputText id="commandInput" value="#{stubTextAreaController.inputString}"/>
+                            <p:inputText id="commandInput" value="#{sessionController.command}"/>
                             <p:commandButton value="Submit" update="content:data commandInput" id="submitButton"
-                                             actionListener="#{stubTextAreaController.addToData}"/>
+                                             actionListener="#{sessionController.disconnect}"/>
                             <p:defaultCommand target="submitButton"/>
                         </div>
                     </div>
@@ -65,7 +65,6 @@
 
                         <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
 
-                        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
                         <p:outputPanel id="conn">
                             <p:dialog header="Add new connection" widgetVar="dlg" resizable="false" modal="true" dynamic="true">
                                 <p:ajax event="close" update="conn" resetValues="true"/>
@@ -95,8 +94,7 @@
 
         <div class="connectionEditForm">
             <p:outputPanel id="dialog">
-                <p:growl id="growlR" sticky="true" showDetail="true" life="3000"/>
-                <p:dialog header="Edit" widgetVar="dlg2" resizable="false" modal="true" dynamic="true">
+                <p:dialog header="Edit" widgetVar="dlg2" resizable="false" modal="true">
                     <p:ajax event="close" update="dialog" resetValues="true"/>
 
 

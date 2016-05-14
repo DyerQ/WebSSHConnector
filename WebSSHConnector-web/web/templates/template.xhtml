@@ -14,7 +14,7 @@
 </h:head>
 <h:body>
     <h:form id="form">
-        <p:growl id="authenticationGrowl" sticky="true" showDetail="true" life="3000"/>
+        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
         <div class="navbar-fixed-top">
             <p:toolbar>
                 <f:facet name="left" >
@@ -34,7 +34,7 @@
                                         label="password"/>
 
                             <f:facet name="footer">
-                                <p:commandButton value="Login" update="authenticationGrowl"
+                                <p:commandButton value="Login" update="growl"
                                                  actionListener="#{mainController.login}"
                                                  oncomplete="handleLoginRequest(xhr, status, args)"/>
                             </f:facet>
@@ -71,7 +71,7 @@
                                         pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                             </p:inputText>
                             <f:facet name="footer">
-                                <h:commandButton value="Sign Up" update="authenticationGrowl"
+                                <h:commandButton value="Sign Up" update="growl"
                                                  actionListener="#{mainController.registerUser}"
                                                  oncomplete="handleSignUpRequest()"/>
                             </f:facet>
