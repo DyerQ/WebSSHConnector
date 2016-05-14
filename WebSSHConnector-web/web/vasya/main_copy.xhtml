@@ -12,16 +12,26 @@
                     <div class="col-lg-8">
                         <div class="row">
                             <p:panel style="float:left; overflow-y: auto; height : 500px; width: 100%;">
-                                <p:commandButton actionListener="#{userSessionsController.fakeConnect}" value="Fake connect"
-                                                 update=":form:content"/>
-                                <p:tabView binding="#{userSessionsController.tabView}">
-                                    <p:ajax event="tabChange" listener="#{userSessionsController.onTabChange}"
-                                            update=":form:content"/>
-                                    <p:ajax event="tabClose" listener="#{userSessionsController.onTabClose}"
-                                            update=":form:content"/>
-
-                                </p:tabView>
+                                <p:dataList id="values" var="commandOutputEntry"
+                                            value="#{sessionController.output}"
+                                            emptyMessage="" type="definition">
+                                    <p:outputLabel value="#{commandOutputEntry.output}"
+                                                   style="color: #{commandOutputEntry.outputColor}"/>
+                                </p:dataList>
+                                <h:panelGrid columns="2" cellpadding="10">
+                                    <p:outputLabel value="#{sessionController.activeConnectionInformation}"/>
+                                    <p:commandButton value="Disconnect"
+                                                     disabled="#{not empty sessionController.activeConnection}"/>
+                                </h:panelGrid>
                             </p:panel>
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:inputText id="commandInput" value="#{sessionController.command}"
+                                             readonly="#{empty sessionController.activeConnection}"/>
+                                <p:commandButton value="Execute" update=":form:content" id="commandInputButton"
+                                                 actionListener="#{sessionController.executeCommand}"
+                                                 disabled="#{empty sessionController.activeConnection}"/>
+                                <p:defaultCommand target="commandInputButton"/>
+                            </h:panelGrid>
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -69,7 +79,7 @@
                             </p:column>
                             <p:column>
                                 <p:commandButton icon="fa fa-fw fa-edit" value="connect"
-                                                 actionListener="#{sessionController.connect}"/>
+                                                 actionListener="#{sessionController.connect(connection)}"/>
                             </p:column>
 
                             <p:column>

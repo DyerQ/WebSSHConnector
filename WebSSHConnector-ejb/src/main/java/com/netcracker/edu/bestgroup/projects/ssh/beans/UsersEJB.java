@@ -44,6 +44,7 @@ public class UsersEJB {
     public User getFakeUserInstance() {
         User user = new User();
         user.setUserId(BigInteger.ZERO);
+        user.setUserName("Anonymous User");
         return user;
     }
 }

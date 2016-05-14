@@ -127,7 +127,7 @@ public class SSHSession implements AutoCloseable {
             channel.disconnect();
             String rawOutput = new String(outputStream.toByteArray());
             if (rawOutput.isEmpty()) {
-                return new SSHCommandResult(false, Collections.<String>emptyList());
+                return new SSHCommandResult(false, Collections.singletonList("empty"));
             }
             String[] linesOutput = rawOutput.split("\\r?\\n");
             return new SSHCommandResult(isErroneous, Arrays.asList(linesOutput));
