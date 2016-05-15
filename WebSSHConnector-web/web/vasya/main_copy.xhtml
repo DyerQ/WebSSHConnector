@@ -80,7 +80,7 @@
                                 />
                                 <p:commandButton icon="ui-icon-arrowthick-1-e"
                                                  title="Connect"
-                                                 actionListener="#{sessionController.connect}"
+                                                 actionListener="#{sessionController.connect(connection)}"
                                                  update="data commandInput"
                                                  ajax="false"
                                 />
@@ -89,9 +89,8 @@
 
                         <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
 
-                        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
                         <p:outputPanel id="conn">
-                            <p:dialog header="Add new connection" widgetVar="dlg" resizable="false" modal="true">
+                            <p:dialog header="Add new connection" widgetVar="dlg" resizable="false" modal="true" dynamic="true">
                                 <p:ajax event="close" update="conn" resetValues="true"/>
 
                                 <h:panelGrid columns="2">
@@ -123,7 +122,6 @@
 
         <div class="connectionEditForm">
             <p:outputPanel id="dialog">
-                <p:growl id="growlR" sticky="true" showDetail="true" life="3000"/>
                 <p:dialog header="Edit" widgetVar="dlg2" resizable="false" modal="true">
                     <p:ajax event="close" update="dialog" resetValues="true"/>
 
