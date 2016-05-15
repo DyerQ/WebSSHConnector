@@ -1,15 +1,13 @@
 package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 
-
 import com.netcracker.edu.bestgroup.projects.ssh.beans.ConnectionsEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.beans.UsersEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Connection;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.User;
-import org.primefaces.event.RowEditEvent;
+import com.netcracker.edu.bestgroup.projects.ssh.pojo.ConnectionPOJO;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -18,97 +16,104 @@ import javax.servlet.http.HttpServletRequest;
 @ManagedBean
 @ViewScoped
 public class ConnectionsController {
+
     private User currentUser;
-    private Connection connection = new Connection();
-    private Connection connectionToEdit = connection.clone();
-    {
-        connection.setPort(22);
-        connectionToEdit.setPort(22);
-    }
+
+    private Connection fakeConnection;
+
+    private ConnectionPOJO connectionToAdd;
+
+    private ConnectionPOJO connectionToEdit;
 
     @EJB
     private ConnectionsEJB connectionsEJB;
+
     @EJB
     private UsersEJB usersEJB;
 
     @PostConstruct
     public void postConstruct() {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String login = req.getParameter("user");
-        if (login == null || (login.compareTo("") == 0) ) {
-//            FacesContext context = FacesContext.getCurrentInstance();
-//
-//            context.addMessage(null, new FacesMessage("INFO", "LOGIN IS NULL"));
-
+        String login = req.getParameter("login");
+        if (login == null || (login.compareTo("") == 0)) {
             currentUser = usersEJB.getFakeUserInstance();
-            connection.setUser(currentUser);
         } else {
             currentUser = usersEJB.findUserByLogin(login);
-            connection.setUser(currentUser);
-            currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
-
+            currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser));
         }
 
-
-
+        fakeConnection = new Connection();
+        fakeConnection.setPort(22);
+        fakeConnection.setUser(currentUser);
     }
 
+    public void startAddConnection() {
+        connectionToAdd = new ConnectionPOJO(fakeConnection.getConnectionId(),
+                fakeConnection.getUser(),
+                fakeConnection.getLogin(),
+                fakeConnection.getPassword(),
+                fakeConnection.getHostName(),
+                fakeConnection.getPort());
+    }
 
-    public void addNewConnection() {
+    public void applyAddConnection() {
+        Connection connection = new Connection();
+        connection.setConnectionId(connectionToAdd.getConnectionId());
+        connection.setUser(connectionToAdd.getUser());
+        connection.setLogin(connectionToAdd.getLogin());
+        connection.setPassword(connectionToAdd.getPassword());
+        connection.setHostName(connectionToAdd.getHostName());
+        connection.setPort(connectionToAdd.getPort());
         connectionsEJB.addNew(connection);
-        currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
-        clearConnection();
-    }
-    public void clearConnection(){
-        connection = new Connection();
-        connection.setPort(22);
-        connection.setUser(currentUser);
-
+        currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser));
+        connectionToAdd = null;
     }
 
     public void deleteConnection(Connection connection) {
         connectionsEJB.delete(connection);
-        currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
+        currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser));
     }
 
-    public void saveRow(RowEditEvent event) {
-        Connection editedConnection = ((Connection) event.getObject());
-        connectionsEJB.save(editedConnection);
+    public void startEditConnection(Connection connection) {
+        connectionToEdit = new ConnectionPOJO(connection.getConnectionId(),
+                connection.getUser(),
+                connection.getLogin(),
+                connection.getPassword(),
+                connection.getHostName(),
+                connection.getPort());
     }
 
-    public void editConnection(Connection conn) {
-        connectionToEdit = conn.clone();
+    public void applyEditConnection() {
+        Connection connection = new Connection();
+        connection.setConnectionId(connectionToEdit.getConnectionId());
+        connection.setUser(connectionToEdit.getUser());
+        connection.setLogin(connectionToEdit.getLogin());
+        connection.setPassword(connectionToEdit.getPassword());
+        connection.setHostName(connectionToEdit.getHostName());
+        connection.setPort(connectionToEdit.getPort());
+        connectionsEJB.save(connection);
 
+        currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser));
+        connectionToEdit = null;
     }
 
-    public void cancelEdit() {
-        connectionsEJB.save(connectionToEdit);
-        currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
+    public ConnectionPOJO getConnectionToAdd() {
+        return connectionToAdd;
     }
 
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
+    public void setConnectionToAdd(ConnectionPOJO connectionToAdd) {
+        this.connectionToAdd = connectionToAdd;
     }
 
     public User getCurrentUser() {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
-        this.currentUser = currentUser;
-    }
-
-    public Connection getConnectionToEdit() {
+    public ConnectionPOJO getConnectionToEdit() {
         return connectionToEdit;
     }
 
-    public void setConnectionToEdit(Connection connectionToEdit) {
+    public void setConnectionToEdit(ConnectionPOJO connectionToEdit) {
         this.connectionToEdit = connectionToEdit;
     }
-
-
 }

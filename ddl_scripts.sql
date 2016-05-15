@@ -22,8 +22,7 @@ CREATE TABLE Users (
   login     VARCHAR2(200) UNIQUE NOT NULL,
   user_name VARCHAR2(200),
   password  VARCHAR2(200)        NOT NULL,
-  e_mail     VARCHAR2(200),
-  avatar    VARCHAR2 (200)       NOT NULL
+  e_mail    VARCHAR2(200)
 );
 
 BEGIN

@@ -1,10 +1,12 @@
-package com.netcracker.edu.bestgroup.projects.ssh.connect;
+package com.netcracker.edu.bestgroup.projects.ssh.connect.impl;
 
 import com.jcraft.jsch.*;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.ConnectionStringFormatException;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.InvalidConnectionParametersException;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.SessionInitializationException;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.SessionStateException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.ConnectionStringFormatException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.InvalidConnectionParametersException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.SessionInitializationException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.SessionStateException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.model.SSHCommandResult;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.model.SSHSession;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -13,26 +15,10 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Collections;
 
-/**
- * This class provides the ability to initiate SSHSessions with certain connection parameters
- * It does not instantiate a TERM instance, having ability only to execute commands one by one
- * After the object is used, session should be closed by invoking @method close()
- * <p>
- * Implements AutoCloseable interface for convenience
- */
-public class SSHSession implements AutoCloseable {
+class SSHSessionImpl implements SSHSession {
     private Session session;
 
-    /**
-     * Creates the instance of SSHSession and instantiates the JSCh session
-     *
-     * @param connectionString in the format of 'username/password@host[:port]', where
-     *                         [param] means that the parameter can be omitted
-     *                         If port is omitted, default value of 22 is used
-     *                         Connection without a password is unavailable
-     * @throws InvalidConnectionParametersException on invalid connectionString
-     */
-    public SSHSession(String connectionString) throws InvalidConnectionParametersException, SessionInitializationException {
+    SSHSessionImpl(String connectionString) throws InvalidConnectionParametersException, SessionInitializationException {
         if (!connectionString.matches("^[^/@:]+/[^/@:]+@[^/@:]+(:\\d+)?$")) {
             throw new ConnectionStringFormatException("Format of connectionString is " +
                     "username/password@host[:port]");
@@ -57,16 +43,7 @@ public class SSHSession implements AutoCloseable {
         this.session = initSession(userName, password, host, port);
     }
 
-    /**
-     * Creates the instance of SSHSession and instantiates the JSCh session
-     *
-     * @param userName @NotNull name of the user on the host server
-     * @param password password of specified user
-     * @param host     @NotNull host server address
-     * @param port     socket opening address
-     * @throws InvalidConnectionParametersException on invalid connection parameters
-     */
-    public SSHSession(String userName, String password, String host, Integer port) throws InvalidConnectionParametersException, SessionInitializationException {
+    SSHSessionImpl(String userName, String password, String host, Integer port) throws InvalidConnectionParametersException, SessionInitializationException {
         if (userName == null || userName.isEmpty()) {
             throw new InvalidConnectionParametersException("userName can't be null");
         }
@@ -112,13 +89,7 @@ public class SSHSession implements AutoCloseable {
         }
     }
 
-    /**
-     * Executes the specified command in a separate exec channel
-     *
-     * @param command command that will be sent to an external terminal
-     * @return object with information on whether the command invocation was erroneous and external terminal output
-     * @throws SessionStateException if this session can't create or operate exec channels
-     */
+    @Override
     public SSHCommandResult executeCommand(String command) throws SessionStateException {
         if (!command.isEmpty()) {
             ChannelExec channel = openExecChannel();
@@ -127,18 +98,15 @@ public class SSHSession implements AutoCloseable {
             channel.disconnect();
             String rawOutput = new String(outputStream.toByteArray());
             if (rawOutput.isEmpty()) {
-                return new SSHCommandResult(false, Collections.singletonList("empty"));
+                return new SSHCommandResultImpl(false, Collections.singletonList("empty"));
             }
             String[] linesOutput = rawOutput.split("\\r?\\n");
-            return new SSHCommandResult(isErroneous, Arrays.asList(linesOutput));
+            return new SSHCommandResultImpl(isErroneous, Arrays.asList(linesOutput));
         } else {
             return null;
         }
     }
 
-    /**
-     * This method has to be invoked after all desired commands are executed
-     */
     @Override
     public void close() {
         session.disconnect();

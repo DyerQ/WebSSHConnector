@@ -14,17 +14,19 @@ public class UsersEJB {
     @PersistenceContext(unitName = "appPersistenceUnit")
     private EntityManager entityManager;
 
-    public User addNew(User user) {
+    public void addNew(User user) {
         entityManager.persist(user);
-        return user;
     }
 
-    public User delete(User user) {
-        User toBeRemoved = entityManager.merge(user);
-        entityManager.remove(toBeRemoved);
-        return user;
+    public void delete(User user) {
+        if (entityManager.contains(user)) {
+            entityManager.remove(user);
+        } else {
+            entityManager.remove(entityManager.merge(user));
+        }
     }
 
+    // FIXME do we really need this?
     public List<User> findUsers() {
         @SuppressWarnings("unchecked")
         TypedQuery<User> query = (TypedQuery<User>) entityManager.createQuery("SELECT u FROM User u");
@@ -41,6 +43,7 @@ public class UsersEJB {
         entityManager.merge(user);
     }
 
+    // FIXME rewrite
     public User getFakeUserInstance() {
         User user = new User();
         user.setUserId(BigInteger.ZERO);

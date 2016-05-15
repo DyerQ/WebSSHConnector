@@ -11,21 +11,47 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="row">
-                            <p:panel style="float:left; overflow-y: auto; height : 500px; width: auto">
-                                <p:dataList id="data" var="str" value="#{sessionController.output}" emptyMessage=""
-                                            type="definition">
-                                    #{str}
+                            <p:panel style="float:left; overflow-y: auto; height : 500px; width: 100%;">
+                                <p:dataList id="values" var="commandOutputEntry"
+                                            value="#{sessionController.output}"
+                                            emptyMessage="" type="definition">
+                                    <p:outputLabel value="#{commandOutputEntry.output}"
+                                                   style="color: #{commandOutputEntry.outputColor}"/>
                                 </p:dataList>
                             </p:panel>
                         </div>
                         <div class="row">
-                            <p:inputText id="commandInput" value="#{sessionController.command}"/>
-                            <p:commandButton value="Submit" update="content:data commandInput" id="submitButton"
-                                             actionListener="#{sessionController.disconnect}"/>
-                            <p:defaultCommand target="submitButton"/>
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p:outputLabel value="#{sessionController.activeConnectionInformation}"
+                                                       style="width: 100%"/>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p:commandButton value="Disconnect"
+                                                         disabled="#{empty sessionController.activeConnection}"
+                                                         actionListener="#{sessionController.disconnect}"
+                                                         update=":form:content"
+                                                         style="width: 100%; float: right"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p:inputText id="commandInput" value="#{sessionController.command}"
+                                                     readonly="#{empty sessionController.activeConnection}"
+                                                     style="width: 100%;"/>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p:commandButton value="Execute" update=":form:content" id="commandInputButton"
+                                                         actionListener="#{sessionController.executeCommand}"
+                                                         disabled="#{empty sessionController.activeConnection}"
+                                                         style="width: 100%; float: right"/>
+                                        <p:defaultCommand target="commandInputButton"/>
+                                    </div>
+                                </div>
+                            </h:panelGrid>
                         </div>
                     </div>
-
 
                     <div class="col-lg-4">
 
@@ -40,7 +66,6 @@
                             <p:column>
                                 <h:outputText
                                         value="#{connection.login.concat('@').concat(connection.hostName).concat(':').concat(connection.port)}"/>
-
                             </p:column>
                             <p:column style="width:140px">
                                 <p:commandButton icon="ui-icon-trash"
@@ -50,7 +75,7 @@
                                                  ajax="false"/>
                                 <p:commandButton icon="ui-icon-pencil"
                                                  title="Edit this connection"
-                                                 actionListener="#{connectionsController.editConnection(connection)}"
+                                                 actionListener="#{connectionsController.startEditConnection(connection)}"
                                                  update=":form:dialog:"
                                                  oncomplete="PF('dlg2').show();"
                                 />
@@ -63,23 +88,30 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
+                        <p:commandButton value="Add new connection" type="button"
+                                         actionListener="#{connectionsController.startAddConnection}"
+                                         onclick="PF('dlg').show();"/>
 
+                        <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
                         <p:outputPanel id="conn">
-                            <p:dialog header="Add new connection" widgetVar="dlg" resizable="false" modal="true" dynamic="true">
+                            <p:dialog header="Add new connection" widgetVar="dlg" resizable="false" modal="true">
                                 <p:ajax event="close" update="conn" resetValues="true"/>
 
                                 <h:panelGrid columns="2">
                                     <h:outputLabel value="Login: " style="font-weight:bold"/>
-                                    <p:inputText id="Login" required="true" value="#{connectionsController.connection.login}"/>
+                                    <p:inputText id="Login" required="true"
+                                                 value="#{connectionsController.connectionToAdd.login}"/>
                                     <h:outputLabel value="Password: " style="font-weight:bold"/>
-                                    <p:inputText id="Password" required="true" value="#{connectionsController.connection.password}"/>
+                                    <p:inputText id="Password" required="true"
+                                                 value="#{connectionsController.connectionToAdd.password}"/>
                                     <h:outputLabel value="Host name: " style="font-weight:bold"/>
-                                    <p:inputText id="Host_name" required="true" value="#{connectionsController.connection.hostName}"/>
+                                    <p:inputText id="Host_name" required="true"
+                                                 value="#{connectionsController.connectionToAdd.hostName}"/>
                                     <h:outputLabel value="Port: " style="font-weight:bold"/>
-                                    <p:inputText id="Port" required="true" value="#{connectionsController.connection.port}"/>
+                                    <p:inputText id="Port" required="true"
+                                                 value="#{connectionsController.connectionToAdd.port}"/>
                                     <p:commandButton value="Add new connection" update="connections_table conn"
-                                                     actionListener="#{connectionsController.addNewConnection}"
+                                                     actionListener="#{connectionsController.applyAddConnection}"
                                                      oncomplete="PF('dlg').hide();"/>
 
                                 </h:panelGrid>
@@ -94,6 +126,7 @@
 
         <div class="connectionEditForm">
             <p:outputPanel id="dialog">
+                <p:growl id="growlR" sticky="true" showDetail="true" life="3000"/>
                 <p:dialog header="Edit" widgetVar="dlg2" resizable="false" modal="true">
                     <p:ajax event="close" update="dialog" resetValues="true"/>
 
@@ -111,10 +144,8 @@
                         <h:outputLabel value="Port: " style="font-weight:bold"/>
                         <p:inputText id="Port_tmp" value="#{connectionsController.connectionToEdit.port}"/>
                         <p:commandButton value="Accept" update=":form:content:connections_table"
-                                         actionListener="#{connectionsController.cancelEdit}"
+                                         actionListener="#{connectionsController.applyEditConnection}"
                                          oncomplete="PF('dlg2').hide();"/>
-
-
                     </h:panelGrid>
                 </p:dialog>
             </p:outputPanel>

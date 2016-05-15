@@ -17,62 +17,68 @@
         <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
         <div class="navbar-fixed-top">
             <p:toolbar>
-                <f:facet name="left" >
+                <f:facet name="left">
                     <p:outputLabel>WebSSHConnector (Dev in progress)</p:outputLabel>
                 </f:facet>
                 <f:facet name="right">
-                    <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();" rendered="#{!(mainController.loggedIn)}"/>
+                    <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();"
+                                     rendered="#{empty profileController.currentUser}"/>
 
                     <p:dialog widgetVar="dlg_L" resizable="false" dynamic="true" modal="true" closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="username" value="Username:"/>
-                            <p:inputText id="username" value="#{mainController.user.login}" required="true"
+                            <p:inputText id="username" value="#{authenticationController.user.login}" required="true"
                                          label="username"/>
 
                             <h:outputLabel for="password_L" value="Password:"/>
-                            <p:password id="password_L" value="#{mainController.user.password}" required="true"
+                            <p:password id="password_L" value="#{authenticationController.user.password}"
+                                        required="true"
                                         label="password"/>
 
                             <f:facet name="footer">
                                 <p:commandButton value="Login" update="growl"
-                                                 actionListener="#{mainController.login}"
+                                                 actionListener="#{authenticationController.login}"
                                                  oncomplete="handleLoginRequest(xhr, status, args)"/>
                             </f:facet>
                         </h:panelGrid>
                     </p:dialog>
 
-                    <h:outputLink value="profile.xhtml" rendered="#{!(mainController.profilePage)}" style="font-weight:bold" >#{mainController.user.userName}
+                    <h:outputLink value="profile.xhtml" rendered="#{!(authenticationController.profilePage)}"
+                                  style="font-weight:bold">#{authenticationController.loggedIn}
                     </h:outputLink>
-                    <h:button value="Go to main" rendered="#{(mainController.profilePage)}" outcome="main.xhtml" style="font-weight:bold" />
-                    <h:commandButton value="Logout" action="#{mainController.logout}"
-                                     rendered="#{mainController.loggedIn}"/>
+                    <h:button value="Go to main" rendered="#{(authenticationController.profilePage)}"
+                              outcome="main.xhtml" style="font-weight:bold"/>
+                    <h:commandButton value="Logout" action="#{authenticationController.logout}"
+                                     rendered="#{authenticationController.loggedIn}"/>
 
 
-                    <h:commandButton value="Sign Up" type="button" onclick="PF('dlg_R').show();" rendered="#{!(mainController.loggedIn)}"/>
+                    <h:commandButton value="Sign Up" type="button" onclick="PF('dlg_R').show();"
+                                     rendered="#{!(authenticationController.loggedIn)}"/>
 
-                    <p:dialog widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true" closeOnEscape="true">
+                    <p:dialog widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true"
+                              closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="name" value="Name:"/>
-                            <p:inputText id="name" value="#{mainController.user.userName}" required="true"
+                            <p:inputText id="name" value="#{authenticationController.user.userName}" required="true"
                                          label="username"/>
 
                             <h:outputLabel for="login" value="Login:"/>
-                            <p:inputText id="login" value="#{mainController.user.login}" required="true"
+                            <p:inputText id="login" value="#{authenticationController.user.login}" required="true"
                                          label="login"/>
 
                             <h:outputLabel for="password" value="Password:"/>
-                            <p:password id="password" value="#{mainController.user.password}" required="true"
+                            <p:password id="password" value="#{authenticationController.user.password}" required="true"
                                         label="password"/>
 
                             <h:outputLabel for="email" value="E-mail:"/>
-                            <p:inputText id="email" value="#{mainController.user.email}"
+                            <p:inputText id="email" value="#{authenticationController.user.email}"
                                          label="email" validatorMessage="Invalid email format">
                                 <f:validateRegex
-                                        pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                             </p:inputText>
                             <f:facet name="footer">
                                 <h:commandButton value="Sign Up" update="growl"
-                                                 actionListener="#{mainController.registerUser}"
+                                                 actionListener="#{authenticationController.registerUser}"
                                                  oncomplete="handleSignUpRequest()"/>
                             </f:facet>
                         </h:panelGrid>

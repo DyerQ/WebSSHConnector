@@ -14,6 +14,7 @@ import java.io.IOException;
 @ManagedBean
 @ViewScoped
 public class ProfileController {
+
     private User currentUser;
 
     @EJB
@@ -24,7 +25,6 @@ public class ProfileController {
         HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
         String login = req.getParameter("login");
         currentUser = usersEJB.findUserByLogin(login);
-
     }
 
     public void updateUserProfile() throws IOException {
@@ -38,7 +38,6 @@ public class ProfileController {
                 .invalidateSession();
         FacesContext.getCurrentInstance().getExternalContext().redirect("main.xhtml");
     }
-
 
     public User getCurrentUser() {
         return currentUser;

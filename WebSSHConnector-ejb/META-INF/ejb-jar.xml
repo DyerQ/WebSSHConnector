@@ -18,12 +18,6 @@
             <transaction-type>Container</transaction-type>
         </session>
         <session>
-            <ejb-name>SessionEJB</ejb-name>
-            <ejb-class>com.netcracker.edu.bestgroup.projects.ssh.beans.SessionEJB</ejb-class>
-            <session-type>Stateful</session-type>
-            <transaction-type>Container</transaction-type>
-        </session>
-        <session>
             <ejb-name>MultipleSessionsEJB</ejb-name>
             <ejb-class>com.netcracker.edu.bestgroup.projects.ssh.beans.MultipleSessionsEJB</ejb-class>
             <session-type>Stateful</session-type>

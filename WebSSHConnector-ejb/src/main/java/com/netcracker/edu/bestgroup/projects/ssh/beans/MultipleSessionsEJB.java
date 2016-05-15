@@ -1,10 +1,11 @@
 package com.netcracker.edu.bestgroup.projects.ssh.beans;
 
-import com.netcracker.edu.bestgroup.projects.ssh.connect.SSHCommandResult;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.SSHSession;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.InvalidConnectionParametersException;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.SessionInitializationException;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.SessionStateException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.InvalidConnectionParametersException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.SessionInitializationException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.SessionStateException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.impl.SSHSessionFactory;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.model.SSHCommandResult;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.model.SSHSession;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Connection;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.User;
 
@@ -17,6 +18,7 @@ import java.util.Map;
 
 @Stateful
 public class MultipleSessionsEJB {
+
     private Map<User, Map<Connection, SSHSession>> usersSessions;
 
     @PostConstruct
@@ -54,7 +56,7 @@ public class MultipleSessionsEJB {
         String password = connection.getPassword();
         String hostName = connection.getHostName();
         int port = connection.getPort();
-        return new SSHSession(login, password, hostName, port);
+        return SSHSessionFactory.openSSHSession(login, password, hostName, port);
     }
 
     public SSHCommandResult executeCommand(Connection connection, String command) throws SessionStateException {

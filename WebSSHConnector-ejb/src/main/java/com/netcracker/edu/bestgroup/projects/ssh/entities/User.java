@@ -25,7 +25,6 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
 
-
     @Column(name = "e_mail")
     private String eMail;
 
@@ -81,6 +80,11 @@ public class User implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return getUserName();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -88,7 +92,6 @@ public class User implements Serializable {
         User user = (User) o;
 
         return userId.equals(user.userId);
-
     }
 
     @Override

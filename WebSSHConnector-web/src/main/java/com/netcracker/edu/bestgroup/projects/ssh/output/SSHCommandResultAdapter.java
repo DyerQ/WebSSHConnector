@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SSHCommandOutput {
+public class SSHCommandResultAdapter {
     private static final DateFormat EXECUTION_DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
     private boolean plain;
@@ -15,7 +15,7 @@ public class SSHCommandOutput {
     private String outputColor;
 
 
-    SSHCommandOutput(boolean plain, String user, Date executionDate, String executionDirectory, String output, String outputColor) {
+    SSHCommandResultAdapter(boolean plain, String user, Date executionDate, String executionDirectory, String output, String outputColor) {
         this.plain = plain;
         this.user = user;
         this.executionDate = executionDate;

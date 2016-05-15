@@ -9,7 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-
     <properties>
         <!-- To enable parallel development and deployment, specify unique value -->
         <web-deploy-suffix></web-deploy-suffix>
@@ -32,7 +31,6 @@
             <type>war</type>
         </dependency>
     </dependencies>
-
 
     <build>
         <plugins>
@@ -62,6 +60,4 @@
         </plugins>
         <finalName>WebSSHConnector</finalName>
     </build>
-
-
 </project>
