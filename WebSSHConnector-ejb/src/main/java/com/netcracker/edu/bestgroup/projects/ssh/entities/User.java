@@ -29,6 +29,24 @@ public class User implements Serializable {
     @Column(name = "e_mail")
     private String eMail;
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @Column(name = "avatar")
+    private String avatar;
+
+    @PrePersist
+    private void preInsert() {
+        if (avatar == null || avatar.isEmpty()) {
+            avatar = "resources/img/standart.jpg";
+        }
+    }
+
     @OneToMany(targetEntity = Connection.class, mappedBy = "user")
     private List<Connection> connectionList;
 

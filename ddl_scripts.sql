@@ -83,4 +83,15 @@ FOR EACH ROW
     END IF;
   END;
 
+CREATE OR REPLACE TRIGGER no_avatar_trig
+BEFORE UPDATE ON Users
+FOR EACH ROW
+  BEGIN
+    IF :new.avatar IS NULL
+    THEN
+      :new.avatar := 'resources/img/standart.jpg';
+    END IF;
+  END;
+
 -- Further additions to the tables structure must include creating new tables. Do not modify existing tables!
+
