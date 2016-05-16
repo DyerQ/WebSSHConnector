@@ -69,7 +69,7 @@ public class MainController {
         FacesContext.getCurrentInstance().getExternalContext()
                 .invalidateSession();
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("main.xhtml");
         } catch (IOException e) {
             e.printStackTrace();
         }
