@@ -1,14 +1,13 @@
 package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 
-import com.netcracker.edu.bestgroup.projects.ssh.beans.UserSessionsEJB;
+import com.netcracker.edu.bestgroup.projects.ssh.beans.MultipleSessionsEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.connect.SSHCommandResult;
 import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.InvalidConnectionParametersException;
 import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.SessionInitializationException;
 import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.SessionStateException;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Connection;
-import com.netcracker.edu.bestgroup.projects.ssh.entities.User;
-import com.netcracker.edu.bestgroup.projects.ssh.output.SSHCommandOutput;
-import com.netcracker.edu.bestgroup.projects.ssh.output.SSHCommandOutputBuilder;
+import com.netcracker.edu.bestgroup.projects.ssh.output.SSHCommandResultAdapter;
+import com.netcracker.edu.bestgroup.projects.ssh.output.SSHCommandResultAdapterProducer;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -27,7 +26,7 @@ public class SessionController {
     private static final String ECHO_USER_NAME_COMMAND = "echo $USER";
     private static final String CURRENT_DIRECTORY_COMMAND = "pwd";
     @EJB
-    UserSessionsEJB userSessionsEJB;
+    MultipleSessionsEJB multipleSessionsEJB;
 
     private Connection activeConnection = null;
     private Date connectionDate = null;
@@ -36,11 +35,11 @@ public class SessionController {
 
     private static final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
 
-    private List<SSHCommandOutput> output = new ArrayList<>();
+    private List<SSHCommandResultAdapter> output = new ArrayList<>();
 
     public void connect(Connection connection) throws InvalidConnectionParametersException, SessionInitializationException {
         if (activeConnection == null) {
-            userSessionsEJB.openNewSession(connection);
+            multipleSessionsEJB.openNewSession(connection);
             activeConnection = connection;
             connectionDate = new Date();
             FacesMessage message = new FacesMessage("Connected to " + connection);
@@ -54,23 +53,26 @@ public class SessionController {
 
     public void executeCommand() throws SessionStateException {
         if (activeConnection != null) {
-            User user = activeConnection.getUser();
-            SSHCommandResult userNameCommandResult = userSessionsEJB.executeCommand(user, ECHO_USER_NAME_COMMAND);
-            // we expect that it'll be successful
+            // we expect that default commands will be successful
+            SSHCommandResult userNameCommandResult = multipleSessionsEJB.executeCommand(activeConnection,
+                    ECHO_USER_NAME_COMMAND);
             String userName = userNameCommandResult.getOutput().get(0);
-            SSHCommandResult directoryCommandResult = userSessionsEJB.executeCommand(user, CURRENT_DIRECTORY_COMMAND);
+            SSHCommandResult directoryCommandResult = multipleSessionsEJB.executeCommand(activeConnection,
+                    CURRENT_DIRECTORY_COMMAND);
             String directory = directoryCommandResult.getOutput().get(0);
-            SSHCommandOutputBuilder userInputOutputBuilder = SSHCommandOutputBuilder.getUserInputOutputBuilder(userName, directory);
+            SSHCommandResultAdapterProducer userInputOutputBuilder = SSHCommandResultAdapterProducer
+                    .getUserInputAdapterProducer(userName, directory);
             output.add(userInputOutputBuilder.convert(command));
-            SSHCommandResult result = userSessionsEJB.executeCommand(user, this.command);
-            SSHCommandOutputBuilder outputBuilder;
+            SSHCommandResult result = multipleSessionsEJB.executeCommand(activeConnection, this.command);
+            SSHCommandResultAdapterProducer outputBuilder;
             if (result.isErroneous()) {
-                outputBuilder = SSHCommandOutputBuilder.getErrorOutputBuilder();
+                outputBuilder = SSHCommandResultAdapterProducer.getErrorAdapterProducer();
             } else {
-                outputBuilder = SSHCommandOutputBuilder.getPlainOutputBuilder();
+                outputBuilder = SSHCommandResultAdapterProducer.getPlainAdapterProducer();
             }
             output.addAll(outputBuilder.convertAll(result.getOutput()));
             this.command = null;
+
         } else {
             FacesMessage message = new FacesMessage("Could not execute command",
                     "Could not execute command, no active connection at the moment");
@@ -80,7 +82,7 @@ public class SessionController {
 
     public void disconnect() {
         if (activeConnection != null) {
-            userSessionsEJB.closeSession(activeConnection.getUser());
+            multipleSessionsEJB.closeConnection(activeConnection);
             activeConnection = null;
             connectionDate = null;
         } else {
@@ -109,7 +111,7 @@ public class SessionController {
         this.command = command;
     }
 
-    public List<SSHCommandOutput> getOutput() {
+    public List<SSHCommandResultAdapter> getOutput() {
         return output;
     }
 }

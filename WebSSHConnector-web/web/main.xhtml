@@ -11,18 +11,44 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="row">
-                            <p:panel style="float:left; overflow-y: auto; height : 500px; width: auto">
-                                <p:dataList id="data" var="str" value="#{sessionController.output}" emptyMessage=""
-                                            type="definition">
-                                    #{str}
+                            <p:panel style="float:left; overflow-y: auto; height : 500px; width: 100%;">
+                                <p:dataList id="values" var="commandOutputEntry"
+                                            value="#{sessionController.output}"
+                                            emptyMessage="" type="definition">
+                                    <p:outputLabel value="#{commandOutputEntry.output}"
+                                                   style="color: #{commandOutputEntry.outputColor}"/>
                                 </p:dataList>
                             </p:panel>
                         </div>
                         <div class="row">
-                            <p:inputText id="commandInput" value="#{sessionController.command}"/>
-                            <p:commandButton value="Submit" update="content:data commandInput" id="submitButton"
-                                             actionListener="#{sessionController.disconnect}"/>
-                            <p:defaultCommand target="submitButton"/>
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p:outputLabel value="#{sessionController.activeConnectionInformation}"
+                                                       style="width: 100%"/>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <p:commandButton value="Disconnect"
+                                                         disabled="#{empty sessionController.activeConnection}"
+                                                         actionListener="#{sessionController.disconnect}"
+                                                         style="width: 100%; float: right"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <p:inputText id="commandInput" value="#{sessionController.command}"
+                                                     readonly="#{empty sessionController.activeConnection}"
+                                                     style="width: 100%;"/>
+                                    </div>
+                                    <div class="col-lg-2">
+                                                         id="commandInputButton"
+                                                         actionListener="#{sessionController.executeCommand}"
+                                                         disabled="#{empty sessionController.activeConnection}"
+                                                         style="width: 100%; float: right"/>
+                                        <p:defaultCommand target="commandInputButton"/>
+                                    </div>
+                                </div>
+                            </h:panelGrid>
                         </div>
                     </div>
 
@@ -55,7 +81,7 @@
                                 />
                                 <p:commandButton icon="ui-icon-arrowthick-1-e"
                                                  title="Connect"
-                                                 actionListener="#{sessionController.connect}"
+                                                 actionListener="#{sessionController.connect(connection)}"
                                                  update="data commandInput"
                                                  ajax="false"
                                 />
