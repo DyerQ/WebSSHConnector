@@ -4,6 +4,7 @@ function handleLoginRequest(xhr, status, args) {
     } else {
         PF('dlg_L').hide();
         $('#loginLink').fadeOut();
+        location.reload();
     }
 }
 (function() {
@@ -26,7 +27,13 @@ function handleLoginRequest(xhr, status, args) {
     })(i);
 
 })();
-function handleSignUpRequest() {
-    PF('dlg_R').hide();
-    $('#loginLink').fadeOut();
+function handleSignUpRequest(xhr, status, args) {
+    if (!args.RegisterSuccess) {
+        PF('dlg_R').jq.effect("shake", {times: 5}, 100);
+    }
+    else{
+        PF('dlg_R').hide();
+        $('#loginLink').fadeOut();
+        location.reload();
+    }
 }

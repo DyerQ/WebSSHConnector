@@ -28,6 +28,12 @@ public class MainController {
     }
     boolean isProfilePage = false;
 
+    public boolean getRegisterSuccess() {
+        return RegisterSuccess;
+    }
+
+    boolean RegisterSuccess = false;
+
     @EJB
     private UsersEJB usersEJB;
     public String login(ActionEvent event) {
@@ -35,27 +41,18 @@ public class MainController {
                 .getExternalContext().getSession(false);
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message;
-        List<User> usersList = usersEJB.findUsers();
-        List<User> tmp = new ArrayList<>();
-        for (User e : usersList) {
-            if (e.getLogin().equals(user.getLogin()) && e.getPassword().equals(user.getPassword())) {
-                tmp.add(e);
-            }
-        }
+        User tmp_User = usersEJB.findUserByLogin(user.getLogin());
 
-        if ((!tmp.isEmpty())) {
+        if (!(tmp_User.equals(null)) && tmp_User.getPassword().equals(user.getPassword())) {
             loggedIn = true;
             user = usersEJB.findUserByLogin(user.getLogin());
             FacesContext.getCurrentInstance().getExternalContext()
                     .getSessionMap().put("username", user.getUserName());
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .getSessionMap().put("login", user.getLogin());
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Welcome", user.getLogin());
             FacesContext.getCurrentInstance().addMessage(null, message);
             context.addCallbackParam("loggedIn", loggedIn);
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("test/connections.xhtml?user=" + user.getLogin() + "&faces-redirect=true");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Logging Error", "Invalid credentials");
@@ -91,9 +88,20 @@ public class MainController {
 
     }
 
-    public String registerUser(ActionEvent event) {
-        usersEJB.addNew(user);
-        login(event);
-        return "main.xhtml?user" + user.getLogin() + "&faces-redirect=true";
+    public void registerUser(ActionEvent event) {
+        RequestContext context = RequestContext.getCurrentInstance();
+        FacesMessage message;
+        if(user.getUserName().equals(null)||user.getLogin().equals(null)||user.getPassword().equals(null)){
+            RegisterSuccess = false;
+            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Registration Error", "Invalid credentials");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            context.addCallbackParam("RegisterSuccess", RegisterSuccess);
+        }
+        else{
+            RegisterSuccess = true;
+            usersEJB.addNew(user);
+            login(event);
+            context.addCallbackParam("RegisterSuccess", RegisterSuccess);
+        }
     }
 }
