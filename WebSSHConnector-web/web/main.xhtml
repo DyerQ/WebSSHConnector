@@ -31,6 +31,7 @@
                                         <p:commandButton value="Disconnect"
                                                          disabled="#{empty sessionController.activeConnection}"
                                                          actionListener="#{sessionController.disconnect}"
+                                                         update="content"
                                                          style="width: 100%; float: right"/>
                                     </div>
                                 </div>
@@ -41,6 +42,7 @@
                                                      style="width: 100%;"/>
                                     </div>
                                     <div class="col-lg-2">
+                                        <p:commandButton value="Execute" update="content"
                                                          id="commandInputButton"
                                                          actionListener="#{sessionController.executeCommand}"
                                                          disabled="#{empty sessionController.activeConnection}"
