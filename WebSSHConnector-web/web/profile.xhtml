@@ -27,35 +27,36 @@
                         </p:selectOneButton>
                     </div>
                     <div class="row">
-                        <p:commandButton value="Apply" actionListener="#{profileController.setAvatar()}" update="avatar" ajax="false"/>
+                        <p:commandButton value="Apply" actionListener="#{profileController.setAvatar()}" update="avatar" ajax="false" icon="ui-icon-check"/>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                        <h:outputText value="Login " />
-                        <p:inputText value="#{profileController.currentUser.login}" readonly="true"/>
+                    <div style="margin-top: 40px">
+                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                         <h:outputText value="Login " />
+                         <p:inputText value="#{profileController.currentUser.login}" readonly="true"/>
 
-                        <h:outputText value="Password " />
-                        <p:inputText value="#{profileController.currentUser.password}"/>
+                            <h:outputText value="Password " />
+                             <p:inputText value="#{profileController.currentUser.password}"/>
 
-                        <h:outputText value="User Name " />
-                        <p:inputText value="#{profileController.currentUser.userName}"/>
+                             <h:outputText value="User Name " />
+                            <p:inputText value="#{profileController.currentUser.userName}"/>
 
-                        <h:outputText value="E-mail " />
-                        <p:inputText value="#{profileController.currentUser.email}"/>
-                    </h:panelGrid>
+                             <h:outputText value="E-mail " />
+                             <p:inputText value="#{profileController.currentUser.email}"/>
+                        </h:panelGrid>
 
-                    <p:commandButton title="Update User Profile"
+                        <p:commandButton title="Update User Profile"
                                      value="Update User Profile"
                                      action="#{profileController.updateUserProfile}"
                                      update="form"/>
 
-                    <p:commandButton icon="ui-icon-trash"
+                        <p:commandButton icon="ui-icon-trash"
                                      value="Delete User Profile"
                                      title="Delete User Profile"
                                      action="#{profileController.deleteUserProfile}"
-
-                                     update="form"/>
+                                         update="form"/>
+                    </div>
                 </div>
             </div>
         </div>
