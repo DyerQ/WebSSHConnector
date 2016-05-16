@@ -36,7 +36,7 @@ public class MainController {
 
     @EJB
     private UsersEJB usersEJB;
-    public String login(ActionEvent event) {
+    public void login(ActionEvent event) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
         RequestContext context = RequestContext.getCurrentInstance();
@@ -53,14 +53,17 @@ public class MainController {
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Welcome", user.getLogin());
             FacesContext.getCurrentInstance().addMessage(null, message);
             context.addCallbackParam("loggedIn", loggedIn);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("main.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             loggedIn = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Logging Error", "Invalid credentials");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+            context.addCallbackParam("loggedIn", loggedIn);
         }
-
-        FacesContext.getCurrentInstance().addMessage(null, message);
-        context.addCallbackParam("loggedIn", loggedIn);
-        return "test/connections.xhtml?user=" + user.getLogin() + "&faces-redirect=true";
     }
 
     public void logout() {
@@ -69,7 +72,7 @@ public class MainController {
         FacesContext.getCurrentInstance().getExternalContext()
                 .invalidateSession();
         try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("main.xhtml");
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,6 +104,11 @@ public class MainController {
             registerSuccess = true;
             usersEJB.addNew(user);
             login(event);
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             context.addCallbackParam("RegisterSuccess", registerSuccess);
         }
     }
