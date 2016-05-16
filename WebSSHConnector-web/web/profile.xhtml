@@ -7,47 +7,58 @@
 
     <ui:define name="content">
 
-        <h:form>
-            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                <p:selectOneButton value="#{selectOneView.option}">
-                    <f:selectItem itemLabel="Sex" itemValue="Sex" />
-                    <f:selectItem itemLabel="Hair" itemValue="Hair" />
-                </p:selectOneButton>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <p:graphicImage id="avatar" value="#{profileController.currentUser.avatar}" />
+                    </div>
+                    <div class="row">
+                        <p:selectOneButton value="#{profileController.avatarSex}">
+                            <f:selectItem itemLabel="Man" itemValue="Man" />
+                            <f:selectItem itemLabel="Woman" itemValue="Woman" />
+                        </p:selectOneButton>
+                    </div>
+                    <div class="row">
+                        <p:selectOneButton value="#{profileController.avatarColor}">
+                            <f:selectItem itemLabel="Blonde" itemValue="Blonde" />
+                            <f:selectItem itemLabel="Ginger" itemValue="Ginger" />
+                            <f:selectItem itemLabel="Brunet" itemValue="Brunet" />
+                        </p:selectOneButton>
+                    </div>
+                    <div class="row">
+                        <p:commandButton value="Apply" actionListener="#{profileController.setAvatar()}" update="avatar" ajax="false"/>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                        <h:outputText value="Login " />
+                        <p:inputText value="#{profileController.currentUser.login}" readonly="true"/>
 
-                <p:commandButton value="Submit" update="display" icon="ui-icon-check" />
-                <p:spacer />
+                        <h:outputText value="Password " />
+                        <p:inputText value="#{profileController.currentUser.password}"/>
 
-                <h:outputText value="Selected:" />
-                <h:outputText id="display" value="#{selectOneView.option}" style="font-weight: bold" />
-            </h:panelGrid>
-        </h:form>
+                        <h:outputText value="User Name " />
+                        <p:inputText value="#{profileController.currentUser.userName}"/>
 
-        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-            <h:outputText value="Login " />
-            <p:inputText value="#{profileController.currentUser.login}" readonly="true"/>
+                        <h:outputText value="E-mail " />
+                        <p:inputText value="#{profileController.currentUser.email}"/>
+                    </h:panelGrid>
 
-            <h:outputText value="Password " />
-            <p:inputText value="#{profileController.currentUser.password}"/>
+                    <p:commandButton title="Update User Profile"
+                                     value="Update User Profile"
+                                     action="#{profileController.updateUserProfile}"
+                                     update="form"/>
 
-            <h:outputText value="User Name " />
-            <p:inputText value="#{profileController.currentUser.userName}"/>
+                    <p:commandButton icon="ui-icon-trash"
+                                     value="Delete User Profile"
+                                     title="Delete User Profile"
+                                     action="#{profileController.deleteUserProfile}"
 
-            <h:outputText value="E-mail " />
-            <p:inputText value="#{profileController.currentUser.email}"/>
-        </h:panelGrid>
-
-        <p:commandButton title="Update User Profile"
-                         value="Update User Profile"
-                         action="#{profileController.updateUserProfile}"
-                         update="form"/>
-
-        <p:commandButton icon="ui-icon-trash"
-                         value="Delete User Profile"
-                         title="Delete User Profile"
-                         action="#{profileController.deleteUserProfile}"
-
-                         update="form"/>
-
+                                     update="form"/>
+                </div>
+            </div>
+        </div>
     </ui:define>
 
 
