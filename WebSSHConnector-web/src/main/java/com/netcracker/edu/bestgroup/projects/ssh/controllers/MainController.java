@@ -29,10 +29,10 @@ public class MainController {
     boolean isProfilePage = false;
 
     public boolean getRegisterSuccess() {
-        return RegisterSuccess;
+        return registerSuccess;
     }
 
-    boolean RegisterSuccess = false;
+    boolean registerSuccess = false;
 
     @EJB
     private UsersEJB usersEJB;
@@ -92,16 +92,16 @@ public class MainController {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message;
         if(user.getUserName().equals(null)||user.getLogin().equals(null)||user.getPassword().equals(null)){
-            RegisterSuccess = false;
+            registerSuccess = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Registration Error", "Invalid credentials");
             FacesContext.getCurrentInstance().addMessage(null, message);
-            context.addCallbackParam("RegisterSuccess", RegisterSuccess);
+            context.addCallbackParam("RegisterSuccess", registerSuccess);
         }
         else{
-            RegisterSuccess = true;
+            registerSuccess = true;
             usersEJB.addNew(user);
             login(event);
-            context.addCallbackParam("RegisterSuccess", RegisterSuccess);
+            context.addCallbackParam("RegisterSuccess", registerSuccess);
         }
     }
 }
