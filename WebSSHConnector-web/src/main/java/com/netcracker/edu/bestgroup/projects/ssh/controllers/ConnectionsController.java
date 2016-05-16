@@ -33,13 +33,9 @@ public class ConnectionsController {
 
     @PostConstruct
     public void postConstruct() {
-        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String login = req.getParameter("user");
-        if (login == null || (login.compareTo("") == 0) ) {
-//            FacesContext context = FacesContext.getCurrentInstance();
-//
-//            context.addMessage(null, new FacesMessage("INFO", "LOGIN IS NULL"));
 
+        String login = (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
+        if (login == null || (login.compareTo("") == 0) ) {
             currentUser = usersEJB.getFakeUserInstance();
             connection.setUser(currentUser);
         } else {
