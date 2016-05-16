@@ -21,7 +21,7 @@
                             </p:panel>
                         </div>
                         <div class="row">
-                            <h:panelGrid columns="2" cellpadding="10">
+                            <h:panelGrid id="commandPanel" columns="2" cellpadding="10">
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <p:outputLabel value="#{sessionController.activeConnectionInformation}"
@@ -31,8 +31,8 @@
                                         <p:commandButton value="Disconnect"
                                                          disabled="#{empty sessionController.activeConnection}"
                                                          actionListener="#{sessionController.disconnect}"
-                                                         update="content"
-                                                         style="width: 100%; float: right"/>
+                                                         update="values commandInput commandPanel connections_table"
+                                                         style="width: 100%; float: right" ajax="false"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -42,11 +42,11 @@
                                                      style="width: 100%;"/>
                                     </div>
                                     <div class="col-lg-2">
-                                        <p:commandButton value="Execute" update="content"
+                                        <p:commandButton value="Execute" update="values commandInput commandPanel"
                                                          id="commandInputButton"
                                                          actionListener="#{sessionController.executeCommand}"
                                                          disabled="#{empty sessionController.activeConnection}"
-                                                         style="width: 100%; float: right"/>
+                                                         style="width: 100%; float: right" ajax="false"/>
                                         <p:defaultCommand target="commandInputButton"/>
                                     </div>
                                 </div>
@@ -84,8 +84,9 @@
                                 <p:commandButton icon="ui-icon-arrowthick-1-e"
                                                  title="Connect"
                                                  actionListener="#{sessionController.connect(connection)}"
-                                                 update="data commandInput"
+                                                 update="values commandInput connections_table"
                                                  ajax="false"
+                                                 disabled="#{not empty sessionController.activeConnection}"
                                 />
                             </p:column>
                         </p:dataTable>
