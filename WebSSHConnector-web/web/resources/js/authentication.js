@@ -28,7 +28,7 @@ function handleLoginRequest(xhr, status, args) {
 
 })();
 function handleSignUpRequest(xhr, status, args) {
-    if (!args.RegisterSuccess) {
+    if (!args.registerSuccess) {
         PF('dlg_R').jq.effect("shake", {times: 5}, 100);
     }
     else{

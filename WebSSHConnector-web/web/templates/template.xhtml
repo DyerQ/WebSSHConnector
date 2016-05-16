@@ -18,7 +18,7 @@
         <div class="navbar-fixed-top">
             <p:toolbar>
                 <f:facet name="left" >
-                    <p:outputLabel>WebSSHConnector (Dev in progress)</p:outputLabel>
+                    <p:outputLabel>WebSSHConnector (Dev in progress),   #{mainController.registerSuccess}   </p:outputLabel>
                 </f:facet>
                 <f:facet name="right">
                     <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();" rendered="#{!(mainController.loggedIn)}"/>
@@ -71,9 +71,9 @@
                                         pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                             </p:inputText>
                             <f:facet name="footer">
-                                <h:commandButton value="Sign Up" update="growl"
+                                <p:commandButton value="Sign Up" update="growl"
                                                  actionListener="#{mainController.registerUser}"
-                                                 oncomplete="handleSignUpRequest()"/>
+                                                 oncomplete="handleSignUpRequest(xhr, status, args)"/>
                             </f:facet>
                         </h:panelGrid>
                     </p:dialog>
