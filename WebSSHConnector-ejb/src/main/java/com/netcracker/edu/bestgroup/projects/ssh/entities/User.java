@@ -37,13 +37,13 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
-    @Column(name = "avatar")
+    @Basic
     private String avatar;
 
     @PrePersist
     private void preInsert() {
         if (avatar == null || avatar.isEmpty()) {
-            avatar = "resources/img/standart.jpg";
+            avatar = "resources/img/standard.jpg";
         }
     }
 
@@ -106,7 +106,6 @@ public class User implements Serializable {
         User user = (User) o;
 
         return userId.equals(user.userId);
-
     }
 
     @Override

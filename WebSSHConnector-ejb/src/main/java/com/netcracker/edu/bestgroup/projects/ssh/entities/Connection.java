@@ -32,18 +32,6 @@ public class Connection implements Serializable {
     @Basic
     private int port;
 
-    public Connection( BigInteger connectionId, String login, String password, String hostName, int port, User user) {
-        this.connectionId = connectionId;
-        this.user=user;
-        this.login = login;
-        this.password = password;
-        this.hostName = hostName;
-        this.port = port;
-    }
-
-    public Connection() {
-    }
-
     public BigInteger getConnectionId() {
         return connectionId;
     }
@@ -90,11 +78,6 @@ public class Connection implements Serializable {
 
     public void setPort(int port) {
         this.port = port;
-    }
-
-    @Override
-    public Connection clone() {
-        return new Connection(connectionId,login,password,hostName,port,user);
     }
 
     @Override

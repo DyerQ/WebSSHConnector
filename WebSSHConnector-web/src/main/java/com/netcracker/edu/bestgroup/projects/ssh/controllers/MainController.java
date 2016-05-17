@@ -12,8 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @ManagedBean
 @SessionScoped
@@ -21,11 +19,12 @@ public class MainController {
     private User user = new User();
     boolean loggedIn = false;
 
-   public boolean isProfilePage() {
-        isProfilePage = (loggedIn)&(FacesContext.getCurrentInstance().getViewRoot()
+    public boolean isProfilePage() {
+        isProfilePage = (loggedIn) & (FacesContext.getCurrentInstance().getViewRoot()
                 .getViewId().lastIndexOf("profile.xhtml") > -1);
         return isProfilePage;
     }
+
     boolean isProfilePage = false;
 
     public boolean getRegisterSuccess() {
@@ -36,6 +35,7 @@ public class MainController {
 
     @EJB
     private UsersEJB usersEJB;
+
     public void login(ActionEvent event) {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
                 .getExternalContext().getSession(false);
@@ -43,7 +43,7 @@ public class MainController {
         FacesMessage message;
         User tmp_User = usersEJB.findUserByLogin(user.getLogin());
 
-        if (!(tmp_User.equals(null)) && tmp_User.getPassword().equals(user.getPassword())) {
+        if (tmp_User != null && tmp_User.getPassword().equals(user.getPassword())) {
             loggedIn = true;
             user = usersEJB.findUserByLogin(user.getLogin());
             FacesContext.getCurrentInstance().getExternalContext()
@@ -94,13 +94,12 @@ public class MainController {
     public void registerUser(ActionEvent event) {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message;
-        if(user.getUserName().equals(null)||user.getLogin().equals(null)||user.getPassword().equals(null)){
+        if (user.getUserName() == null || user.getLogin() == null || user.getPassword() == null) {
             registerSuccess = false;
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Registration Error", "Invalid credentials");
             FacesContext.getCurrentInstance().addMessage(null, message);
             context.addCallbackParam("RegisterSuccess", registerSuccess);
-        }
-        else{
+        } else {
             registerSuccess = true;
             usersEJB.addNew(user);
             login(event);

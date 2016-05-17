@@ -1,10 +1,10 @@
 package com.netcracker.edu.bestgroup.projects.ssh.controllers;
 
 import com.netcracker.edu.bestgroup.projects.ssh.beans.MultipleSessionsEJB;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.SSHCommandResult;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.InvalidConnectionParametersException;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.SessionInitializationException;
-import com.netcracker.edu.bestgroup.projects.ssh.connect.exceptions.SessionStateException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.InvalidConnectionParametersException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.SessionInitializationException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.error.SessionStateException;
+import com.netcracker.edu.bestgroup.projects.ssh.connect.model.SSHCommandResult;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Connection;
 import com.netcracker.edu.bestgroup.projects.ssh.output.SSHCommandResultAdapter;
 import com.netcracker.edu.bestgroup.projects.ssh.output.SSHCommandResultAdapterProducer;
@@ -99,7 +99,7 @@ public class SessionController {
         if (activeConnection != null) {
             return activeConnection + " connected at " + DATE_FORMAT.format(connectionDate);
         } else {
-            return "";
+            return "No active connection";
         }
     }
 

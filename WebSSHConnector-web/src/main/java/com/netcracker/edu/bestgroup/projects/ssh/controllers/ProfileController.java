@@ -8,7 +8,6 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -26,10 +25,8 @@ public class ProfileController {
 
     @PostConstruct
     public void postConstruct() {
-        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String login = req.getParameter("login");
+        String login = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
         currentUser = usersEJB.findUserByLogin(login);
-
     }
 
     public void updateUserProfile() throws IOException {
@@ -44,24 +41,23 @@ public class ProfileController {
         FacesContext.getCurrentInstance().getExternalContext().redirect("main.xhtml");
     }
 
-    public void setAvatar(){
-    //    FacesContext.getCurrentInstance().getExternalContext().
+    public void setAvatar() {
         Map<String, String> manMap = new LinkedHashMap<>();
-        manMap.put("Blonde", "resources/img/man_blonde.jpg");
+        manMap.put("Blond", "resources/img/man_blond.jpg");
         manMap.put("Ginger", "resources/img/man_ginger.jpg");
         manMap.put("Brunet", "resources/img/man_brunet.jpg");
 
         Map<String, String> womanMap = new LinkedHashMap<>();
-        womanMap.put("Blonde", "resources/img/woman_blonde.jpg");
+        womanMap.put("Blond", "resources/img/woman_blond.jpg");
         womanMap.put("Ginger", "resources/img/woman_ginger.jpg");
         womanMap.put("Brunet", "resources/img/woman_brunet.jpg");
 
         Map<String, Map<String, String>> outerMap = new LinkedHashMap<>();
-        outerMap.put("Man", manMap);
-        outerMap.put("Woman", womanMap);
+        outerMap.put("Male", manMap);
+        outerMap.put("Female", womanMap);
 
         if (avatarSex == null || avatarSex.isEmpty() || avatarColor == null || avatarColor.isEmpty()) {
-            currentUser.setAvatar("resources/img/standart.jpg");
+            currentUser.setAvatar("resources/img/standard.jpg");
         } else {
             currentUser.setAvatar(outerMap.get(avatarSex).get(avatarColor));
         }

@@ -9,22 +9,16 @@ import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpServletRequest;
 
 @ManagedBean
 @ViewScoped
 public class ConnectionsController {
     private User currentUser;
-    private Connection connection = new Connection();
-    private Connection connectionToEdit = connection.clone();
-    {
-        connection.setPort(22);
-        connectionToEdit.setPort(22);
-    }
+    private Connection connection;
+    private Connection connectionToEdit;
 
     @EJB
     private ConnectionsEJB connectionsEJB;
@@ -34,19 +28,21 @@ public class ConnectionsController {
     @PostConstruct
     public void postConstruct() {
 
-        String login = (String)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
-        if (login == null || (login.compareTo("") == 0) ) {
+        String login = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
+        if (login == null || (login.compareTo("") == 0)) {
             currentUser = usersEJB.getFakeUserInstance();
-            connection.setUser(currentUser);
         } else {
             currentUser = usersEJB.findUserByLogin(login);
-            connection.setUser(currentUser);
             currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
 
         }
 
-
-
+        connection = new Connection();
+        connection.setPort(22);
+        connection.setUser(currentUser);
+        connectionToEdit = new Connection();
+        connectionToEdit.setPort(22);
+        connectionToEdit.setUser(currentUser);
     }
 
 
@@ -55,7 +51,8 @@ public class ConnectionsController {
         currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
         clearConnection();
     }
-    public void clearConnection(){
+
+    public void clearConnection() {
         connection = new Connection();
         connection.setPort(22);
         connection.setUser(currentUser);
@@ -73,7 +70,13 @@ public class ConnectionsController {
     }
 
     public void editConnection(Connection conn) {
-        connectionToEdit = conn.clone();
+        connectionToEdit = new Connection();
+        connection.setConnectionId(conn.getConnectionId());
+        connection.setUser(conn.getUser());
+        connection.setLogin(conn.getLogin());
+        connection.setPassword(conn.getHostName());
+        connection.setHostName(conn.getHostName());
+        connection.setPort(conn.getPort());
 
     }
 

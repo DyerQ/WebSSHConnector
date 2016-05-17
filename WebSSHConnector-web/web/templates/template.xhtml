@@ -17,11 +17,12 @@
         <p:growl id="growl" sticky="true" showDetail="true" life="3000"/>
         <div class="navbar-fixed-top">
             <p:toolbar>
-                <f:facet name="left" >
+                <f:facet name="left">
                     <p:outputLabel>WebSSHConnector (Dev in progress)</p:outputLabel>
                 </f:facet>
                 <f:facet name="right">
-                    <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();" rendered="#{!(mainController.loggedIn)}"/>
+                    <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();"
+                                     rendered="#{!(mainController.loggedIn)}"/>
 
                     <p:dialog widgetVar="dlg_L" resizable="false" dynamic="true" modal="true" closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
@@ -41,16 +42,20 @@
                         </h:panelGrid>
                     </p:dialog>
 
-                    <h:outputLink value="profile.xhtml" rendered="#{!(mainController.profilePage)}" style="font-weight:bold" >#{mainController.user.userName}
+                    <h:outputLink value="profile.xhtml" rendered="#{!(mainController.profilePage)}"
+                                  style="font-weight:bold">#{mainController.user.userName}
                     </h:outputLink>
-                    <h:button value="Go to main" rendered="#{(mainController.profilePage)}" outcome="main.xhtml" style="font-weight:bold" />
+                    <h:button value="Go to main" rendered="#{(mainController.profilePage)}" outcome="main.xhtml"
+                              style="font-weight:bold"/>
                     <h:commandButton value="Logout" action="#{mainController.logout}"
                                      rendered="#{mainController.loggedIn}"/>
 
 
-                    <h:commandButton value="Sign Up" type="button" onclick="PF('dlg_R').show();" rendered="#{!(mainController.loggedIn)}"/>
+                    <h:commandButton value="Sign Up" type="button" onclick="PF('dlg_R').show();"
+                                     rendered="#{!(mainController.loggedIn)}"/>
 
-                    <p:dialog widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true" closeOnEscape="true">
+                    <p:dialog widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true"
+                              closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="name" value="Name:"/>
                             <p:inputText id="name" value="#{mainController.user.userName}" required="true"
@@ -68,7 +73,7 @@
                             <p:inputText id="email" value="#{mainController.user.email}"
                                          label="email" validatorMessage="Invalid email format">
                                 <f:validateRegex
-                                        pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        pattern="^$|^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"/>
                             </p:inputText>
                             <f:facet name="footer">
                                 <p:commandButton value="Sign Up" update="growl"
@@ -93,8 +98,9 @@
         <div class="navbar-fixed-bottom">
             <div class="navbar-inner">
                 <div class="container text-center">
-                    <a href="http://www.freepik.com">Avatars by Freepik ||</a>
-                    <h:outputLink value="about.xhtml">Created by someone... © 2016</h:outputLink>
+                    <h:outputLink value="about.xhtml">Created by MIPT NC Edu Center Group © 2016</h:outputLink>
+                    &nbsp;
+                    <h:outputLink value="http://www.freepik.com">Avatars by Freepik</h:outputLink>
                 </div>
             </div>
         </div>

@@ -6,7 +6,6 @@
 
 -- Business logic: User performs login operation with a pair of login and password. Name displayed in a system
 -- may be different if so is specified during the registration process or edit account information process.
--- Users(user_id /* generated automatically, primary key */, login /* unique, not null */, user_name, password /* not null */
 BEGIN
   EXECUTE IMMEDIATE 'drop table Users';
   EXCEPTION
@@ -22,8 +21,8 @@ CREATE TABLE Users (
   login     VARCHAR2(200) UNIQUE NOT NULL,
   user_name VARCHAR2(200),
   password  VARCHAR2(200)        NOT NULL,
-  e_mail     VARCHAR2(200),
-  avatar    VARCHAR2 (200)       NOT NULL
+  e_mail    VARCHAR2(200),
+  avatar    VARCHAR2(200) DEFAULT 'resources/img/standard.jpg'
 );
 
 BEGIN
@@ -38,10 +37,17 @@ END;
 
 CREATE SEQUENCE user_ids_seq;
 
+CREATE OR REPLACE TRIGGER no_user_avatar_trig
+BEFORE UPDATE ON Users
+FOR EACH ROW
+  BEGIN
+    IF :new.avatar IS NULL
+    THEN
+      :new.avatar := 'resources/img/standard.jpg';
+    END IF;
+  END;
 -- Use of certain fields and constraints for Connections table is necessary due to API of ssh module.
 -- e.g. Fields login, password, host are required -> corresponding table columns are marked as not null.
--- Connections(connection_id /* generated automatically, primary key */, user_id /* foreign key referencing Users(user_id) */,
--- login /* not null */, password /* not null */, host_name /* not null */, port)
 BEGIN
   EXECUTE IMMEDIATE 'drop table Connections';
   EXCEPTION
@@ -82,16 +88,4 @@ FOR EACH ROW
       :new.port := 22;
     END IF;
   END;
-
-CREATE OR REPLACE TRIGGER no_avatar_trig
-BEFORE UPDATE ON Users
-FOR EACH ROW
-  BEGIN
-    IF :new.avatar IS NULL
-    THEN
-      :new.avatar := 'resources/img/standart.jpg';
-    END IF;
-  END;
-
 -- Further additions to the tables structure must include creating new tables. Do not modify existing tables!
-

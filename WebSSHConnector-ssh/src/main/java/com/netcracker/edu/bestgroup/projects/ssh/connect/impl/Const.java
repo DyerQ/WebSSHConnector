@@ -1,4 +1,4 @@
-package com.netcracker.edu.bestgroup.projects.ssh.connect;
+package com.netcracker.edu.bestgroup.projects.ssh.connect.impl;
 
 final class Const {
     private Const() {
