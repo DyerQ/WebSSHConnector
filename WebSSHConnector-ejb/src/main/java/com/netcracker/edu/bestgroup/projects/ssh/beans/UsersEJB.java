@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.math.BigInteger;
 import java.util.List;
 
 @Stateless
@@ -39,12 +38,5 @@ public class UsersEJB {
 
     public void save(User user) {
         entityManager.merge(user);
-    }
-
-    public User getFakeUserInstance() {
-        User user = new User();
-        user.setUserId(BigInteger.ZERO);
-        user.setUserName("Anonymous User");
-        return user;
     }
 }

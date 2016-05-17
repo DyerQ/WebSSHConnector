@@ -5,7 +5,6 @@ import com.netcracker.edu.bestgroup.projects.ssh.beans.ConnectionsEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.beans.UsersEJB;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.Connection;
 import com.netcracker.edu.bestgroup.projects.ssh.entities.User;
-import org.primefaces.event.RowEditEvent;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -30,7 +29,7 @@ public class ConnectionsController {
 
         String login = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("login");
         if (login == null || (login.compareTo("") == 0)) {
-            currentUser = usersEJB.getFakeUserInstance();
+            // currentUser = usersEJB.getFakeUserInstance();
         } else {
             currentUser = usersEJB.findUserByLogin(login);
             currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
@@ -62,11 +61,6 @@ public class ConnectionsController {
     public void deleteConnection(Connection connection) {
         connectionsEJB.delete(connection);
         currentUser.setConnectionList(connectionsEJB.findUserConnections(currentUser.getLogin()));
-    }
-
-    public void saveRow(RowEditEvent event) {
-        Connection editedConnection = ((Connection) event.getObject());
-        connectionsEJB.save(editedConnection);
     }
 
     public void editConnection(Connection conn) {

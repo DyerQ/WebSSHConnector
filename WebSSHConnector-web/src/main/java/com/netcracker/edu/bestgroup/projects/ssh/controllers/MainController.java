@@ -9,8 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @ManagedBean
@@ -27,18 +25,12 @@ public class MainController {
 
     boolean isProfilePage = false;
 
-    public boolean getRegisterSuccess() {
-        return registerSuccess;
-    }
-
     boolean registerSuccess = false;
 
     @EJB
     private UsersEJB usersEJB;
 
-    public void login(ActionEvent event) {
-        HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-                .getExternalContext().getSession(false);
+    public void login() {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message;
         User tmp_User = usersEJB.findUserByLogin(user.getLogin());
@@ -87,11 +79,7 @@ public class MainController {
         return loggedIn;
     }
 
-    public void connect() {
-
-    }
-
-    public void registerUser(ActionEvent event) {
+    public void registerUser() {
         RequestContext context = RequestContext.getCurrentInstance();
         FacesMessage message;
         if (user.getUserName() == null || user.getLogin() == null || user.getPassword() == null) {
@@ -102,7 +90,7 @@ public class MainController {
         } else {
             registerSuccess = true;
             usersEJB.addNew(user);
-            login(event);
+            login();
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("profile.xhtml");
             } catch (IOException e) {
