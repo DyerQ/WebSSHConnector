@@ -34,6 +34,5 @@ function handleSignUpRequest(xhr, status, args) {
     else{
         PF('dlg_R').hide();
         $('#loginLink').fadeOut();
-        location.reload();
     }
 }
