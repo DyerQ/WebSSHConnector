@@ -15,7 +15,6 @@ public class Connection implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ConnectionPKGenerator")
     private BigInteger connectionId;
 
-
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -85,7 +84,6 @@ public class Connection implements Serializable {
         return login + "@" + hostName;
     }
 
-
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -93,7 +91,6 @@ public class Connection implements Serializable {
         Connection that = (Connection) o;
 
         return connectionId.equals(that.connectionId);
-
     }
 
     @Override

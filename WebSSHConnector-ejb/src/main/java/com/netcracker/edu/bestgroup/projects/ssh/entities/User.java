@@ -25,17 +25,8 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
 
-
     @Column(name = "e_mail")
     private String eMail;
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
 
     @Basic
     private String avatar;
@@ -47,7 +38,15 @@ public class User implements Serializable {
         }
     }
 
-    @OneToMany(targetEntity = Connection.class, mappedBy = "user")
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @OneToMany(targetEntity = Connection.class, mappedBy = "user", cascade = CascadeType.ALL)
     private List<Connection> connectionList;
 
     public BigInteger getUserId() {
