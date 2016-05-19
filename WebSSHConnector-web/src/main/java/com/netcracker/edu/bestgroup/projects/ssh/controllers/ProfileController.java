@@ -38,7 +38,7 @@ public class ProfileController {
         usersEJB.delete(currentUser);
         FacesContext.getCurrentInstance().getExternalContext()
                 .invalidateSession();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("main.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
     }
 
     public void setAvatar() {
