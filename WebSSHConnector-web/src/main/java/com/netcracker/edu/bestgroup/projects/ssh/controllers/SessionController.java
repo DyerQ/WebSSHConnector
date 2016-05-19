@@ -52,7 +52,7 @@ public class SessionController {
     }
 
     public void executeCommand() throws SessionStateException {
-        if (activeConnection != null) {
+        if (activeConnection != null && command != null) {
             // we expect that default commands will be successful
             SSHCommandResult userNameCommandResult = multipleSessionsEJB.executeCommand(activeConnection,
                     ECHO_USER_NAME_COMMAND);
