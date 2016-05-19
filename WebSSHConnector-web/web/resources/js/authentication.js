@@ -8,7 +8,7 @@ function handleLoginRequest(xhr, status, args) {
     }
 }
 (function() {
-
+    // отобр. пароля, в отдельный файл -> подключить в конце темплейта
     var KEY_ENTER = 13;
 
     var inputs = document.querySelectorAll('password[id=password]');
@@ -19,6 +19,8 @@ function handleLoginRequest(xhr, status, args) {
         function showPassword(){
             inputs[i].id = 'text';
         }
+//        Ещё добавить на события mouseout -> hidePassword
+//        mouseover -> showPassword
         inputs[i].addEventListener('focus', showPassword, false);
         inputs[i].addEventListener('blur', hidePassword, false);
         inputs[i].addEventListener('keydown', function onBeforeSubmit(e){
