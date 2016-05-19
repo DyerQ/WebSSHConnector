@@ -91,7 +91,7 @@
                             </p:column>
                         </p:dataTable>
 
-                        <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
+                        <p:commandButton value="Add New Connection" type="button" onclick="PF('dlg').show();"/>
 
                         <p:outputPanel id="conn">
                             <p:dialog header="Add New Connection" widgetVar="dlg" resizable="false" modal="true"
@@ -99,19 +99,19 @@
                                 <p:ajax event="close" update="conn" resetValues="true"/>
 
                                 <h:panelGrid columns="2">
-                                    <h:outputLabel value="Login: " style="font-weight:bold"/>
+                                    <h:outputLabel value="Login:" style="font-weight:bold"/>
                                     <p:inputText id="Login" required="true"
                                                  value="#{connectionsController.connection.login}"/>
-                                    <h:outputLabel value="Password: " style="font-weight:bold"/>
+                                    <h:outputLabel value="Password:" style="font-weight:bold"/>
                                     <p:password id="Password" required="true"
-                                                 value="#{connectionsController.connection.password}"/>
-                                    <h:outputLabel value="Host name: " style="font-weight:bold"/>
+                                                value="#{connectionsController.connection.password}"/>
+                                    <h:outputLabel value="Host Name:" style="font-weight:bold"/>
                                     <p:inputText id="Host_name" required="true"
                                                  value="#{connectionsController.connection.hostName}"/>
-                                    <h:outputLabel value="Port: " style="font-weight:bold"/>
+                                    <h:outputLabel value="Port:" style="font-weight:bold"/>
                                     <p:inputText id="Port" required="true"
                                                  value="#{connectionsController.connection.port}"/>
-                                    <p:commandButton value="Add new connection" update="connections_table conn"
+                                    <p:commandButton value="Add New Connection" update="connections_table conn"
                                                      actionListener="#{connectionsController.addNewConnection}"
                                                      oncomplete="PF('dlg').hide();"/>
 
@@ -132,16 +132,16 @@
 
 
                     <h:panelGrid columns="2">
-                        <h:outputLabel value="Login: " style="font-weight:bold"/>
+                        <h:outputLabel value="Login:" style="font-weight:bold"/>
                         <p:inputText id="Login_tmp"
                                      value="#{connectionsController.connectionToEdit.login}"/>
-                        <h:outputLabel value="Password: " style="font-weight:bold"/>
+                        <h:outputLabel value="Password:" style="font-weight:bold"/>
                         <p:password id="Password_tmp"
-                                     value="#{connectionsController.connectionToEdit.password}"/>
-                        <h:outputLabel value="Host name: " style="font-weight:bold"/>
+                                    value="#{connectionsController.connectionToEdit.password}"/>
+                        <h:outputLabel value="Host Name:" style="font-weight:bold"/>
                         <p:inputText id="Host_name_tmp"
                                      value="#{connectionsController.connectionToEdit.hostName}"/>
-                        <h:outputLabel value="Port: " style="font-weight:bold"/>
+                        <h:outputLabel value="Port:" style="font-weight:bold"/>
                         <p:inputText id="Port_tmp" value="#{connectionsController.connectionToEdit.port}"/>
                         <p:commandButton value="Accept" update=":form:content:connections_table"
                                          actionListener="#{connectionsController.cancelEdit}"
