@@ -39,7 +39,11 @@ public class User implements Serializable {
     }
 
     public String getAvatar() {
-        return avatar;
+        if (avatar == null) {
+            return "resources/img/standard.jpg";
+        } else {
+            return avatar;
+        }
     }
 
     public void setAvatar(String avatar) {

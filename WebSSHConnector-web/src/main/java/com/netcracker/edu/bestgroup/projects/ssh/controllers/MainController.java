@@ -72,7 +72,12 @@ public class MainController {
     }
 
     public User getUser() {
-        return user;
+        try {
+            // Vasiliy Urosov - user entities are corrected in other beans, so...
+            return user = usersEJB.findUserByLogin(user.getLogin());
+        } catch (RuntimeException e) {
+            return user;
+        }
     }
 
     public boolean getLoggedIn() {

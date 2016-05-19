@@ -24,7 +24,8 @@
                     <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();"
                                      rendered="#{!(mainController.loggedIn)}"/>
                     <h:outputText value="&nbsp;" rendered="#{!(mainController.loggedIn)}"/>
-                    <p:dialog header="Login" widgetVar="dlg_L" resizable="false" dynamic="true" modal="true" closeOnEscape="true">
+                    <p:dialog header="Login" widgetVar="dlg_L" resizable="false" dynamic="true" modal="true"
+                              closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="username" value="Username:"/>
                             <p:inputText id="username" value="#{mainController.user.login}" required="true"
@@ -42,9 +43,19 @@
                         </h:panelGrid>
                     </p:dialog>
 
-                    <h:outputLink value="profile.xhtml" rendered="#{!(mainController.profilePage)}"
-                                  style="font-weight:bold">#{mainController.user.userName}
+                    <p:graphicImage styleClass="img-responsive img-thumbnail" value="#{mainController.user.avatar}"
+                                    width="26"
+                                    height="26"
+                                    rendered="#{!mainController.profilePage and not empty mainController.user.login}"/>
+                    <h:outputText value="&nbsp;"
+                                  rendered="#{!mainController.profilePage and not empty mainController.user.login}"/>
+                    <h:outputLink value="profile.xhtml"
+                                  rendered="#{!mainController.profilePage and not empty mainController.user.login}"
+                                  style="font-weight:bold">
+                        #{mainController.user.userName}
                     </h:outputLink>
+                    <h:outputText value="&nbsp;"
+                                  rendered="#{!mainController.profilePage and not empty mainController.user.avatar}"/>
                     <h:button value="Go to main" rendered="#{(mainController.profilePage)}" outcome="main.xhtml"
                               style="font-weight:bold"/>
                     <h:commandButton value="Logout" action="#{mainController.logout}"
@@ -54,7 +65,8 @@
                     <h:commandButton value="Sign Up" type="button" onclick="PF('dlg_R').show();"
                                      rendered="#{!(mainController.loggedIn)}"/>
 
-                    <p:dialog header="Registration Form" widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true"
+                    <p:dialog header="Registration Form" widgetVar="dlg_R" position="500,30" resizable="false"
+                              dynamic="true" modal="true"
                               closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="name" value="Name:"/>
