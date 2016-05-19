@@ -21,6 +21,12 @@
                     <p:link outcome="index.xhtml">WebSSHConnector</p:link>
                 </f:facet>
                 <f:facet name="right">
+                    <h:button value="Main Page"
+                              rendered="#{!(mainController.mainPage) and not empty mainController.user.userId}"
+                              outcome="main.xhtml"
+                              style="font-weight:bold"/>
+                    <h:outputText value="&nbsp;"
+                                  rendered="#{!(mainController.mainPage) and not empty mainController.user.userId}"/>
                     <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();"
                                      rendered="#{!(mainController.loggedIn)}"/>
                     <h:outputText value="&nbsp;" rendered="#{!(mainController.loggedIn)}"/>
@@ -56,14 +62,13 @@
                     </h:outputLink>
                     <h:outputText value="&nbsp;"
                                   rendered="#{!mainController.profilePage and not empty mainController.user.avatar}"/>
-                    <h:button value="Go to main" rendered="#{(mainController.profilePage)}" outcome="main.xhtml"
-                              style="font-weight:bold"/>
-                    <h:commandButton value="Logout" action="#{mainController.logout}"
+                    <h:commandButton value="Log Out" action="#{mainController.logout}"
                                      rendered="#{mainController.loggedIn}"/>
-
+                    <h:outputText value="&nbsp;" rendered="#{mainController.loggedIn}"/>
 
                     <h:commandButton value="Sign Up" type="button" onclick="PF('dlg_R').show();"
                                      rendered="#{!(mainController.loggedIn)}"/>
+                    <h:outputText value="&nbsp;" rendered="#{!mainController.loggedIn}"/>
 
                     <p:dialog header="Registration Form" widgetVar="dlg_R" position="500,30" resizable="false"
                               dynamic="true" modal="true"

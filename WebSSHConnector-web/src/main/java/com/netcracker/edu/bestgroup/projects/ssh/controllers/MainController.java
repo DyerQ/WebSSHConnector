@@ -18,12 +18,19 @@ public class MainController {
     boolean loggedIn = false;
 
     public boolean isProfilePage() {
-        isProfilePage = (loggedIn) & (FacesContext.getCurrentInstance().getViewRoot()
+        isProfilePage = (loggedIn) && (FacesContext.getCurrentInstance().getViewRoot()
                 .getViewId().lastIndexOf("profile.xhtml") > -1);
         return isProfilePage;
     }
 
+    public boolean isMainPage() {
+        isMainPage = (loggedIn) && (FacesContext.getCurrentInstance().getViewRoot()
+                .getViewId().lastIndexOf("main.xhtml") > -1);
+        return isMainPage;
+    }
+
     boolean isProfilePage = false;
+    boolean isMainPage = false;
 
     boolean registerSuccess = false;
 
