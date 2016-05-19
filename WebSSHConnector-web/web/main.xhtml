@@ -21,22 +21,23 @@
                             </p:panel>
                         </div>
                         <div class="row">
-                            <h:panelGrid id="commandPanel" columns="2" cellpadding="10">
-                                <div class="row">
-                                </div>
-                                <div class="row">
-                                    <p:inputText for="commandInputButton" id="commandInput"
-                                                 value="#{sessionController.command}"
-                                                 readonly="#{empty sessionController.activeConnection}"
-                                                 style="width: 100%;"/>
-                                    <p:commandButton value="Execute" update="values commandInput commandPanel"
-                                                     id="commandInputButton"
-                                                     actionListener="#{sessionController.executeCommand}"
-                                                     disabled="#{empty sessionController.activeConnection}"
-                                                     style="width: 100%; float: right" ajax="false"/>
-                                    <p:defaultCommand target="commandInputButton"/>
-                                </div>
-                            </h:panelGrid>
+                            <div class="row">
+                                <p:inputText for="commandInputButton" id="commandInput"
+                                             value="#{sessionController.command}"
+                                             readonly="#{empty sessionController.activeConnection}"
+                                             style="width: 100%;"/>
+                                <p:commandButton value="Execute" update="values commandInput commandPanel"
+                                                 id="commandInputButton"
+                                                 actionListener="#{sessionController.executeCommand}"
+                                                 disabled="#{empty sessionController.activeConnection}"
+                                                 style="width: 100%; float: right" ajax="false"/>
+                                <p:defaultCommand target="commandInputButton"/>
+                                <p:commandButton value="Disconnect"
+                                                 disabled="#{empty sessionController.activeConnection}"
+                                                 actionListener="#{sessionController.disconnect}"
+                                                 update="values commandInput commandPanel connections_table"
+                                                 style="width: 100%; float: right" ajax="false"/>
+                            </div>
                         </div>
                     </div>
 
