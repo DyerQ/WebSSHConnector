@@ -11,18 +11,19 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="row">
-                        <p:graphicImage id="avatar" value="#{profileController.currentUser.avatar}"/>
+                        <p:graphicImage styleClass="img-rounded center-block img-responsive" id="avatar"
+                                        value="#{profileController.currentUser.avatar}"/>
                     </div>
                     <div class="row">
                     </div>
-                    <div class="row">
+                    <div class="row text-center">
                         <p:outputLabel for="selectSex" value="Select your gender:"/>
                         <p:selectOneButton id="selectSex" value="#{profileController.avatarSex}">
                             <f:selectItem itemLabel="Man" itemValue="Male"/>
                             <f:selectItem itemLabel="Woman" itemValue="Female"/>
                         </p:selectOneButton>
                     </div>
-                    <div class="row">
+                    <div class="row text-center">
                         <p:outputLabel for="selectHairColor" value="Select your hair color:"/>
                         <p:selectOneButton id="selectHairColor" value="#{profileController.avatarColor}">
                             <f:selectItem itemLabel="Blond" itemValue="Blond"/>
@@ -30,7 +31,7 @@
                             <f:selectItem itemLabel="Brunet" itemValue="Brunet"/>
                         </p:selectOneButton>
                     </div>
-                    <div class="row">
+                    <div class="row text-center">
                         <p:commandButton value="Preview Avatar (Update profile to persist)"
                                          actionListener="#{profileController.setAvatar()}" update="avatar"
                                          ajax="false" icon="ui-icon-check"/>
@@ -39,29 +40,34 @@
                 <div class="col-lg-6">
                     <div style="margin-top: 40px">
                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                            <h:outputText value="Login "/>
-                            <p:inputText value="#{profileController.currentUser.login}" readonly="true"/>
+                            <h:outputText for="loginU" value="Login:"/>
+                            <p:inputText id="loginU" value="#{profileController.currentUser.login}" readonly="true"/>
 
-                            <h:outputText value="Password "/>
-                            <p:inputText value="#{profileController.currentUser.password}"/>
+                            <h:outputText for="passwordU" value="Password:"/>
+                            <p:inputText id="passwordU" value="#{profileController.currentUser.password}"/>
 
-                            <h:outputText value="User Name "/>
-                            <p:inputText value="#{profileController.currentUser.userName}"/>
+                            <h:outputText for="userNameU" value="User Name:"/>
+                            <p:inputText id="userNameU" value="#{profileController.currentUser.userName}"/>
 
-                            <h:outputText value="E-mail "/>
-                            <p:inputText value="#{profileController.currentUser.email}"/>
+                            <h:outputText for="eMailU" value="E-mail:"/>
+                            <p:inputText id="eMailU" value="#{profileController.currentUser.email}"/>
                         </h:panelGrid>
-
-                        <p:commandButton title="Update User Profile"
-                                         value="Update User Profile"
-                                         action="#{profileController.updateUserProfile}"
-                                         update="form"/>
-
-                        <p:commandButton icon="ui-icon-trash"
-                                         value="Delete User Profile"
-                                         title="Delete User Profile"
-                                         action="#{profileController.deleteUserProfile}"
-                                         update="form"/>
+                        <div class="row">
+                            <p:commandButton icon="ui-icon-disk"
+                                             title="Update Profile"
+                                             value="Update Profile"
+                                             action="#{profileController.updateUserProfile}"
+                                             update="form"
+                                             style="margin-top: 10px;"/>
+                        </div>
+                        <div class="row">
+                            <p:commandButton icon="ui-icon-trash"
+                                             value="Delete Profile"
+                                             title="Delete Profile"
+                                             action="#{profileController.deleteUserProfile}"
+                                             update="form"
+                                             style="background-color: #d9534f; border-color: #d43f3a; margin-top: 5px;"/>
+                        </div>
                     </div>
                 </div>
             </div>
