@@ -18,13 +18,13 @@
         <div class="navbar-fixed-top">
             <p:toolbar>
                 <f:facet name="left">
-                    <p:outputLabel>WebSSHConnector (Dev in progress)</p:outputLabel>
+                    <p:link outcome="index.xhtml">WebSSHConnector</p:link>
                 </f:facet>
                 <f:facet name="right">
                     <h:commandButton value="Login" type="button" onclick="PF('dlg_L').show();"
                                      rendered="#{!(mainController.loggedIn)}"/>
-
-                    <p:dialog widgetVar="dlg_L" resizable="false" dynamic="true" modal="true" closeOnEscape="true">
+                    <h:outputText value="&nbsp;" rendered="#{!(mainController.loggedIn)}"/>
+                    <p:dialog header="Login" widgetVar="dlg_L" resizable="false" dynamic="true" modal="true" closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="username" value="Username:"/>
                             <p:inputText id="username" value="#{mainController.user.login}" required="true"
@@ -54,7 +54,7 @@
                     <h:commandButton value="Sign Up" type="button" onclick="PF('dlg_R').show();"
                                      rendered="#{!(mainController.loggedIn)}"/>
 
-                    <p:dialog widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true"
+                    <p:dialog header="Registration Form" widgetVar="dlg_R" position="500,30" resizable="false" dynamic="true" modal="true"
                               closeOnEscape="true">
                         <h:panelGrid columns="2" cellpadding="5">
                             <h:outputLabel for="name" value="Name:"/>

@@ -7,14 +7,14 @@
 
     <ui:define name="content">
         <h:form id="content">
-            <div class="row">
-                <p:outputLabel>Hello!</p:outputLabel>
-            </div>
-            <div class="row">
-                <p:clock/>
-            </div>
-            <div class="row">
-                <p:graphicImage styleClass="img-rounded" value="resources/img/welcome_with_cat.jpg"/>
+            <p class="row text-center" style="font-size: 20pt; font-family: Trebuchet;">
+                <p:outputLabel rendered="#{!(mainController.loggedIn)}">Start with an authorization</p:outputLabel>
+                <p:outputLabel
+                        rendered="#{(mainController.loggedIn)}">Navigate back to Main Page or edit your profile</p:outputLabel>
+            </p>
+            <div class="row" style="margin-top: 40px; vertical-align: center">
+                <p:graphicImage styleClass="img-rounded center-block img-responsive"
+                                value="resources/img/welcome_with_cat.jpg"/>
             </div>
         </h:form>
     </ui:define>

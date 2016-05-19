@@ -62,7 +62,7 @@
                                      var="connection">
 
                             <f:facet name="header">
-                                CONNECTIONS
+                                Stored connections
                             </f:facet>
 
                             <p:column>
@@ -94,7 +94,7 @@
                         <p:commandButton value="Add new connection" type="button" onclick="PF('dlg').show();"/>
 
                         <p:outputPanel id="conn">
-                            <p:dialog header="Add new connection" widgetVar="dlg" resizable="false" modal="true"
+                            <p:dialog header="Add New Connection" widgetVar="dlg" resizable="false" modal="true"
                                       dynamic="true">
                                 <p:ajax event="close" update="conn" resetValues="true"/>
 
@@ -127,7 +127,7 @@
 
         <div class="connectionEditForm">
             <p:outputPanel id="dialog">
-                <p:dialog header="Edit" widgetVar="dlg2" resizable="false" modal="true">
+                <p:dialog header="Edit Connection" widgetVar="dlg2" resizable="false" modal="true">
                     <p:ajax event="close" update="dialog" resetValues="true"/>
 
 
